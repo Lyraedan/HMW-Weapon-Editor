@@ -264,9 +264,9 @@ namespace WinFormsApp1
             // add any other nested classes here...
 
             // Initialize anim dictionaries with all keys set to empty strings
-            newWeapon.szXAnimsRightHanded = StaticReadonly.AnimDictKeys.ToDictionary(k => k, k => "");
-            newWeapon.szXAnimsLeftHanded = StaticReadonly.AnimDictKeys.ToDictionary(k => k, k => "");
-            newWeapon.szXAnims = StaticReadonly.AnimDictKeys.ToDictionary(k => k, k => "");
+            newWeapon.szXAnimsRightHanded = StaticReadonly.AnimDictKeys.ToDictionary(k => k,k => (object)"");
+            newWeapon.szXAnimsLeftHanded = StaticReadonly.AnimDictKeys.ToDictionary(k => k, k => (object)"");
+            newWeapon.szXAnims = StaticReadonly.AnimDictKeys.ToDictionary(k => k, k => (object)"");
 
             TabPage newTab = new TabPage("New Weapon");
             newTab.Tag = new WeaponTabContext { Weapon = newWeapon, FilePath = null };
@@ -317,7 +317,7 @@ namespace WinFormsApp1
         {
             if (weaponTabControl.SelectedTab?.Tag is WeaponTabContext context)
             {
-                string weaponName = context.Weapon?.szDisplayName ?? Path.GetFileName(context.FilePath);
+                string weaponName = (string) context.Weapon?.szDisplayName ?? Path.GetFileName(context.FilePath);
                 if (dirtyFlags.TryGetValue(weaponTabControl.SelectedTab, out bool dirty) && dirty)
                 {
                     weaponName += "*";
@@ -369,12 +369,18 @@ namespace WinFormsApp1
                 progressBar.Value = 40;
                 Application.DoEvents();
 
-                var weapon = JsonSerializer.Deserialize<WeaponJson>(json);
+                var options = new JsonSerializerOptions
+                {
+                    Converters = { new JsonElementToObjectConverter() },
+                    PropertyNameCaseInsensitive = true
+                };
+
+                var weapon = JsonSerializer.Deserialize<WeaponJson>(json, options);
                 progressBar.Value = 70;
 
                 if (weapon != null)
                 {
-                    string name = weapon.szDisplayName ?? Path.GetFileName(path);
+                    string name = (string)weapon.szDisplayName ?? Path.GetFileName(path);
                     TabPage weaponTab = new TabPage(name);
                     weaponTab.Tag = new WeaponTabContext { Weapon = weapon, FilePath = path };
 
@@ -408,6 +414,7 @@ namespace WinFormsApp1
                 MessageBox.Show("Failed to load file: " + ex.Message);
             }
         }
+
         private void GenerateTabsForWeapon(TabPage tabPage, WeaponJson weapon)
         {
             var innerTabs = tabPage.Controls.OfType<TabControl>().FirstOrDefault();
@@ -419,10 +426,12 @@ namespace WinFormsApp1
             {
                 var groupAttr = prop.GetCustomAttribute<GroupAttribute>();
                 var val = prop.GetValue(weapon);
+                var actualType = val?.GetType() ?? prop.PropertyType;
 
-                if (IsCustomClass(prop.PropertyType) && val != null)
+                if (IsCustomClass(actualType) && val != null)
                 {
-                    return prop.PropertyType.GetProperties().Select(subProp => new
+                    // Get nested class properties
+                    return actualType.GetProperties().Select(subProp => new
                     {
                         Property = subProp,
                         Target = val,
@@ -480,14 +489,16 @@ namespace WinFormsApp1
                     {
                         var property = item.Property;
                         var target = item.Target;
+
                         var label = new Label
                         {
                             Text = property.Name,
                             AutoSize = true,
-                            Tag = property.Name.Trim().ToLower() // 🔑 For matching
+                            Tag = property.Name.Trim().ToLower()
                         };
+
                         var control = GenerateControlForProperty(property, target);
-                        control.Tag = property.Name.Trim().ToLower(); // 🔑 Optional reverse mapping
+                        control.Tag = property.Name.Trim().ToLower();
 
                         layout.Controls.Add(label);
                         layout.Controls.Add(control);
@@ -552,10 +563,10 @@ namespace WinFormsApp1
 
         private Control GenerateControlForProperty(PropertyInfo prop, object targetObject)
         {
-            Type type = prop.PropertyType;
             object value = prop.GetValue(targetObject);
+            Type actualType = value?.GetType() ?? prop.PropertyType;
 
-            if (type == typeof(string))
+            if (actualType == typeof(string))
             {
                 return new TextBox
                 {
@@ -564,7 +575,7 @@ namespace WinFormsApp1
                     Margin = new Padding(3)
                 };
             }
-            else if (type == typeof(int))
+            else if (actualType == typeof(int))
             {
                 var nud = new NumericUpDown
                 {
@@ -576,30 +587,44 @@ namespace WinFormsApp1
                 nud.Value = ClampDecimal(value ?? 0, nud.Minimum, nud.Maximum);
                 return nud;
             }
-            else if (type == typeof(float))
+            else if (actualType == typeof(float) || actualType == typeof(double) || (value is JsonElement je && je.ValueKind == JsonValueKind.Number))
             {
+                float floatVal = 0f;
+
+                if (value is JsonElement jeFloat)
+                {
+                    floatVal = jeFloat.GetSingle();
+                }
+                else
+                {
+                    floatVal = Convert.ToSingle(value);
+                }
+
+                var decimalPlaces = floatVal % 1 == 0 ? 1 : 6; // show .0 if whole, else up to 6 decimal digits
+
                 var fNud = new NumericUpDown
                 {
-                    DecimalPlaces = 2,
                     Increment = 0.1M,
                     Minimum = -1000000,
                     Maximum = 1000000,
+                    DecimalPlaces = decimalPlaces,
                     Dock = DockStyle.Fill,
                     Margin = new Padding(3)
                 };
-                fNud.Value = ClampDecimal(value ?? 0f, fNud.Minimum, fNud.Maximum);
+
+                fNud.Value = ClampDecimal(floatVal, fNud.Minimum, fNud.Maximum);
                 return fNud;
             }
-            else if (type == typeof(bool))
+            else if (actualType == typeof(bool))
             {
                 return new CheckBox
                 {
-                    Checked = (bool)(value ?? false),
+                    Checked = value is bool b && b,
                     AutoSize = true,
                     Margin = new Padding(3)
                 };
             }
-            else if (type == typeof(List<string>))
+            else if (actualType == typeof(List<string>))
             {
                 return new TextBox
                 {
@@ -608,7 +633,7 @@ namespace WinFormsApp1
                     Margin = new Padding(3)
                 };
             }
-            else if (type == typeof(List<float>))
+            else if (actualType == typeof(List<float>))
             {
                 return new TextBox
                 {
@@ -617,7 +642,7 @@ namespace WinFormsApp1
                     Margin = new Padding(3)
                 };
             }
-            else if (type == typeof(List<int>))
+            else if (actualType == typeof(List<int>))
             {
                 return new TextBox
                 {
@@ -626,7 +651,56 @@ namespace WinFormsApp1
                     Margin = new Padding(3)
                 };
             }
-            else if (type == typeof(Dictionary<string, object>))
+            else if (actualType == typeof(List<object>) && value is List<object> listObj && listObj.Count > 0)
+            {
+                var distinctTypes = listObj.Select(v => v?.GetType()).Distinct().ToList();
+
+                if (distinctTypes.Count == 1)
+                {
+                    var type = distinctTypes[0];
+                    if (type == typeof(float) || type == typeof(double))
+                    {
+                        return new TextBox
+                        {
+                            Text = string.Join(", ", listObj.Select(v => $"{Convert.ToSingle(v):0.0######}")),
+                            Dock = DockStyle.Fill,
+                            Margin = new Padding(3)
+                        };
+                    }
+                    else if (type == typeof(int))
+                    {
+                        return new TextBox
+                        {
+                            Text = string.Join(", ", listObj.Cast<int>()),
+                            Dock = DockStyle.Fill,
+                            Margin = new Padding(3)
+                        };
+                    }
+                    else if (type == typeof(string))
+                    {
+                        return new TextBox
+                        {
+                            Text = string.Join(", ", listObj.Cast<string>()),
+                            Dock = DockStyle.Fill,
+                            Margin = new Padding(3)
+                        };
+                    }
+                }
+
+                // Mixed or unknown types fallback
+                return new TextBox
+                {
+                    Text = string.Join(", ", listObj.Select(o =>
+                    {
+                        if (o is float f) return $"{f:0.0######}";
+                        if (o is double d) return $"{d:0.0######}";
+                        return o?.ToString() ?? "";
+                    })),
+                    Dock = DockStyle.Fill,
+                    Margin = new Padding(3)
+                };
+            }
+            else if (actualType == typeof(Dictionary<string, object>))
             {
                 return new CollapsibleDictionaryControl(prop.Name)
                 {
@@ -635,7 +709,7 @@ namespace WinFormsApp1
                     Margin = new Padding(3)
                 };
             }
-            else if (type == typeof(Dictionary<string, string>))
+            else if (actualType == typeof(Dictionary<string, string>))
             {
                 var dict = (IDictionary<string, string>)value;
                 return new CollapsibleDictionaryControl(prop.Name)
@@ -645,17 +719,14 @@ namespace WinFormsApp1
                     Margin = new Padding(3)
                 };
             }
-            else
-            {
-                return new TextBox
-                {
-                    Text = value?.ToString() ?? "",
-                    Dock = DockStyle.Fill,
-                    Margin = new Padding(3)
-                };
-            }
-        }
 
+            return new TextBox
+            {
+                Text = value?.ToString() ?? "",
+                Dock = DockStyle.Fill,
+                Margin = new Padding(3)
+            };
+        }
 
         private decimal ClampDecimal(object input, decimal min, decimal max)
         {
@@ -825,6 +896,21 @@ namespace WinFormsApp1
                 return new Dictionary<string, object>();
             }
 
+            if (type == typeof(List<object>))
+            {
+                var parts = control.Text.Split(new[] { ", " }, StringSplitOptions.RemoveEmptyEntries);
+
+                // Try parse type from content
+                if (parts.All(p => int.TryParse(p, out _)))
+                    return parts.Select(p => (object)int.Parse(p)).ToList();
+
+                if (parts.All(p => float.TryParse(p, out _)))
+                    return parts.Select(p => (object)float.Parse(p)).ToList();
+
+                return parts.Select(p => (object)p).ToList();
+            }
+
+
             return control.Text;
         }
 
@@ -867,6 +953,13 @@ namespace WinFormsApp1
         {
             if (weaponTabControl.TabPages.Contains(tab))
                 weaponTabControl.SelectedTab = tab;
+        }
+
+        private string FormatObjectForDisplay(object o)
+        {
+            if (o is float f)
+                return f.ToString("0.##");
+            return o?.ToString() ?? "";
         }
 
         private class WeaponTabContext

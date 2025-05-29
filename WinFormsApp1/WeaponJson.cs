@@ -6,147 +6,147 @@ namespace WinFormsApp1
     public class WeaponJson
     {
         // General group, no subgroup
-        [Group("General", "Base")]
-        public string szInternalName { get; set; }
+        [Group("General")]
+        public object szinternalName { get; set; }
 
-        [Group("General", "Base")]
-        public string szDisplayName { get; set; }
+        [Group("General")]
+        public object szDisplayName { get; set; }
 
-        [Group("General", "Base")]
-        public string szAltWeaponName { get; set; }
+        [Group("General")]
+        public object szAltWeaponName { get; set; }
 
 
         // Models group
         [Group("Models")]
-        public List<string> gunModel { get; set; }
+        public List<object> gunModel { get; set; }
 
         [Group("Models")]
-        public List<string> worldModel { get; set; }
+        public List<object> worldModel { get; set; }
 
         [Group("Models")]
-        public List<string> reticleViewModels { get; set; }
+        public List<object> reticleViewModels { get; set; }
 
         [Group("Models")]
-        public string handModel { get; set; }
+        public object handModel { get; set; }
 
         [Group("Models")]
-        public string persistentArmXModel { get; set; }
+        public object persistentArmXModel { get; set; }
 
         [Group("Models")]
-        public string worldClipModel { get; set; }
+        public object worldClipModel { get; set; }
 
         [Group("Models")]
-        public string rocketModel { get; set; }
+        public object rocketModel { get; set; }
 
         [Group("Models")]
-        public string knifeModel { get; set; }
+        public object knifeModel { get; set; }
 
         [Group("Models")]
-        public string worldKnifeModel { get; set; }
+        public object worldKnifeModel { get; set; }
 
 
         // Animations group, subgroup "RightHanded"
         [Group("Animations", "RightHanded")]
-        public Dictionary<string, string> szXAnimsRightHanded { get; set; }
+        public Dictionary<string, object> szXAnimsRightHanded { get; set; }
 
         // Animations group, subgroup "LeftHanded"
         [Group("Animations", "LeftHanded")]
-        public Dictionary<string, string> szXAnimsLeftHanded { get; set; }
+        public Dictionary<string, object> szXAnimsLeftHanded { get; set; }
 
         // Animations group, subgroup "General"
         [Group("Animations", "General")]
-        public Dictionary<string, string> szXAnims { get; set; }
+        public Dictionary<string, object> szXAnims { get; set; }
 
 
         [Group("Attachments")]
-        public List<string> attachments { get; set; }
+        public List<object> attachments { get; set; }
 
 
         [Group("Sound Notetracks")]
-        public List<string> notetrackSoundMapKeys { get; set; }
+        public List<object> notetrackSoundMapKeys { get; set; }
 
         [Group("Sound Notetracks")]
-        public List<string> notetrackSoundMapValues { get; set; }
+        public List<object> notetrackSoundMapValues { get; set; }
 
         [Group("Sound Notetracks")]
-        public List<string> notetrackRumbleMapKeys { get; set; }
+        public List<object> notetrackRumbleMapKeys { get; set; }
 
         [Group("Sound Notetracks")]
-        public List<string> notetrackRumbleMapValues { get; set; }
+        public List<object> notetrackRumbleMapValues { get; set; }
 
         [Group("Sound Notetracks")]
-        public List<string> notetrackFXMapKeys { get; set; }
+        public List<object> notetrackFXMapKeys { get; set; }
 
         [Group("Sound Notetracks")]
-        public List<string> notetrackFXMapValues { get; set; }
+        public List<object> notetrackFXMapValues { get; set; }
 
         [Group("Sound Notetracks")]
-        public List<string> notetrackFXMapTagValues { get; set; }
+        public List<object> notetrackFXMapTagValues { get; set; }
 
         [Group("Sound Notetracks")]
-        public List<string> notetrackUnknownKeys { get; set; }
+        public List<object> notetrackUnknownKeys { get; set; }
 
         [Group("Sound Notetracks")]
-        public List<int> notetrackUnknown { get; set; }
+        public List<object> notetrackUnknown { get; set; }
 
         [Group("Sound Notetracks")]
-        public List<string> notetrackUnknownValues { get; set; }
+        public List<object> notetrackUnknownValues { get; set; }
 
         // FX group, subgroup "Effects"
         [Group("FX")]
-        public string viewFlashEffect { get; set; }
+        public object viewFlashEffect { get; set; }
 
         [Group("FX")]
-        public string worldFlashEffect { get; set; }
+        public object worldFlashEffect { get; set; }
 
         [Group("FX")]
-        public string viewBodyFlashEffect { get; set; }
+        public object viewBodyFlashEffect { get; set; }
 
         [Group("FX")]
-        public string viewFlashADSEffect { get; set; }
+        public object viewFlashADSEffect { get; set; }
 
         [Group("FX")]
-        public string viewBodyFlashADSEffect { get; set; }
+        public object viewBodyFlashADSEffect { get; set; }
 
         [Group("FX")]
-        public string signatureViewFlashEffect { get; set; }
+        public object signatureViewFlashEffect { get; set; }
 
         [Group("FX")]
-        public string signatureViewBodyFlashEffect { get; set; }
+        public object signatureViewBodyFlashEffect { get; set; }
 
         [Group("FX")]
-        public string signatureWorldFlashEffect { get; set; }
+        public object signatureWorldFlashEffect { get; set; }
 
         [Group("FX")]
-        public string signatureViewFlashADSEffect { get; set; }
+        public object signatureViewFlashADSEffect { get; set; }
 
         [Group("FX")]
-        public string signatureViewBodyFlashADSEffect { get; set; }
+        public object signatureViewBodyFlashADSEffect { get; set; }
 
         [Group("FX")]
-        public string meleeHitEffect { get; set; }
+        public object meleeHitEffect { get; set; }
 
         [Group("FX")]
-        public string meleeMissEffect { get; set; }
+        public object meleeMissEffect { get; set; }
 
         [Group("FX")]
-        public string viewMagEjectEffect { get; set; }
+        public object viewMagEjectEffect { get; set; }
 
         [Group("FX")]
-        public string viewShellEjectEffect { get; set; }
+        public object viewShellEjectEffect { get; set; }
 
         [Group("FX")]
-        public string worldShellEjectEffect { get; set; }
+        public object worldShellEjectEffect { get; set; }
 
         [Group("FX")]
-        public string viewLastShotEjectEffect { get; set; }
+        public object viewLastShotEjectEffect { get; set; }
 
         [Group("FX")]
-        public string worldLastShotEjectEffect { get; set; }
+        public object worldLastShotEjectEffect { get; set; }
 
 
         [Group("Tags")]
-        public List<string> hideTags { get; set; }
+        public List<object> hideTags { get; set; }
 
 
         [Group("Sounds")]
@@ -168,957 +168,957 @@ namespace WinFormsApp1
         public StateTimers stateTimersAkimbo { get; set; }
 
         [Group("Physics")]
-        public string physCollmap { get; set; }
+        public object physCollmap { get; set; }
 
         [Group("Physics")]
-        public string physPreset { get; set; }
+        public object physPreset { get; set; }
 
         [Group("Position and Rotation", "Stand")]
-        public List<float> standMove { get; set; }
+        public List<object> standMove { get; set; }
 
         [Group("Position and Rotation", "Stand")]
-        public List<float> standRot { get; set; }
+        public List<object> standRot { get; set; }
 
         [Group("Position and Rotation", "Strafe")]
-        public List<float> strafeMove { get; set; }
+        public List<object> strafeMove { get; set; }
 
         [Group("Position and Rotation", "Strafe")]
-        public List<float> strafeRot { get; set; }
+        public List<object> strafeRot { get; set; }
 
         [Group("Position and Rotation", "Ducked")]
-        public List<float> duckedOfs { get; set; }
+        public List<object> duckedOfs { get; set; }
 
         [Group("Position and Rotation", "Ducked")]
-        public List<float> duckedMove { get; set; }
+        public List<object> duckedMove { get; set; }
 
         [Group("Position and Rotation", "Ducked")]
-        public List<float> duckedRot { get; set; }
+        public List<object> duckedRot { get; set; }
 
         [Group("Position and Rotation", "Prone")]
-        public List<float> proneOfs { get; set; }
+        public List<object> proneOfs { get; set; }
 
         [Group("Position and Rotation", "Prone")]
-        public List<float> proneMove { get; set; }
+        public List<object> proneMove { get; set; }
 
         [Group("Position and Rotation", "Prone")]
-        public List<float> proneRot { get; set; }
+        public List<object> proneRot { get; set; }
 
 
         [Group("Misc")]
-        public float posMoveRate { get; set; }
+        public object posMoveRate { get; set; }
 
         [Group("Misc")]
-        public float posProneMoveRate { get; set; }
+        public object posProneMoveRate { get; set; }
 
         [Group("Misc")]
-        public float standMoveMinSpeed { get; set; }
+        public object standMoveMinSpeed { get; set; }
 
         [Group("Misc")]
-        public float duckedMoveMinSpeed { get; set; }
+        public object duckedMoveMinSpeed { get; set; }
 
         [Group("Misc")]
-        public float proneMoveMinSpeed { get; set; }
+        public object proneMoveMinSpeed { get; set; }
 
         [Group("Misc")]
-        public float posRotRate { get; set; }
+        public object posRotRate { get; set; }
 
         [Group("Misc")]
-        public float posProneRotRate { get; set; }
+        public object posProneRotRate { get; set; }
 
 
         [Group("Icons")]
-        public string hudIcon { get; set; }
+        public object hudIcon { get; set; }
 
         [Group("Icons")]
-        public int hudIconRatio { get; set; }
+        public object hudIconRatio { get; set; }
 
         [Group("Icons")]
-        public int pickupIconRatio { get; set; }
+        public object pickupIconRatio { get; set; }
 
         [Group("Icons")]
-        public int ammoCounterIconRatio { get; set; }
+        public object ammoCounterIconRatio { get; set; }
 
         [Group("Icons")]
-        public int ammoCounterClip { get; set; }
+        public object ammoCounterClip { get; set; }
 
         [Group("Icons")]
-        public string pickupIcon { get; set; }
+        public object pickupIcon { get; set; }
 
 
         [Group("Icons")]
-        public string minimapIconFriendly { get; set; }
+        public object minimapIconFriendly { get; set; }
 
         [Group("Icons")]
-        public string minimapIconEnemy { get; set; }
+        public object minimapIconEnemy { get; set; }
 
         [Group("Icons")]
-        public string minimapIconNeutral { get; set; }
+        public object minimapIconNeutral { get; set; }
 
         [Group("Icons")]
-        public string ammoCounterIcon { get; set; }
+        public object ammoCounterIcon { get; set; }
 
 
         [Group("Ammo")]
-        public string szAmmoName { get; set; }
+        public object szAmmoName { get; set; }
 
         [Group("Ammo")]
-        public string szClipName { get; set; }
+        public object szClipName { get; set; }
 
         [Group("Ammo")]
-        public string szSharedAmmoCapName { get; set; }
+        public object szSharedAmmoCapName { get; set; }
 
         [Group("Ammo")]
-        public int ammoDropStockMin { get; set; }
+        public object ammoDropStockMin { get; set; }
 
         [Group("Ammo")]
-        public int ammoDropStockMax { get; set; }
+        public object ammoDropStockMax { get; set; }
 
         [Group("Ammo")]
-        public int ammoDropClipPercentMin { get; set; }
+        public object ammoDropClipPercentMin { get; set; }
 
         [Group("Ammo")]
-        public int ammoDropClipPercentMax { get; set; }
+        public object ammoDropClipPercentMax { get; set; }
 
         [Group("Weapon Stats")]
-        public int clipSize { get; set; }
+        public object clipSize { get; set; }
 
         [Group("Weapon Stats")]
-        public int startAmmo { get; set; }
+        public object startAmmo { get; set; }
 
         [Group("Weapon Stats")]
-        public int maxAmmo { get; set; }
+        public object maxAmmo { get; set; }
 
         [Group("Weapon Stats")]
-        public int minAmmoReq { get; set; }
+        public object minAmmoReq { get; set; }
 
         [Group("Weapon Stats")]
-        public int shotCount { get; set; }
+        public object shotCount { get; set; }
 
         [Group("Weapon Stats")]
-        public int sharedAmmoCap { get; set; }
+        public object sharedAmmoCap { get; set; }
 
         [Group("Weapon Stats")]
-        public int damage { get; set; }
+        public object damage { get; set; }
 
         [Group("Weapon Stats")]
-        public int playerDamage { get; set; }
+        public object playerDamage { get; set; }
 
         [Group("Weapon Stats")]
-        public int meleeDamage { get; set; }
+        public object meleeDamage { get; set; }
 
         [Group("Weapon Stats")]
-        public int damageType { get; set; }
+        public object damageType { get; set; }
 
         [Group("Weapon Stats")]
-        public float autoAimRange { get; set; }
+        public object autoAimRange { get; set; }
 
         [Group("Weapon Stats")]
-        public float aimAssistRangeAds { get; set; }
+        public object aimAssistRangeAds { get; set; }
 
         [Group("Weapon Stats")]
-        public float aimAssistRange { get; set; }
+        public object aimAssistRange { get; set; }
 
         [Group("Weapon Stats")]
-        public float aimPadding { get; set; }
+        public object aimPadding { get; set; }
 
         [Group("Weapon Stats")]
-        public float enemyCrosshairRange { get; set; }
+        public object enemyCrosshairRange { get; set; }
 
         [Group("Weapon Stats")]
-        public float moveSpeedScale { get; set; }
+        public object moveSpeedScale { get; set; }
 
         [Group("Weapon Stats")]
-        public float adsMoveSpeedScale { get; set; }
+        public object adsMoveSpeedScale { get; set; }
 
         [Group("Weapon Stats")]
-        public float sprintDurationScale { get; set; }
+        public object sprobjectDurationScale { get; set; }
 
         [Group("Weapon Stats")]
-        public float adsZoomFov { get; set; }
+        public object adsZoomFov { get; set; }
 
         [Group("Weapon Stats")]
-        public float adsZoomInFrac { get; set; }
+        public object adsZoomInFrac { get; set; }
 
         [Group("Weapon Stats")]
-        public float adsZoomOutFrac { get; set; }
+        public object adsZoomOutFrac { get; set; }
 
         [Group("Weapon Stats")]
-        public float adsSceneBlurStrength { get; set; }
+        public object adsSceneBlurStrength { get; set; }
 
         [Group("Weapon Stats")]
-        public float adsSceneBlurPhysicalScale { get; set; }
+        public object adsSceneBlurPhysicalScale { get; set; }
 
         [Group("Weapon Stats")]
-        public float adsBobFactor { get; set; }
+        public object adsBobFactor { get; set; }
 
         [Group("Weapon Stats")]
-        public float adsViewBobMult { get; set; }
+        public object adsViewBobMult { get; set; }
 
         [Group("Weapon Stats")]
-        public int fireType { get; set; }
+        public object fireType { get; set; }
 
         [Group("Weapon Stats")]
-        public int fireBarrels { get; set; }
+        public object fireBarrels { get; set; }
 
         [Group("Weapon Stats")]
-        public int adsFireMode { get; set; }
+        public object adsFireMode { get; set; }
 
         [Group("Weapon Stats")]
-        public float burstFireCooldown { get; set; }
+        public object burstFireCooldown { get; set; }
 
         [Group("Weapon Stats")]
-        public int weapType { get; set; }
+        public object weapType { get; set; }
 
         [Group("Weapon Stats")]
-        public int weapClass { get; set; }
+        public object weapClass { get; set; }
 
         [Group("Weapon Stats")]
-        public int penetrateType { get; set; }
+        public object penetrateType { get; set; }
 
         [Group("Weapon Stats")]
-        public float penetrateDepth { get; set; }
+        public object penetrateDepth { get; set; }
 
         [Group("Weapon Stats")]
-        public int impactType { get; set; }
+        public object impactType { get; set; }
 
         [Group("Weapon Stats")]
-        public int inventoryType { get; set; }
+        public object inventoryType { get; set; }
 
         [Group("Weapon Stats")]
-        public int greebleType { get; set; }
+        public object greebleType { get; set; }
 
         [Group("Weapon Stats")]
-        public int autoReloadType { get; set; }
+        public object autoReloadType { get; set; }
 
         [Group("Weapon Stats")]
-        public int autoHolsterType { get; set; }
+        public object autoHolsterType { get; set; }
 
         [Group("Weapon Stats")]
-        public int offhandClass { get; set; }
+        public object offhandClass { get; set; }
 
         [Group("Weapon Stats")]
-        public int stance { get; set; }
+        public object stance { get; set; }
 
         [Group("Weapon Stats")]
-        public int reticleCenterSize { get; set; }
+        public object reticleCenterSize { get; set; }
 
         [Group("Weapon Stats")]
-        public int reticleSideSize { get; set; }
+        public object reticleSideSize { get; set; }
 
         [Group("Weapon Stats")]
-        public int reticleMinOfs { get; set; }
+        public object reticleMinOfs { get; set; }
 
         [Group("Weapon Stats")]
-        public int activeReticleType { get; set; }
+        public object activeReticleType { get; set; }
 
         [Group("Spread", "Min")]
-        public float hipSpreadStandMin { get; set; }
+        public object hipSpreadStandMin { get; set; }
 
         [Group("Spread", "Min")]
-        public float hipSpreadDuckedMin { get; set; }
+        public object hipSpreadDuckedMin { get; set; }
 
         [Group("Spread", "Min")]
-        public float hipSpreadProneMin { get; set; }
+        public object hipSpreadProneMin { get; set; }
 
         [Group("Spread", "Max")]
-        public float hipSpreadStandMax { get; set; }
+        public object hipSpreadStandMax { get; set; }
 
         [Group("Spread", "Max")]
-        public float hipSpreadSprintMax { get; set; }
+        public object hipSpreadSprobjectMax { get; set; }
 
         [Group("Spread", "Max")]
-        public float hipSpreadSlideMax { get; set; }
+        public object hipSpreadSlideMax { get; set; }
 
         [Group("Spread", "Max")]
-        public float hipSpreadDuckedMax { get; set; }
+        public object hipSpreadDuckedMax { get; set; }
 
         [Group("Spread", "Max")]
-        public float hipSpreadProneMax { get; set; }
+        public object hipSpreadProneMax { get; set; }
 
 
         [Group("Spread", "Decay")]
-        public float hipSpreadDecayRate { get; set; }
+        public object hipSpreadDecayRate { get; set; }
 
         [Group("Spread", "Decay")]
-        public float hipSpreadFireAdd { get; set; }
+        public object hipSpreadFireAdd { get; set; }
 
         [Group("Spread", "Decay")]
-        public float hipSpreadTurnAdd { get; set; }
+        public object hipSpreadTurnAdd { get; set; }
 
         [Group("Spread", "Decay")]
-        public float hipSpreadMoveAdd { get; set; }
+        public object hipSpreadMoveAdd { get; set; }
 
         [Group("Spread", "Decay")]
-        public float hipSpreadDuckedDecay { get; set; }
+        public object hipSpreadDuckedDecay { get; set; }
 
         [Group("Spread", "Decay")]
-        public float hipSpreadProneDecay { get; set; }
+        public object hipSpreadProneDecay { get; set; }
 
         [Group("Sway", "Base")]
-        public float swayMaxAngleSteadyAim { get; set; }
+        public object swayMaxAngleSteadyAim { get; set; }
 
         [Group("Sway", "Base")]
-        public float swayMaxAngle { get; set; }
+        public object swayMaxAngle { get; set; }
 
         [Group("Sway", "Base")]
-        public float swayLerpSpeed { get; set; }
+        public object swayLerpSpeed { get; set; }
 
         [Group("Sway", "Base")]
-        public float swayPitchScale { get; set; }
+        public object swayPitchScale { get; set; }
 
         [Group("Sway", "Base")]
-        public float swayYawScale { get; set; }
+        public object swayYawScale { get; set; }
 
         [Group("Sway", "Base")]
-        public float swayVertScale { get; set; }
+        public object swayVertScale { get; set; }
 
         [Group("Sway", "Base")]
-        public float swayHorizScale { get; set; }
+        public object swayHorizScale { get; set; }
 
         [Group("Sway", "Base")]
-        public float swayShellShockScale { get; set; }
+        public object swayShellShockScale { get; set; }
 
         [Group("Sway", "ADS")]
-        public float adsSwayMaxAngle { get; set; }
+        public object adsSwayMaxAngle { get; set; }
 
         [Group("Sway", "ADS")]
-        public float adsSwayLerpSpeed { get; set; }
+        public object adsSwayLerpSpeed { get; set; }
 
         [Group("Sway", "ADS")]
-        public float adsSwayPitchScale { get; set; }
+        public object adsSwayPitchScale { get; set; }
 
         [Group("Sway", "ADS")]
-        public float adsSwayYawScale { get; set; }
+        public object adsSwayYawScale { get; set; }
 
         [Group("Sway", "ADS")]
-        public float adsSwayHorizScale { get; set; }
+        public object adsSwayHorizScale { get; set; }
 
         [Group("Sway", "ADS")]
-        public float adsSwayVertScale { get; set; }
+        public object adsSwayVertScale { get; set; }
 
         // Continue adding all other fields with similar Group/SubGroup pattern...
         [Group("Uncharacterized", "Base")]
-        public string szScript { get; set; }
+        public object szScript { get; set; }
 
         [Group("Uncharacterized", "Base")]
-        public string szAdsrBaseSetting { get; set; }
+        public object szAdsrBaseSetting { get; set; }
 
         [Group("Uncharacterized", "Base")]
-        public string szUseHintString { get; set; }
+        public object szUseHobjectobject { get; set; }
 
         [Group("Uncharacterized", "Base")]
-        public string dropHintString { get; set; }
+        public object dropHobjectobject { get; set; }
 
         [Group("Uncharacterized", "World")]
-        public string lobWorldModelName { get; set; }
+        public object lobWorldModelName { get; set; }
 
         [Group("Uncharacterized", "Rumble")]
-        public string fireRumble { get; set; }
+        public object fireRumble { get; set; }
 
         [Group("Uncharacterized", "Rumble")]
-        public string fireMedRumble { get; set; }
+        public object fireMedRumble { get; set; }
 
         [Group("Uncharacterized", "Rumble")]
-        public string fireHighRumble { get; set; }
+        public object fireHighRumble { get; set; }
 
         [Group("Uncharacterized", "Rumble")]
-        public string meleeImpactRumble { get; set; }
+        public object meleeImpactRumble { get; set; }
 
         [Group("Uncharacterized", "Damage")]
-        public List<float> locationDamageMultipliers { get; set; }
+        public List<object> locationDamageMultipliers { get; set; }
 
         [Group("Uncharacterized", "Sounds")]
-        public string bounceSound { get; set; }
+        public object bounceSound { get; set; }
 
         [Group("Uncharacterized", "Sounds")]
-        public string rollingSound { get; set; }
+        public object rollingSound { get; set; }
 
         [Group("Uncharacterized", "Ads")]
-        public float adsViewErrorMin { get; set; }
+        public object adsViewErrorMin { get; set; }
 
         [Group("Uncharacterized", "Ads")]
-        public float adsViewErrorMax { get; set; }
+        public object adsViewErrorMax { get; set; }
 
         [Group("Uncharacterized", "Ads")]
-        public float adsFireAnimFrac { get; set; }
+        public object adsFireAnimFrac { get; set; }
 
         [Group("Uncharacterized", "Weapon")]
-        public float dualWieldViewModelOffset { get; set; }
+        public object dualWieldViewModelOffset { get; set; }
 
         [Group("Uncharacterized", "Weapon")]
-        public float scopeDriftDelay { get; set; }
+        public object scopeDriftDelay { get; set; }
 
         [Group("Uncharacterized", "Weapon")]
-        public float scopeDriftLerpInTime { get; set; }
+        public object scopeDriftLerpobjectime { get; set; }
 
         [Group("Uncharacterized", "Weapon")]
-        public float scopeDriftSteadyTime { get; set; }
+        public object scopeDriftSteadyTime { get; set; }
 
         [Group("Uncharacterized", "Weapon")]
-        public float scopeDriftLerpOutTime { get; set; }
+        public object scopeDriftLerpOutTime { get; set; }
 
         [Group("Uncharacterized", "Weapon")]
-        public float scopeDriftSteadyFactor { get; set; }
+        public object scopeDriftSteadyFactor { get; set; }
 
         [Group("Uncharacterized", "Weapon")]
-        public float scopeDriftUnsteadyFactor { get; set; }
+        public object scopeDriftUnsteadyFactor { get; set; }
 
         [Group("Uncharacterized", "Weapon")]
-        public int explosionRadius { get; set; }
+        public object explosionRadius { get; set; }
 
         [Group("Uncharacterized", "Weapon")]
-        public int explosionRadiusMin { get; set; }
+        public object explosionRadiusMin { get; set; }
 
         [Group("Uncharacterized", "Weapon")]
-        public int explosionInnerDamage { get; set; }
+        public object explosionInnerDamage { get; set; }
 
         [Group("Uncharacterized", "Weapon")]
-        public int explosionOuterDamage { get; set; }
+        public object explosionOuterDamage { get; set; }
 
         [Group("Uncharacterized", "Weapon")]
-        public float damageConeAngle { get; set; }
+        public object damageConeAngle { get; set; }
 
         [Group("Uncharacterized", "Weapon")]
-        public float bulletExplDmgMult { get; set; }
+        public object bulletExplDmgMult { get; set; }
 
         [Group("Uncharacterized", "Weapon")]
-        public float bulletExplRadiusMult { get; set; }
-
-        [Group("Uncharacterized", "Other")]
-        public float bobVerticalFactor { get; set; }
+        public object bulletExplRadiusMult { get; set; }
 
         [Group("Uncharacterized", "Other")]
-        public float bobHorizontalFactor { get; set; }
+        public object bobVerticalFactor { get; set; }
 
         [Group("Uncharacterized", "Other")]
-        public float bobViewVerticalFactor { get; set; }
+        public object bobHorizontalFactor { get; set; }
 
         [Group("Uncharacterized", "Other")]
-        public float bobViewHorizontalFactor { get; set; }
+        public object bobViewVerticalFactor { get; set; }
 
         [Group("Uncharacterized", "Other")]
-        public float stationaryZoomFov { get; set; }
+        public object bobViewHorizontalFactor { get; set; }
 
         [Group("Uncharacterized", "Other")]
-        public float stationaryZoomDelay { get; set; }
+        public object stationaryZoomFov { get; set; }
 
         [Group("Uncharacterized", "Other")]
-        public float stationaryZoomLerpInTime { get; set; }
+        public object stationaryZoomDelay { get; set; }
 
         [Group("Uncharacterized", "Other")]
-        public float stationaryZoomLerpOutTime { get; set; }
+        public object stationaryZoomLerpobjectime { get; set; }
 
         [Group("Uncharacterized", "Other")]
-        public float adsDofStart { get; set; }
+        public object stationaryZoomLerpOutTime { get; set; }
 
         [Group("Uncharacterized", "Other")]
-        public float adsDofEnd { get; set; }
+        public object adsDofStart { get; set; }
 
         [Group("Uncharacterized", "Other")]
-        public string reticleCenter { get; set; }
+        public object adsDofEnd { get; set; }
 
         [Group("Uncharacterized", "Other")]
-        public string reticleSide { get; set; }
+        public object reticleCenter { get; set; }
 
         [Group("Uncharacterized", "Other")]
-        public string tracerType { get; set; }
+        public object reticleSide { get; set; }
 
         [Group("Uncharacterized", "Other")]
-        public string signatureTracerType { get; set; }
+        public object tracerType { get; set; }
 
         [Group("Uncharacterized", "Other")]
-        public string laserType { get; set; }
+        public object signatureTracerType { get; set; }
 
         [Group("Uncharacterized", "Other")]
-        public string stowOffsetModel { get; set; }
+        public object laserType { get; set; }
 
         [Group("Uncharacterized", "Other")]
-        public string killIcon { get; set; }
+        public object stowOffsetModel { get; set; }
 
         [Group("Uncharacterized", "Other")]
-        public int killIconRatio { get; set; }
+        public object killIcon { get; set; }
 
         [Group("Uncharacterized", "Other")]
-        public string dpadIcon { get; set; }
+        public object killIconRatio { get; set; }
 
         [Group("Uncharacterized", "Other")]
-        public int dpadIconRatio { get; set; }
+        public object dpadIcon { get; set; }
 
         [Group("Uncharacterized", "Other")]
-        public string hudProximityWarningIcon { get; set; }
+        public object dpadIconRatio { get; set; }
 
         [Group("Uncharacterized", "Other")]
-        public int fireAnimLength { get; set; }
+        public object hudProximityWarningIcon { get; set; }
 
         [Group("Uncharacterized", "Other")]
-        public int fireAnimLengthAkimbo { get; set; }
+        public object fireAnimLength { get; set; }
 
         [Group("Uncharacterized", "Other")]
-        public int inspectAnimTime { get; set; }
+        public object fireAnimLengthAkimbo { get; set; }
 
         [Group("Uncharacterized", "Other")]
-        public int reloadAmmoAdd { get; set; }
+        public object inspectAnimTime { get; set; }
 
         [Group("Uncharacterized", "Other")]
-        public int reloadStartAdd { get; set; }
+        public object reloadAmmoAdd { get; set; }
 
         [Group("Uncharacterized", "Other")]
-        public string missileConeSoundAlias { get; set; }
+        public object reloadStartAdd { get; set; }
 
         [Group("Uncharacterized", "Other")]
-        public string missileConeSoundAliasAtBase { get; set; }
+        public object missileConeSoundAlias { get; set; }
 
         [Group("Uncharacterized", "Other")]
-        public string stowTag { get; set; }
+        public object missileConeSoundAliasAtBase { get; set; }
 
         [Group("Uncharacterized", "Other")]
-        public int altWeapon { get; set; }
+        public object stowTag { get; set; }
 
         [Group("Uncharacterized", "Other")]
-        public int playerAnimType { get; set; }
+        public object altWeapon { get; set; }
 
         [Group("Uncharacterized", "Other")]
-        public float hipReticleSidePos { get; set; }
+        public object playerAnimType { get; set; }
 
         [Group("Uncharacterized", "Other")]
-        public float adsIdleAmount { get; set; }
+        public object hipReticleSidePos { get; set; }
 
         [Group("Uncharacterized", "Other")]
-        public float adsIdleSpeed { get; set; }
+        public object adsIdleAmount { get; set; }
 
         [Group("Uncharacterized", "Other")]
-        public float hipIdleSpeed { get; set; }
+        public object adsIdleSpeed { get; set; }
 
         [Group("Uncharacterized", "Other")]
-        public float idleCrouchFactor { get; set; }
+        public object hipIdleSpeed { get; set; }
 
         [Group("Uncharacterized", "Other")]
-        public int stickiness { get; set; }
+        public object idleCrouchFactor { get; set; }
 
         [Group("Uncharacterized", "Other")]
-        public float lowAmmoWarningThreshold { get; set; }
+        public object stickiness { get; set; }
 
         [Group("Uncharacterized", "Other")]
-        public float ricochetChance { get; set; }
+        public object lowAmmoWarningThreshold { get; set; }
 
         [Group("Uncharacterized", "Other")]
-        public float riotShieldHealth { get; set; }
+        public object ricochetChance { get; set; }
 
         [Group("Uncharacterized", "Other")]
-        public float riotShieldDamageMult { get; set; }
+        public object riotShieldHealth { get; set; }
 
         [Group("Uncharacterized", "Other")]
-        public List<float> parallelBounce { get; set; }
+        public object riotShieldDamageMult { get; set; }
 
         [Group("Uncharacterized", "Other")]
-        public List<float> perpendicularBounce { get; set; }
+        public List<object> parallelBounce { get; set; }
 
         [Group("Uncharacterized", "Other")]
-        public float idleProneFactor { get; set; }
+        public List<object> perpendicularBounce { get; set; }
 
         [Group("Uncharacterized", "Other")]
-        public float fightDist { get; set; }
+        public object idleProneFactor { get; set; }
 
         [Group("Uncharacterized", "Other")]
-        public float maxDist { get; set; }
+        public object fightDist { get; set; }
 
         [Group("Uncharacterized", "Other")]
-        public float leftArc { get; set; }
+        public object maxDist { get; set; }
 
         [Group("Uncharacterized", "Other")]
-        public float rightArc { get; set; }
+        public object leftArc { get; set; }
 
         [Group("Uncharacterized", "Other")]
-        public float topArc { get; set; }
+        public object rightArc { get; set; }
 
         [Group("Uncharacterized", "Other")]
-        public float bottomArc { get; set; }
+        public object topArc { get; set; }
 
         [Group("Uncharacterized", "Other")]
-        public float accuracy { get; set; }
+        public object bottomArc { get; set; }
 
         [Group("Uncharacterized", "Other")]
-        public float aiSpread { get; set; }
+        public object accuracy { get; set; }
 
         [Group("Uncharacterized", "Other")]
-        public float playerSpread { get; set; }
+        public object aiSpread { get; set; }
 
         [Group("Uncharacterized", "Other")]
-        public List<float> minTurnSpeed { get; set; }
+        public object playerSpread { get; set; }
 
         [Group("Uncharacterized", "Other")]
-        public List<float> maxTurnSpeed { get; set; }
+        public List<object> mobjecturnSpeed { get; set; }
+
+        [Group("Uncharacterized", "Other")]
+        public List<object> maxTurnSpeed { get; set; }
 
         [Group("Uncharacterized", "Weapon")]
-        public float gunMaxPitch { get; set; }
+        public object gunMaxPitch { get; set; }
 
         [Group("Uncharacterized", "Weapon")]
-        public float gunMaxYaw { get; set; }
+        public object gunMaxYaw { get; set; }
 
         [Group("Uncharacterized", "Weapon")]
-        public float adsIdleLerpStartTime { get; set; }
+        public object adsIdleLerpStartTime { get; set; }
 
         [Group("Uncharacterized", "Weapon")]
-        public float adsIdleLerpTime { get; set; }
+        public object adsIdleLerpTime { get; set; }
 
         [Group("Uncharacterized", "Weapon")]
-        public int adsTransInTime { get; set; }
+        public object adsTransobjectime { get; set; }
 
         [Group("Uncharacterized", "Weapon")]
-        public int adsTransInFromSprintTime { get; set; }
+        public object adsTransInFromSprobjectTime { get; set; }
 
         [Group("Uncharacterized", "Weapon")]
-        public int adsTransOutTime { get; set; }
+        public object adsTransOutTime { get; set; }
 
         [Group("Uncharacterized", "Weapon")]
-        public float adsAimPitch { get; set; }
+        public object adsAimPitch { get; set; }
 
         [Group("Uncharacterized", "Weapon")]
-        public float adsCrosshairInFrac { get; set; }
+        public object adsCrosshairInFrac { get; set; }
 
         [Group("Uncharacterized", "Weapon")]
-        public float adsCrosshairOutFrac { get; set; }
+        public object adsCrosshairOutFrac { get; set; }
 
         [Group("Uncharacterized", "Weapon")]
-        public int adsGunKickReducedKickBullets { get; set; }
+        public object adsGunKickReducedKickBullets { get; set; }
 
         [Group("Uncharacterized", "Weapon")]
-        public float adsGunKickReducedKickPercent { get; set; }
+        public object adsGunKickReducedKickPercent { get; set; }
 
         [Group("Uncharacterized", "Weapon")]
-        public float adsGunKickPitchMin { get; set; }
+        public object adsGunKickPitchMin { get; set; }
 
         [Group("Uncharacterized", "Weapon")]
-        public float adsGunKickPitchMax { get; set; }
+        public object adsGunKickPitchMax { get; set; }
 
         [Group("Uncharacterized", "Weapon")]
-        public float adsGunKickYawMin { get; set; }
+        public object adsGunKickYawMin { get; set; }
 
         [Group("Uncharacterized", "Weapon")]
-        public float adsGunKickYawMax { get; set; }
+        public object adsGunKickYawMax { get; set; }
 
         [Group("Uncharacterized", "Weapon")]
-        public float adsGunKickMagMin { get; set; }
+        public object adsGunKickMagMin { get; set; }
 
         [Group("Uncharacterized", "Weapon")]
-        public float adsGunKickAccel { get; set; }
+        public object adsGunKickAccel { get; set; }
 
         [Group("Uncharacterized", "Weapon")]
-        public float adsGunKickSpeedMax { get; set; }
+        public object adsGunKickSpeedMax { get; set; }
 
         [Group("Uncharacterized", "Weapon")]
-        public float adsGunKickSpeedDecay { get; set; }
+        public object adsGunKickSpeedDecay { get; set; }
 
         [Group("Uncharacterized", "Weapon")]
-        public float adsGunKickStaticDecay { get; set; }
+        public object adsGunKickStaticDecay { get; set; }
 
         [Group("Uncharacterized", "Weapon")]
-        public float adsViewKickPitchMin { get; set; }
+        public object adsViewKickPitchMin { get; set; }
 
         [Group("Uncharacterized", "Weapon")]
-        public float adsViewKickPitchMax { get; set; }
+        public object adsViewKickPitchMax { get; set; }
 
         [Group("Uncharacterized", "Weapon")]
-        public float adsViewKickYawMin { get; set; }
+        public object adsViewKickYawMin { get; set; }
 
         [Group("Uncharacterized", "Weapon")]
-        public float adsViewKickYawMax { get; set; }
+        public object adsViewKickYawMax { get; set; }
 
         [Group("Uncharacterized", "Weapon")]
-        public float adsViewKickMagMin { get; set; }
+        public object adsViewKickMagMin { get; set; }
 
         [Group("Uncharacterized", "Weapon")]
-        public float adsViewKickCenterSpeed { get; set; }
+        public object adsViewKickCenterSpeed { get; set; }
 
         [Group("Uncharacterized", "Weapon")]
-        public float adsViewScatterMin { get; set; }
+        public object adsViewScatterMin { get; set; }
 
         [Group("Uncharacterized", "Weapon")]
-        public float adsViewScatterMax { get; set; }
+        public object adsViewScatterMax { get; set; }
 
         [Group("Uncharacterized", "Weapon")]
-        public float adsSpread { get; set; }
+        public object adsSpread { get; set; }
 
         [Group("Uncharacterized", "Weapon")]
-        public int hipGunKickReducedKickBullets { get; set; }
+        public object hipGunKickReducedKickBullets { get; set; }
 
         [Group("Uncharacterized", "Weapon")]
-        public float hipGunKickPitchMin { get; set; }
+        public object hipGunKickPitchMin { get; set; }
 
         [Group("Uncharacterized", "Weapon")]
-        public float hipGunKickPitchMax { get; set; }
+        public object hipGunKickPitchMax { get; set; }
 
         [Group("Uncharacterized", "Weapon")]
-        public float hipGunKickYawMin { get; set; }
+        public object hipGunKickYawMin { get; set; }
 
         [Group("Uncharacterized", "Weapon")]
-        public float hipGunKickYawMax { get; set; }
+        public object hipGunKickYawMax { get; set; }
 
         [Group("Uncharacterized", "Weapon")]
-        public float hipGunKickMagMin { get; set; }
+        public object hipGunKickMagMin { get; set; }
 
         [Group("Uncharacterized", "Weapon")]
-        public float hipGunKickAccel { get; set; }
+        public object hipGunKickAccel { get; set; }
 
         [Group("Uncharacterized", "Weapon")]
-        public float hipGunKickSpeedMax { get; set; }
+        public object hipGunKickSpeedMax { get; set; }
 
         [Group("Uncharacterized", "Weapon")]
-        public float hipGunKickSpeedDecay { get; set; }
+        public object hipGunKickSpeedDecay { get; set; }
 
         [Group("Uncharacterized", "Weapon")]
-        public float hipGunKickStaticDecay { get; set; }
+        public object hipGunKickStaticDecay { get; set; }
 
         [Group("Uncharacterized", "Weapon")]
-        public float hipViewKickPitchMin { get; set; }
+        public object hipViewKickPitchMin { get; set; }
 
         [Group("Uncharacterized", "Weapon")]
-        public float hipViewKickPitchMax { get; set; }
+        public object hipViewKickPitchMax { get; set; }
 
         [Group("Uncharacterized", "Weapon")]
-        public float hipViewKickYawMin { get; set; }
+        public object hipViewKickYawMin { get; set; }
 
         [Group("Uncharacterized", "Weapon")]
-        public float hipViewKickYawMax { get; set; }
+        public object hipViewKickYawMax { get; set; }
 
         [Group("Uncharacterized", "Weapon")]
-        public float hipViewKickMagMin { get; set; }
+        public object hipViewKickMagMin { get; set; }
 
         [Group("Uncharacterized", "Weapon")]
-        public float hipViewKickCenterSpeed { get; set; }
+        public object hipViewKickCenterSpeed { get; set; }
 
         [Group("Uncharacterized", "Weapon")]
-        public float hipViewScatterMin { get; set; }
+        public object hipViewScatterMin { get; set; }
 
         [Group("Uncharacterized", "Weapon")]
-        public float hipViewScatterMax { get; set; }
+        public object hipViewScatterMax { get; set; }
 
         [Group("Uncharacterized", "Weapon")]
-        public float viewKickScale { get; set; }
+        public object viewKickScale { get; set; }
 
         [Group("Uncharacterized", "Weapon")]
-        public int positionReloadTransTime { get; set; }
+        public object positionReloadTransTime { get; set; }
 
         [Group("Uncharacterized", "Projectile")]
-        public string projectileName { get; set; }
+        public object projectileName { get; set; }
 
         [Group("Uncharacterized", "Projectile")]
-        public string projectileModel { get; set; }
+        public object projectileModel { get; set; }
 
         [Group("Uncharacterized", "Projectile")]
-        public string projExplosionEffect { get; set; }
+        public object projExplosionEffect { get; set; }
 
         [Group("Uncharacterized", "Projectile")]
-        public string projDudEffect { get; set; }
+        public object projDudEffect { get; set; }
 
         [Group("Uncharacterized", "Projectile")]
-        public string projExplosionSound { get; set; }
+        public object projExplosionSound { get; set; }
 
         [Group("Uncharacterized", "Projectile")]
-        public string projDudSound { get; set; }
+        public object projDudSound { get; set; }
 
         [Group("Uncharacterized", "Projectile")]
-        public string projTrailEffect { get; set; }
+        public object projTrailEffect { get; set; }
 
         [Group("Uncharacterized", "Projectile")]
-        public string projBeaconEffect { get; set; }
+        public object projBeaconEffect { get; set; }
 
         [Group("Uncharacterized", "Projectile")]
-        public string projIgnitionEffect { get; set; }
+        public object projIgnitionEffect { get; set; }
 
         [Group("Uncharacterized", "Projectile")]
-        public string projIgnitionSound { get; set; }
+        public object projIgnitionSound { get; set; }
 
         [Group("Uncharacterized", "Projectile")]
-        public int projectileSpeed { get; set; }
+        public object projectileSpeed { get; set; }
 
         [Group("Uncharacterized", "Projectile")]
-        public int projectileSpeedUp { get; set; }
+        public object projectileSpeedUp { get; set; }
 
         [Group("Uncharacterized", "Projectile")]
-        public int projectileSpeedForward { get; set; }
+        public object projectileSpeedForward { get; set; }
 
         [Group("Uncharacterized", "Projectile")]
-        public int projectileActivateDist { get; set; }
+        public object projectileActivateDist { get; set; }
 
         [Group("Uncharacterized", "Projectile")]
-        public float projLifetime { get; set; }
+        public object projLifetime { get; set; }
 
         [Group("Uncharacterized", "Projectile")]
-        public float timeToAccelerate { get; set; }
+        public object timeToAccelerate { get; set; }
 
         [Group("Uncharacterized", "Projectile")]
-        public float projectileCurvature { get; set; }
+        public object projectileCurvature { get; set; }
 
         [Group("Uncharacterized", "Projectile")]
-        public int projExplosion { get; set; }
+        public object projExplosion { get; set; }
 
         [Group("Uncharacterized", "Projectile")]
-        public List<float> projectileColor { get; set; }
+        public List<object> projectileColor { get; set; }
 
         [Group("Uncharacterized", "Projectile")]
-        public int guidedMissileType { get; set; }
+        public object guidedMissileType { get; set; }
 
         [Group("Uncharacterized", "Projectile")]
-        public float maxSteeringAccel { get; set; }
+        public object maxSteeringAccel { get; set; }
 
         [Group("Uncharacterized", "Projectile")]
-        public int projIgnitionDelay { get; set; }
+        public object projIgnitionDelay { get; set; }
 
         [Group("Uncharacterized", "Turret")]
-        public string turrentOverheatSound { get; set; }
+        public object turrentOverheatSound { get; set; }
 
         [Group("Uncharacterized", "Turret")]
-        public string turrentOverheatEffect { get; set; }
+        public object turrentOverheatEffect { get; set; }
 
         [Group("Uncharacterized", "Turret")]
-        public string turrentBarrelSpinRumble { get; set; }
+        public object turrentBarrelSpinRumble { get; set; }
 
         [Group("Uncharacterized", "Turret")]
-        public string turrentBarrelSpinMaxSnd { get; set; }
+        public object turrentBarrelSpinMaxSnd { get; set; }
 
         [Group("Uncharacterized", "Turret")]
-        public List<string> turrentBarrelSpinUpSnd { get; set; }
+        public List<object> turrentBarrelSpinUpSnd { get; set; }
 
         [Group("Uncharacterized", "Turret")]
-        public List<string> turrentBarrelSpinDownSnd { get; set; }
+        public List<object> turrentBarrelSpinDownSnd { get; set; }
 
         [Group("Uncharacterized", "View Jitter")]
-        public float pitchConvergenceTime { get; set; }
+        public object pitchConvergenceTime { get; set; }
         [Group("Uncharacterized", "View Jitter")]
-        public float yawConvergenceTime { get; set; }
+        public object yawConvergenceTime { get; set; }
         [Group("Uncharacterized", "View Jitter")]
-        public float suppressTime { get; set; }
+        public object suppressTime { get; set; }
         [Group("Uncharacterized", "View Jitter")]
-        public float playerPositionDist { get; set; }
+        public object playerPositionDist { get; set; }
         [Group("Uncharacterized", "View Jitter")]
-        public float horizViewJitter { get; set; }
+        public object horizViewJitter { get; set; }
         [Group("Uncharacterized", "View Jitter")]
-        public float vertViewJitter { get; set; }
+        public object vertViewJitter { get; set; }
         [Group("Uncharacterized", "Scan")]
-        public float scanSpeed { get; set; }
+        public object scanSpeed { get; set; }
         [Group("Uncharacterized", "Scan")]
-        public float scanAccel { get; set; }
+        public object scanAccel { get; set; }
         [Group("Uncharacterized", "Scan")]
-        public int scanPauseTime { get; set; }
+        public object scanPauseTime { get; set; }
         [Group("Uncharacterized", "Damage")]
-        public int minDamage { get; set; }
+        public object minDamage { get; set; }
         [Group("Uncharacterized", "Damage")]
-        public int midDamage { get; set; }
+        public object midDamage { get; set; }
         [Group("Uncharacterized", "Damage")]
-        public int minPlayerDamage { get; set; }
+        public object minPlayerDamage { get; set; }
         [Group("Uncharacterized", "Damage")]
-        public int midPlayerDamage { get; set; }
+        public object midPlayerDamage { get; set; }
         [Group("Uncharacterized", "Damage")]
-        public float maxDamageRange { get; set; }
+        public object maxDamageRange { get; set; }
         [Group("Uncharacterized", "Damage")]
-        public float minDamageRange { get; set; }
+        public object minDamageRange { get; set; }
         [Group("Uncharacterized", "Signature Damage")]
-        public int signatureAmmoInClip { get; set; }
+        public object signatureAmmoInClip { get; set; }
         [Group("Uncharacterized", "Signature Damage")]
-        public int signatureDamage { get; set; }
+        public object signatureDamage { get; set; }
         [Group("Uncharacterized", "Signature Damage")]
-        public int signatureMidDamage { get; set; }
+        public object signatureMidDamage { get; set; }
         [Group("Uncharacterized", "Signature Damage")]
-        public int signatureMinDamage { get; set; }
+        public object signatureMinDamage { get; set; }
         [Group("Uncharacterized", "Signature Damage")]
-        public float signatureMaxDamageRange { get; set; }
+        public object signatureMaxDamageRange { get; set; }
         [Group("Uncharacterized", "Signature Damage")]
-        public float signatureMinDamageRange { get; set; }
+        public object signatureMinDamageRange { get; set; }
         [Group("Uncharacterized", "Destabilization")]
-        public float destabilizationRateTime { get; set; }
+        public object destabilizationRateTime { get; set; }
         [Group("Uncharacterized", "Destabilization")]
-        public float destabilizationCurvatureMax { get; set; }
+        public object destabilizationCurvatureMax { get; set; }
         [Group("Uncharacterized", "Destabilization")]
-        public int destabilizeDistance { get; set; }
+        public object destabilizeDistance { get; set; }
         [Group("Uncharacterized", "Turret Zoom")]
-        public float turretADSTime { get; set; }
+        public object turretADSTime { get; set; }
         [Group("Uncharacterized", "Turret Zoom")]
-        public float turretFov { get; set; }
+        public object turretFov { get; set; }
         [Group("Uncharacterized", "Turret Zoom")]
-        public float turretFovADS { get; set; }
+        public object turretFovADS { get; set; }
         [Group("Uncharacterized", "Turret Zoom")]
-        public float turretScopeZoomRate { get; set; }
+        public object turretScopeZoomRate { get; set; }
         [Group("Uncharacterized", "Turret Zoom")]
-        public float turretScopeZoomMin { get; set; }
+        public object turretScopeZoomMin { get; set; }
         [Group("Uncharacterized", "Turret Zoom")]
-        public float turretScopeZoomMax { get; set; }
+        public object turretScopeZoomMax { get; set; }
         [Group("Uncharacterized", "Overheat")]
-        public float overheatUpRate { get; set; }
+        public object overheatUpRate { get; set; }
         [Group("Uncharacterized", "Overheat")]
-        public float overheatDownRate { get; set; }
+        public object overheatDownRate { get; set; }
         [Group("Uncharacterized", "Overheat")]
-        public float overheatCooldownRate { get; set; }
+        public object overheatCooldownRate { get; set; }
         [Group("Uncharacterized", "Overheat")]
-        public float overheatPenalty { get; set; }
+        public object overheatPenalty { get; set; }
         [Group("Uncharacterized", "Turret Barrel")]
-        public float turretBarrelSpinSpeed { get; set; }
+        public object turretBarrelSpinSpeed { get; set; }
         [Group("Uncharacterized", "Turret Barrel")]
-        public float turretBarrelSpinUpTime { get; set; }
+        public object turretBarrelSpinUpTime { get; set; }
         [Group("Uncharacterized", "Turret Barrel")]
-        public float turretBarrelSpinDownTime { get; set; }
+        public object turretBarrelSpinDownTime { get; set; }
         [Group("Uncharacterized", "Missile Cone Sound")]
-        public float missileConeSoundRadiusAtTop { get; set; }
+        public object missileConeSoundRadiusAtTop { get; set; }
         [Group("Uncharacterized", "Missile Cone Sound")]
-        public float missileConeSoundRadiusAtBase { get; set; }
+        public object missileConeSoundRadiusAtBase { get; set; }
         [Group("Uncharacterized", "Missile Cone Sound")]
-        public float missileConeSoundHeight { get; set; }
+        public object missileConeSoundHeight { get; set; }
         [Group("Uncharacterized", "Missile Cone Sound")]
-        public float missileConeSoundOriginOffset { get; set; }
+        public object missileConeSoundOriginOffset { get; set; }
         [Group("Uncharacterized", "Missile Cone Sound")]
-        public float missileConeSoundVolumescaleAtCore { get; set; }
+        public object missileConeSoundVolumescaleAtCore { get; set; }
         [Group("Uncharacterized", "Missile Cone Sound")]
-        public float missileConeSoundVolumescaleAtEdge { get; set; }
+        public object missileConeSoundVolumescaleAtEdge { get; set; }
         [Group("Uncharacterized", "Missile Cone Sound")]
-        public float missileConeSoundVolumescaleCoreSize { get; set; }
+        public object missileConeSoundVolumescaleCoreSize { get; set; }
         [Group("Uncharacterized", "Missile Cone Sound")]
-        public float missileConeSoundPitchAtTop { get; set; }
+        public object missileConeSoundPitchAtTop { get; set; }
         [Group("Uncharacterized", "Missile Cone Sound")]
-        public float missileConeSoundPitchAtBottom { get; set; }
+        public object missileConeSoundPitchAtBottom { get; set; }
         [Group("Uncharacterized", "Missile Cone Sound")]
-        public float missileConeSoundPitchTopSize { get; set; }
+        public object missileConeSoundPitchTopSize { get; set; }
         [Group("Uncharacterized", "Missile Cone Sound")]
-        public float missileConeSoundPitchBottomSize { get; set; }
+        public object missileConeSoundPitchBottomSize { get; set; }
         [Group("Uncharacterized", "Missile Cone Sound")]
-        public float missileConeSoundCrossfadeTopSize { get; set; }
+        public object missileConeSoundCrossfadeTopSize { get; set; }
         [Group("Uncharacterized", "Missile Cone Sound")]
-        public float missileConeSoundCrossfadeBottomSize { get; set; }
+        public object missileConeSoundCrossfadeBottomSize { get; set; }
         [Group("Uncharacterized", "Auto Melee")]
-        public float aim_automelee_lerp { get; set; }
+        public object aim_automelee_lerp { get; set; }
         [Group("Uncharacterized", "Auto Melee")]
-        public float aim_automelee_range { get; set; }
+        public object aim_automelee_range { get; set; }
         [Group("Uncharacterized", "Auto Melee")]
-        public float aim_automelee_region_height { get; set; }
+        public object aim_automelee_region_height { get; set; }
         [Group("Uncharacterized", "Auto Melee")]
-        public float aim_automelee_region_width { get; set; }
+        public object aim_automelee_region_width { get; set; }
         [Group("Uncharacterized", "Player Melee")]
-        public float player_meleeHeight { get; set; }
+        public object player_meleeHeight { get; set; }
         [Group("Uncharacterized", "Player Melee")]
-        public float player_meleeRange { get; set; }
+        public object player_meleeRange { get; set; }
         [Group("Uncharacterized", "Player Melee")]
-        public float player_meleeWidth { get; set; }
+        public object player_meleeWidth { get; set; }
         [Group("Uncharacterized", "Fire Timing")]
-        public float changedFireTime { get; set; }
+        public object changedFireTime { get; set; }
         [Group("Uncharacterized", "Fire Timing")]
-        public int changedFireTimeNumBullets { get; set; }
+        public object changedFireTimeNumBullets { get; set; }
         [Group("Uncharacterized", "Fire Timing")]
-        public int fireTimeInterpolationType { get; set; }
+        public object fireTimeobjecterpolationType { get; set; }
         [Group("Uncharacterized", "Ammo Generation")]
-        public int generateAmmo { get; set; }
+        public object generateAmmo { get; set; }
         [Group("Uncharacterized", "Ammo Generation")]
-        public int ammoPerShot { get; set; }
+        public object ammoPerShot { get; set; }
         [Group("Uncharacterized", "Ammo Generation")]
-        public int explodeCount { get; set; }
+        public object explodeCount { get; set; }
         [Group("Uncharacterized", "Ammo Generation")]
-        public int batteryDischargeRate { get; set; }
+        public object batteryDischargeRate { get; set; }
         [Group("Uncharacterized", "Ammo Generation")]
-        public int extendedBattery { get; set; }
-        [Group("Uncharacterized", "Unknown Integers")]
-        public int iU_079 { get; set; }
-        [Group("Uncharacterized", "Unknown Integers")]
-        public int iU_080 { get; set; }
+        public object extendedBattery { get; set; }
+        [Group("Uncharacterized", "Unknown objectegers")]
+        public object iU_079 { get; set; }
+        [Group("Uncharacterized", "Unknown objectegers")]
+        public object iU_080 { get; set; }
         [Group("Uncharacterized", "Rattle and Crosshair")]
-        public int rattleSoundType { get; set; }
+        public object rattleSoundType { get; set; }
         [Group("Uncharacterized", "Rattle and Crosshair")]
         public bool adsShouldShowCrosshair { get; set; }
         [Group("Uncharacterized", "Rattle and Crosshair")]
@@ -1312,7 +1312,7 @@ namespace WinFormsApp1
         [Group("Uncharacterized", "Miscellaneous Flags")]
         public bool bU_108 { get; set; }
         [Group("Uncharacterized", "Miscellaneous Flags")]
-        public bool adsSceneBlur { get; set; }
+        public object adsSceneBlur { get; set; }
         [Group("Uncharacterized", "Miscellaneous Flags")]
         public bool usesSniperScope { get; set; }
         [Group("Uncharacterized", "Miscellaneous Flags")]
@@ -1326,344 +1326,344 @@ namespace WinFormsApp1
         [Group("Uncharacterized", "Miscellaneous Flags")]
         public bool bU_115 { get; set; }
         [Group("Uncharacterized", "ADS DOF")]
-        public float adsDofPhysicalFstop { get; set; }
+        public object adsDofPhysicalFstop { get; set; }
         [Group("Uncharacterized", "ADS DOF")]
-        public float adsDofPhysicalFocusDistance { get; set; }
+        public object adsDofPhysicalFocusDistance { get; set; }
         [Group("Uncharacterized", "AutoSim")]
-        public float autosimSpeedScale { get; set; }
+        public object autosimSpeedScale { get; set; }
         [Group("Uncharacterized", "Reactive Motion")]
-        public float reactiveMotionRadiusScale { get; set; }
+        public object reactiveMotionRadiusScale { get; set; }
         [Group("Uncharacterized", "Reactive Motion")]
-        public float reactiveMotionFrequencyScale { get; set; }
+        public object reactiveMotionFrequencyScale { get; set; }
         [Group("Uncharacterized", "Reactive Motion")]
-        public float reactiveMotionAmplitudeScale { get; set; }
+        public object reactiveMotionAmplitudeScale { get; set; }
         [Group("Uncharacterized", "Reactive Motion")]
-        public float reactiveMotionFalloff { get; set; }
+        public object reactiveMotionFalloff { get; set; }
         [Group("Uncharacterized", "Reactive Motion")]
-        public float reactiveMotionLifetime { get; set; }
-        [Group("Uncharacterized", "Unknown Float Array")]
-        public List<float> fU_3604 { get; set; }
+        public object reactiveMotionLifetime { get; set; }
+        [Group("Uncharacterized", "Unknown object Array")]
+        public List<object> fU_3604 { get; set; }
 
         // Nested classes for complex properties:
         public class Sounds
         {
             [Group("Sounds", "Pickup")]
-            public string pickupSound { get; set; }
+            public object pickupSound { get; set; }
 
             [Group("Sounds", "Pickup")]
-            public string pickupSoundPlayer { get; set; }
+            public object pickupSoundPlayer { get; set; }
 
             [Group("Sounds", "Pickup")]
-            public string ammoPickupSound { get; set; }
+            public object ammoPickupSound { get; set; }
 
             [Group("Sounds", "Pickup")]
-            public string ammoPickupSoundPlayer { get; set; }
+            public object ammoPickupSoundPlayer { get; set; }
 
             [Group("Sounds", "Projectile")]
-            public string projectileSound { get; set; }
+            public object projectileSound { get; set; }
 
             [Group("Sounds", "Pullback")]
-            public string pullbackSound { get; set; }
+            public object pullbackSound { get; set; }
 
             [Group("Sounds", "Pullback")]
-            public string pullbackSoundPlayer { get; set; }
+            public object pullbackSoundPlayer { get; set; }
 
             [Group("Sounds", "Pullback")]
-            public string pullbackSoundQuick { get; set; }
+            public object pullbackSoundQuick { get; set; }
 
             [Group("Sounds", "Pullback")]
-            public string pullbackSoundQuickPlayer { get; set; }
+            public object pullbackSoundQuickPlayer { get; set; }
 
             [Group("Sounds", "Fire")]
-            public string fireSound { get; set; }
+            public object fireSound { get; set; }
 
             [Group("Sounds", "Fire")]
-            public string fireSoundPlayer { get; set; }
+            public object fireSoundPlayer { get; set; }
 
             [Group("Sounds", "Fire")]
-            public string fireSoundPlayerAkimbo { get; set; }
+            public object fireSoundPlayerAkimbo { get; set; }
 
             [Group("Sounds", "Fire")]
-            public string fireMedSound { get; set; }
+            public object fireMedSound { get; set; }
 
             [Group("Sounds", "Fire")]
-            public string fireMedSoundPlayer { get; set; }
+            public object fireMedSoundPlayer { get; set; }
 
             [Group("Sounds", "Fire")]
-            public string fireHighSound { get; set; }
+            public object fireHighSound { get; set; }
 
             [Group("Sounds", "Fire")]
-            public string fireHighSoundPlayer { get; set; }
+            public object fireHighSoundPlayer { get; set; }
 
             [Group("Sounds", "FireLoop")]
-            public string fireLoopSound { get; set; }
+            public object fireLoopSound { get; set; }
 
             [Group("Sounds", "FireLoop")]
-            public string fireLoopSoundPlayer { get; set; }
+            public object fireLoopSoundPlayer { get; set; }
 
             [Group("Sounds", "FireLoop")]
-            public string fireMedLoopSound { get; set; }
+            public object fireMedLoopSound { get; set; }
 
             [Group("Sounds", "FireLoop")]
-            public string fireMedLoopSoundPlayer { get; set; }
+            public object fireMedLoopSoundPlayer { get; set; }
 
             [Group("Sounds", "FireLoop")]
-            public string fireHighLoopSound { get; set; }
+            public object fireHighLoopSound { get; set; }
 
             [Group("Sounds", "FireLoop")]
-            public string fireHighLoopSoundPlayer { get; set; }
+            public object fireHighLoopSoundPlayer { get; set; }
 
-            [Group("Sounds", "FireLoopEndPoint")]
-            public string fireLoopEndPointSound { get; set; }
+            [Group("Sounds", "FireLoopEndPoobject")]
+            public object fireLoopEndPoobjectSound { get; set; }
 
-            [Group("Sounds", "FireLoopEndPoint")]
-            public string fireLoopEndPointSoundPlayer { get; set; }
-
-            [Group("Sounds", "FireStop")]
-            public string fireStopSound { get; set; }
+            [Group("Sounds", "FireLoopEndPoobject")]
+            public object fireLoopEndPoobjectSoundPlayer { get; set; }
 
             [Group("Sounds", "FireStop")]
-            public string fireStopSoundPlayer { get; set; }
+            public object fireStopSound { get; set; }
 
             [Group("Sounds", "FireStop")]
-            public string fireMedStopSound { get; set; }
+            public object fireStopSoundPlayer { get; set; }
 
             [Group("Sounds", "FireStop")]
-            public string fireMedStopSoundPlayer { get; set; }
+            public object fireMedStopSound { get; set; }
 
             [Group("Sounds", "FireStop")]
-            public string fireHighStopSound { get; set; }
+            public object fireMedStopSoundPlayer { get; set; }
 
             [Group("Sounds", "FireStop")]
-            public string fireHighStopSoundPlayer { get; set; }
+            public object fireHighStopSound { get; set; }
+
+            [Group("Sounds", "FireStop")]
+            public object fireHighStopSoundPlayer { get; set; }
 
             [Group("Sounds", "FireLast")]
-            public string fireLastSound { get; set; }
+            public object fireLastSound { get; set; }
 
             [Group("Sounds", "FireLast")]
-            public string fireLastSoundPlayer { get; set; }
+            public object fireLastSoundPlayer { get; set; }
 
             [Group("Sounds", "FireFirst")]
-            public string fireFirstSound { get; set; }
+            public object fireFirstSound { get; set; }
 
             [Group("Sounds", "FireFirst")]
-            public string fireFirstSoundPlayer { get; set; }
+            public object fireFirstSoundPlayer { get; set; }
 
             [Group("Sounds", "FireCustom")]
-            public string fireCustomSound { get; set; }
+            public object fireCustomSound { get; set; }
 
             [Group("Sounds", "FireCustom")]
-            public string fireCustomSoundPlayer { get; set; }
+            public object fireCustomSoundPlayer { get; set; }
 
             [Group("Sounds", "EmptyFire")]
-            public string emptyFireSound { get; set; }
+            public object emptyFireSound { get; set; }
 
             [Group("Sounds", "EmptyFire")]
-            public string emptyFireSoundPlayer { get; set; }
+            public object emptyFireSoundPlayer { get; set; }
 
             [Group("Sounds", "ADS")]
-            public string adsRequiredFireSoundPlayer { get; set; }
+            public object adsRequiredFireSoundPlayer { get; set; }
 
             [Group("Sounds", "Melee")]
-            public string meleeSwipeSound { get; set; }
+            public object meleeSwipeSound { get; set; }
 
             [Group("Sounds", "Melee")]
-            public string meleeSwipeSoundPlayer { get; set; }
+            public object meleeSwipeSoundPlayer { get; set; }
 
             [Group("Sounds", "Melee")]
-            public string meleeHitSound { get; set; }
+            public object meleeHitSound { get; set; }
 
             [Group("Sounds", "Melee")]
-            public string meleeHitSoundPlayer { get; set; }
+            public object meleeHitSoundPlayer { get; set; }
 
             [Group("Sounds", "Melee")]
-            public string meleeMissSound { get; set; }
+            public object meleeMissSound { get; set; }
 
             [Group("Sounds", "Melee")]
-            public string meleeMissSoundPlayer { get; set; }
+            public object meleeMissSoundPlayer { get; set; }
 
             [Group("Sounds", "Rechamber")]
-            public string rechamberSound { get; set; }
+            public object rechamberSound { get; set; }
 
             [Group("Sounds", "Rechamber")]
-            public string rechamberSoundPlayer { get; set; }
+            public object rechamberSoundPlayer { get; set; }
 
             [Group("Sounds", "Reload")]
-            public string reloadSound { get; set; }
+            public object reloadSound { get; set; }
 
             [Group("Sounds", "Reload")]
-            public string reloadSoundPlayer { get; set; }
+            public object reloadSoundPlayer { get; set; }
 
             [Group("Sounds", "Reload")]
-            public string reloadEmptySound { get; set; }
+            public object reloadEmptySound { get; set; }
 
             [Group("Sounds", "Reload")]
-            public string reloadEmptySoundPlayer { get; set; }
+            public object reloadEmptySoundPlayer { get; set; }
 
             [Group("Sounds", "Reload")]
-            public string reloadStartSound { get; set; }
+            public object reloadStartSound { get; set; }
 
             [Group("Sounds", "Reload")]
-            public string reloadStartSoundPlayer { get; set; }
+            public object reloadStartSoundPlayer { get; set; }
 
             [Group("Sounds", "Reload")]
-            public string reloadEndSound { get; set; }
+            public object reloadEndSound { get; set; }
 
             [Group("Sounds", "Reload")]
-            public string reloadEndSoundPlayer { get; set; }
+            public object reloadEndSoundPlayer { get; set; }
 
             [Group("Sounds", "Detonate")]
-            public string detonateSound { get; set; }
+            public object detonateSound { get; set; }
 
             [Group("Sounds", "Detonate")]
-            public string detonateSoundPlayer { get; set; }
+            public object detonateSoundPlayer { get; set; }
 
             [Group("Sounds", "NightVision")]
-            public string nightVisionWearSound { get; set; }
+            public object nightVisionWearSound { get; set; }
 
             [Group("Sounds", "NightVision")]
-            public string nightVisionWearSoundPlayer { get; set; }
+            public object nightVisionWearSoundPlayer { get; set; }
 
             [Group("Sounds", "NightVision")]
-            public string nightVisionRemoveSound { get; set; }
+            public object nightVisionRemoveSound { get; set; }
 
             [Group("Sounds", "NightVision")]
-            public string nightVisionRemoveSoundPlayer { get; set; }
+            public object nightVisionRemoveSoundPlayer { get; set; }
 
             [Group("Sounds", "Raise")]
-            public string raiseSound { get; set; }
+            public object raiseSound { get; set; }
 
             [Group("Sounds", "Raise")]
-            public string raiseSoundPlayer { get; set; }
+            public object raiseSoundPlayer { get; set; }
 
             [Group("Sounds", "Raise")]
-            public string firstRaiseSound { get; set; }
+            public object firstRaiseSound { get; set; }
 
             [Group("Sounds", "Raise")]
-            public string firstRaiseSoundPlayer { get; set; }
+            public object firstRaiseSoundPlayer { get; set; }
 
             [Group("Sounds", "AltSwitch")]
-            public string altSwitchSound { get; set; }
+            public object altSwitchSound { get; set; }
 
             [Group("Sounds", "AltSwitch")]
-            public string altSwitchSoundPlayer { get; set; }
+            public object altSwitchSoundPlayer { get; set; }
 
             [Group("Sounds", "Putaway")]
-            public string putawaySound { get; set; }
+            public object putawaySound { get; set; }
 
             [Group("Sounds", "Putaway")]
-            public string putawaySoundPlayer { get; set; }
+            public object putawaySoundPlayer { get; set; }
 
             [Group("Sounds", "Misc")]
-            public string scanSound { get; set; }
+            public object scanSound { get; set; }
 
             [Group("Sounds", "Misc")]
-            public string changeVariableZoomSound { get; set; }
+            public object changeVariableZoomSound { get; set; }
 
             [Group("Sounds", "ADS")]
-            public string adsUpSound { get; set; }
+            public object adsUpSound { get; set; }
 
             [Group("Sounds", "ADS")]
-            public string adsDownSound { get; set; }
+            public object adsDownSound { get; set; }
 
             [Group("Sounds", "ADS")]
-            public string adsCrosshairEnemySound { get; set; }
+            public object adsCrosshairEnemySound { get; set; }
         }
 
         public class Overlay
         {
             [Group("Overlay")]
-            public string shader { get; set; }
+            public object shader { get; set; }
 
             [Group("Overlay")]
-            public string shaderLowRes { get; set; }
+            public object shaderLowRes { get; set; }
 
             [Group("Overlay")]
-            public string shaderEMP { get; set; }
+            public object shaderEMP { get; set; }
 
             [Group("Overlay")]
-            public string shaderEMPLowRes { get; set; }
+            public object shaderEMPLowRes { get; set; }
 
             [Group("Overlay")]
-            public int reticle { get; set; }
+            public object reticle { get; set; }
 
             [Group("Overlay")]
-            public float width { get; set; }
+            public object width { get; set; }
 
             [Group("Overlay")]
-            public float height { get; set; }
+            public object height { get; set; }
 
             [Group("Overlay")]
-            public float widthSplitscreen { get; set; }
+            public object widthSplitscreen { get; set; }
 
             [Group("Overlay")]
-            public float heightSplitscreen { get; set; }
+            public object heightSplitscreen { get; set; }
         }
 
         public class AccuracyGraph
         {
             [Group("Accuracy Graph")]
-            public List<string> accuracyGraphName { get; set; }
+            public List<object> accuracyGraphName { get; set; }
         }
 
         public class StateTimers
         {
             [Group("State Timers", "Fuse")]
-            public int aiFuseTime { get; set; }
-            public int fuseTime { get; set; }
+            public object aiFuseTime { get; set; }
+            public object fuseTime { get; set; }
 
             [Group("State Timers", "Raise/Drop")]
-            public int altDropTime { get; set; }
-            public int altRaiseTime { get; set; }
-            public int dropTime { get; set; }
-            public int raiseTime { get; set; }
-            public int quickDropTime { get; set; }
-            public int quickRaiseTime { get; set; }
-            public int emptyDropTime { get; set; }
-            public int emptyRaiseTime { get; set; }
+            public object altDropTime { get; set; }
+            public object altRaiseTime { get; set; }
+            public object dropTime { get; set; }
+            public object raiseTime { get; set; }
+            public object quickDropTime { get; set; }
+            public object quickRaiseTime { get; set; }
+            public object emptyDropTime { get; set; }
+            public object emptyRaiseTime { get; set; }
 
             [Group("State Timers", "Fire")]
-            public int fireTime { get; set; }
-            public int fireDelay { get; set; }
-            public int holdFireTime { get; set; }
+            public object fireTime { get; set; }
+            public object fireDelay { get; set; }
+            public object holdFireTime { get; set; }
 
             [Group("State Timers", "Melee")]
-            public int meleeTime { get; set; }
-            public int meleeDelay { get; set; }
-            public int meleeChargeTime { get; set; }
-            public int meleeChargeDelay { get; set; }
+            public object meleeTime { get; set; }
+            public object meleeDelay { get; set; }
+            public object meleeChargeTime { get; set; }
+            public object meleeChargeDelay { get; set; }
 
             [Group("State Timers", "NVG")]
-            public int nightVisionRemoveTime { get; set; }
-            public int nightVisionWearTime { get; set; }
-            public int nightVisionRemoveTimeFadeInStart { get; set; }
-            public int nightVisionWearTimeFadeOutEnd { get; set; }
-            public int nightVisionRemoveTimePowerDown { get; set; }
-            public int nightVisionWearTimePowerUp { get; set; }
+            public object nightVisionRemoveTime { get; set; }
+            public object nightVisionWearTime { get; set; }
+            public object nightVisionRemoveTimeFadeInStart { get; set; }
+            public object nightVisionWearTimeFadeOutEnd { get; set; }
+            public object nightVisionRemoveTimePowerDown { get; set; }
+            public object nightVisionWearTimePowerUp { get; set; }
 
             [Group("State Timers", "Reload")]
-            public int reloadTime { get; set; }
-            public int reloadAddTime { get; set; }
-            public int reloadEndTime { get; set; }
-            public int reloadStartTime { get; set; }
-            public int reloadShowRocketTime { get; set; }
+            public object reloadTime { get; set; }
+            public object reloadAddTime { get; set; }
+            public object reloadEndTime { get; set; }
+            public object reloadStartTime { get; set; }
+            public object reloadShowRocketTime { get; set; }
 
             [Group("State Timers", "Movement")]
-            public int sprintInTime { get; set; }
-            public int sprintLoopTime { get; set; }
-            public int sprintOutTime { get; set; }
-            public int slideInTime { get; set; }
-            public int slideLoopTime { get; set; }
-            public int slideOutTime { get; set; }
+            public object sprobjectobjectime { get; set; }
+            public object sprobjectLoopTime { get; set; }
+            public object sprobjectOutTime { get; set; }
+            public object slideobjectime { get; set; }
+            public object slideLoopTime { get; set; }
+            public object slideOutTime { get; set; }
 
             [Group("State Timers", "Other")]
             public bool bHoldFullPrime { get; set; }
-            public int breachRaiseTime { get; set; }
-            public int dodgeTime { get; set; }
-            public int landDipTime { get; set; }
-            public int stunnedTimeBegin { get; set; }
-            public int stunnedTimeEnd { get; set; }
-            public int stunnedTimeLoop { get; set; }
+            public object breachRaiseTime { get; set; }
+            public object dodgeTime { get; set; }
+            public object landDipTime { get; set; }
+            public object stunnedTimeBegin { get; set; }
+            public object stunnedTimeEnd { get; set; }
+            public object stunnedTimeLoop { get; set; }
             // Add more reorganized entries if desired...
         }
 
