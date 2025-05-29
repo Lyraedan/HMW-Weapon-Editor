@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Reflection;
 using System.Linq;
+using static WinFormsApp1.WeaponJson;
 
 namespace WinFormsApp1
 {
@@ -97,6 +98,13 @@ namespace WinFormsApp1
         private void NewMenuItem_Click(object sender, EventArgs e)
         {
             var newWeapon = new WeaponJson(); // You can customize default values here if needed
+
+            newWeapon.accuracy_graph = new AccuracyGraph();
+            newWeapon.overlay = new Overlay();
+            newWeapon.sounds = new Sounds();
+            newWeapon.stateTimers = new StateTimers();
+            newWeapon.stateTimersAkimbo = new StateTimers();
+            // add any other nested classes here...
 
             // Initialize anim dictionaries with all keys set to empty strings
             newWeapon.szXAnimsRightHanded = StaticReadonly.AnimDictKeys.ToDictionary(k => k, k => "");
