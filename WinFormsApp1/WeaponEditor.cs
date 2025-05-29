@@ -237,7 +237,6 @@ namespace WinFormsApp1
 
             innerTabs.TabPages.Clear();
 
-            // Group properties by Group attribute (top level)
             var groupedByGroup = typeof(WeaponJson)
                 .GetProperties()
                 .Select(p => new {
@@ -248,32 +247,37 @@ namespace WinFormsApp1
 
             foreach (var group in groupedByGroup)
             {
-                // Create top-level tab for each Group
                 TabPage groupTab = new TabPage(group.Key) { AutoScroll = true };
                 innerTabs.TabPages.Add(groupTab);
 
-                // Group properties within this Group by SubGroup attribute
                 var groupedBySubGroup = group
                     .GroupBy(x => x.GroupAttr?.SubGroup)
                     .ToList();
 
                 if (groupedBySubGroup.Count == 1 && groupedBySubGroup[0].Key == null)
                 {
-                    // No subgroups: Add all properties directly in this group tab
                     int y = 20;
                     foreach (var item in groupedBySubGroup[0])
                     {
-                        AddPropertyControlToTab(groupTab, item.Property, weapon, y);
-                        y += 30;
+                        object target = item.Property.GetValue(weapon);
+                        if (IsCustomClass(item.Property.PropertyType) && target != null)
+                        {
+                            foreach (var subProp in item.Property.PropertyType.GetProperties())
+                            {
+                                AddPropertyControlToTab(groupTab, subProp, target, y);
+                                y += 30;
+                            }
+                        }
+                        else
+                        {
+                            AddPropertyControlToTab(groupTab, item.Property, weapon, y);
+                            y += 30;
+                        }
                     }
                 }
                 else
                 {
-                    // Create a nested TabControl for subgroups inside this group tab
-                    var subTabControl = new TabControl
-                    {
-                        Dock = DockStyle.Fill
-                    };
+                    var subTabControl = new TabControl { Dock = DockStyle.Fill };
                     groupTab.Controls.Add(subTabControl);
 
                     foreach (var subGroup in groupedBySubGroup)
@@ -285,18 +289,30 @@ namespace WinFormsApp1
                         int y = 20;
                         foreach (var item in subGroup)
                         {
-                            AddPropertyControlToTab(subTab, item.Property, weapon, y);
-                            y += 30;
+                            object target = item.Property.GetValue(weapon);
+                            if (IsCustomClass(item.Property.PropertyType) && target != null)
+                            {
+                                foreach (var subProp in item.Property.PropertyType.GetProperties())
+                                {
+                                    AddPropertyControlToTab(subTab, subProp, target, y);
+                                    y += 30;
+                                }
+                            }
+                            else
+                            {
+                                AddPropertyControlToTab(subTab, item.Property, weapon, y);
+                                y += 30;
+                            }
                         }
                     }
                 }
             }
         }
 
-        private void AddPropertyControlToTab(TabPage tab, PropertyInfo prop, WeaponJson weapon, int y)
+        private void AddPropertyControlToTab(TabPage tab, PropertyInfo prop, object targetObject, int y)
         {
             Label label = new Label { Text = prop.Name, Left = 20, Top = y, Width = 250 };
-            Control control = GenerateControlForProperty(prop, weapon);
+            Control control = GenerateControlForProperty(prop, targetObject);
             control.Left = 280;
             control.Top = y;
             control.Width = 300;
@@ -306,6 +322,13 @@ namespace WinFormsApp1
             tab.Controls.Add(label);
             tab.Controls.Add(control);
         }
+
+        private bool IsCustomClass(Type type)
+        {
+            return type.IsClass && type != typeof(string) &&
+                   !typeof(System.Collections.IEnumerable).IsAssignableFrom(type);
+        }
+
 
         private void HookControlChangedEvent(Control control, TabPage parentTab)
         {
@@ -336,36 +359,17 @@ namespace WinFormsApp1
             }
         }
 
-        private Control GenerateControlForProperty(PropertyInfo prop, WeaponJson weapon)
+        private Control GenerateControlForProperty(PropertyInfo prop, object targetObject)
         {
             Type type = prop.PropertyType;
-            object value = prop.GetValue(weapon);
+            object value = prop.GetValue(targetObject);
 
             if (type == typeof(string))
                 return new TextBox { Text = value as string ?? "" };
             else if (type == typeof(int))
-            {
-                int val = (int)(value ?? 0);
-                var nud = new NumericUpDown
-                {
-                    Maximum = int.MaxValue,
-                    Minimum = int.MinValue,
-                    Value = val < int.MinValue ? int.MinValue : val > int.MaxValue ? int.MaxValue : val
-                };
-                return nud;
-            }
+                return new NumericUpDown { Maximum = int.MaxValue, Minimum = int.MinValue, Value = (int)(value ?? 0) };
             else if (type == typeof(float))
-            {
-                decimal val = Convert.ToDecimal(value ?? 0f);
-                var nud = new NumericUpDown
-                {
-                    DecimalPlaces = 2,
-                    Maximum = decimal.MaxValue,
-                    Minimum = decimal.MinValue,
-                    Value = val < decimal.MinValue ? decimal.MinValue : val > decimal.MaxValue ? decimal.MaxValue : val
-                };
-                return nud;
-            }
+                return new NumericUpDown { DecimalPlaces = 2, Maximum = decimal.MaxValue, Minimum = decimal.MinValue, Value = Convert.ToDecimal(value ?? 0f) };
             else if (type == typeof(bool))
                 return new CheckBox { Checked = (bool)(value ?? false) };
             else if (type == typeof(List<string>))
@@ -375,27 +379,16 @@ namespace WinFormsApp1
             else if (type == typeof(List<int>))
                 return new TextBox { Text = string.Join(", ", (List<int>)value ?? new List<int>()) };
             else if (type == typeof(Dictionary<string, object>))
-            {
-                var dict = (IDictionary<string, object>)value;
-                var control = new CollapsibleDictionaryControl(prop.Name)
-                {
-                    Width = 500,
-                    Values = dict != null ? dict.ToDictionary(kvp => kvp.Key, kvp => kvp.Value) : new Dictionary<string, object>()
-                };
-                return control;
-            }
+                return new CollapsibleDictionaryControl(prop.Name) { Width = 500, Values = value as Dictionary<string, object> ?? new Dictionary<string, object>() };
             else if (type == typeof(Dictionary<string, string>))
             {
                 var dict = (IDictionary<string, string>)value;
-                var control = new CollapsibleDictionaryControl(prop.Name)
+                return new CollapsibleDictionaryControl(prop.Name)
                 {
                     Width = 500,
-                    Values = dict != null ? dict.ToDictionary(kvp => kvp.Key, kvp => (object)kvp.Value) : new Dictionary<string, object>()
+                    Values = dict?.ToDictionary(kvp => kvp.Key, kvp => (object)kvp.Value) ?? new Dictionary<string, object>()
                 };
-                return control;
             }
-
-
             else
                 return new TextBox { Text = value?.ToString() ?? "" };
         }
