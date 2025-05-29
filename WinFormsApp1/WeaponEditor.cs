@@ -16,6 +16,8 @@ namespace WinFormsApp1
         private OpenFileDialog openFileDialog;
         private ContextMenuStrip tabContextMenu;
 
+        public Action<string> OnFileChanged;
+
         public WeaponEditor()
         {
             AllowDrop = true;
@@ -128,6 +130,7 @@ namespace WinFormsApp1
                     // Update status label and tab text
                     fileLabel.Text = name;
                     weaponTab.Text = name;
+                    OnFileChanged.Invoke($"{name}");
                 }
             }
             catch (Exception ex)

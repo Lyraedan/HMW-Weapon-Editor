@@ -33,28 +33,32 @@ namespace WinFormsApp1
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            //this.FormBorderStyle = FormBorderStyle.FixedSingle;
-
-            this.weaponEditor = new WeaponEditor(); // 🔧 Instantiate it
-
-            this.SuspendLayout();
-
+            weaponEditor = new WeaponEditor();
+            SuspendLayout();
             // 
             // weaponEditor
             // 
-            this.weaponEditor.Dock = DockStyle.Fill;
-            this.weaponEditor.Name = "weaponEditor";
-
+            weaponEditor.AllowDrop = true;
+            weaponEditor.Dock = DockStyle.Fill;
+            weaponEditor.Location = new Point(0, 0);
+            weaponEditor.Name = "weaponEditor";
+            weaponEditor.Size = new Size(800, 450);
+            weaponEditor.TabIndex = 0;
+            weaponEditor.OnFileChanged = (file_name) =>
+            {
+                Text = $"HMW Weapon Editor: {file_name}";
+            };
             // 
             // Form1
             // 
-            this.AutoScaleMode = AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.weaponEditor); // 🔧 Add it to the form
-            this.Name = "Form1";
-            this.Text = "Form1";
-            this.ResumeLayout(false);
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(800, 450);
+            Controls.Add(weaponEditor);
+            Name = "HMW Weapon Editor";
+            Text = "HMW Weapon Editor";
+            Load += Form1_Load;
+            ResumeLayout(false);
         }
 
         #endregion
