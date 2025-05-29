@@ -49,7 +49,7 @@ namespace WinFormsApp1
             saveCurrentMenuItem = new ToolStripMenuItem("Save Current File") { Enabled = false };
             saveCurrentMenuItem.ShortcutKeys = Keys.Control | Keys.S;
             var saveAllMenuItem = new ToolStripMenuItem("Save All");
-            var saveNewMenuItem = new ToolStripMenuItem("Save New");
+            var saveNewMenuItem = new ToolStripMenuItem("Save As");
             saveNewMenuItem.ShortcutKeys = Keys.Control | Keys.Shift | Keys.S;
 
             saveCurrentMenuItem.Click += SaveCurrentFile_Click;
