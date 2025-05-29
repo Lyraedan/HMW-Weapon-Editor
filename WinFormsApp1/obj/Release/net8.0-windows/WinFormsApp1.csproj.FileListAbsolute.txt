@@ -3,7 +3,6 @@ D:\Github\HMW-Weapon-Editor\WinFormsApp1\bin\Release\net8.0-windows\WinFormsApp1
 D:\Github\HMW-Weapon-Editor\WinFormsApp1\bin\Release\net8.0-windows\WinFormsApp1.runtimeconfig.json
 D:\Github\HMW-Weapon-Editor\WinFormsApp1\bin\Release\net8.0-windows\WinFormsApp1.dll
 D:\Github\HMW-Weapon-Editor\WinFormsApp1\bin\Release\net8.0-windows\WinFormsApp1.pdb
-D:\Github\HMW-Weapon-Editor\WinFormsApp1\obj\Release\net8.0-windows\WinFormsApp1.CollapsibleDictionaryControl.resources
 D:\Github\HMW-Weapon-Editor\WinFormsApp1\obj\Release\net8.0-windows\WinFormsApp1.Form1.resources
 D:\Github\HMW-Weapon-Editor\WinFormsApp1\obj\Release\net8.0-windows\WinFormsApp1.WeaponEditor.resources
 D:\Github\HMW-Weapon-Editor\WinFormsApp1\obj\Release\net8.0-windows\WinFormsApp1.csproj.GenerateResource.cache
@@ -17,3 +16,4 @@ D:\Github\HMW-Weapon-Editor\WinFormsApp1\obj\Release\net8.0-windows\refint\WinFo
 D:\Github\HMW-Weapon-Editor\WinFormsApp1\obj\Release\net8.0-windows\WinFormsApp1.pdb
 D:\Github\HMW-Weapon-Editor\WinFormsApp1\obj\Release\net8.0-windows\WinFormsApp1.genruntimeconfig.cache
 D:\Github\HMW-Weapon-Editor\WinFormsApp1\obj\Release\net8.0-windows\ref\WinFormsApp1.dll
+D:\Github\HMW-Weapon-Editor\WinFormsApp1\obj\Release\net8.0-windows\WinFormsApp1.CollapsibleDictionaryControl.resources

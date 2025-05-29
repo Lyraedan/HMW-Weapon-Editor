@@ -378,33 +378,113 @@ namespace WinFormsApp1
             object value = prop.GetValue(targetObject);
 
             if (type == typeof(string))
-                return new TextBox { Text = value as string ?? "" };
+            {
+                return new TextBox
+                {
+                    Text = value as string ?? "",
+                    Dock = DockStyle.Fill,
+                    Margin = new Padding(3)
+                };
+            }
             else if (type == typeof(int))
-                return new NumericUpDown { Maximum = int.MaxValue, Minimum = int.MinValue, Value = (int)(value ?? 0) };
+            {
+                var nud = new NumericUpDown
+                {
+                    Minimum = int.MinValue,
+                    Maximum = int.MaxValue,
+                    Dock = DockStyle.Fill,
+                    Margin = new Padding(3)
+                };
+                nud.Value = ClampDecimal(value ?? 0, nud.Minimum, nud.Maximum);
+                return nud;
+            }
             else if (type == typeof(float))
-                return new NumericUpDown { DecimalPlaces = 2, Maximum = decimal.MaxValue, Minimum = decimal.MinValue, Value = Convert.ToDecimal(value ?? 0f) };
+            {
+                var fNud = new NumericUpDown
+                {
+                    DecimalPlaces = 2,
+                    Increment = 0.1M,
+                    Minimum = -1000000,
+                    Maximum = 1000000,
+                    Dock = DockStyle.Fill,
+                    Margin = new Padding(3)
+                };
+                fNud.Value = ClampDecimal(value ?? 0f, fNud.Minimum, fNud.Maximum);
+                return fNud;
+            }
             else if (type == typeof(bool))
-                return new CheckBox { Checked = (bool)(value ?? false) };
+            {
+                return new CheckBox
+                {
+                    Checked = (bool)(value ?? false),
+                    AutoSize = true,
+                    Margin = new Padding(3)
+                };
+            }
             else if (type == typeof(List<string>))
-                return new TextBox { Text = string.Join(", ", (List<string>)value ?? new List<string>()) };
+            {
+                return new TextBox
+                {
+                    Text = string.Join(", ", (List<string>)value ?? new List<string>()),
+                    Dock = DockStyle.Fill,
+                    Margin = new Padding(3)
+                };
+            }
             else if (type == typeof(List<float>))
-                return new TextBox { Text = string.Join(", ", (List<float>)value ?? new List<float>()) };
+            {
+                return new TextBox
+                {
+                    Text = string.Join(", ", (List<float>)value ?? new List<float>()),
+                    Dock = DockStyle.Fill,
+                    Margin = new Padding(3)
+                };
+            }
             else if (type == typeof(List<int>))
-                return new TextBox { Text = string.Join(", ", (List<int>)value ?? new List<int>()) };
+            {
+                return new TextBox
+                {
+                    Text = string.Join(", ", (List<int>)value ?? new List<int>()),
+                    Dock = DockStyle.Fill,
+                    Margin = new Padding(3)
+                };
+            }
             else if (type == typeof(Dictionary<string, object>))
-                return new CollapsibleDictionaryControl(prop.Name) { Width = 500, Values = value as Dictionary<string, object> ?? new Dictionary<string, object>() };
+            {
+                return new CollapsibleDictionaryControl(prop.Name)
+                {
+                    Dock = DockStyle.Fill,
+                    Values = value as Dictionary<string, object> ?? new Dictionary<string, object>(),
+                    Margin = new Padding(3)
+                };
+            }
             else if (type == typeof(Dictionary<string, string>))
             {
                 var dict = (IDictionary<string, string>)value;
                 return new CollapsibleDictionaryControl(prop.Name)
                 {
-                    Width = 500,
-                    Values = dict?.ToDictionary(kvp => kvp.Key, kvp => (object)kvp.Value) ?? new Dictionary<string, object>()
+                    Dock = DockStyle.Fill,
+                    Values = dict?.ToDictionary(kvp => kvp.Key, kvp => (object)kvp.Value) ?? new Dictionary<string, object>(),
+                    Margin = new Padding(3)
                 };
             }
             else
-                return new TextBox { Text = value?.ToString() ?? "" };
+            {
+                return new TextBox
+                {
+                    Text = value?.ToString() ?? "",
+                    Dock = DockStyle.Fill,
+                    Margin = new Padding(3)
+                };
+            }
         }
+
+
+        private decimal ClampDecimal(object input, decimal min, decimal max)
+        {
+            decimal val = Convert.ToDecimal(input);
+            return Math.Min(Math.Max(val, min), max);
+        }
+
 
         private void SaveCurrentFile_Click(object sender, EventArgs e)
         {
