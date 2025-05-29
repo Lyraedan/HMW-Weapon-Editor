@@ -237,32 +237,74 @@ namespace WinFormsApp1
 
             innerTabs.TabPages.Clear();
 
-            var groupedProperties = typeof(WeaponJson)
+            // Group properties by Group attribute (top level)
+            var groupedByGroup = typeof(WeaponJson)
                 .GetProperties()
-                .GroupBy(p => p.GetCustomAttribute<GroupAttribute>()?.Name ?? "Other");
+                .Select(p => new {
+                    Property = p,
+                    GroupAttr = p.GetCustomAttribute<GroupAttribute>()
+                })
+                .GroupBy(x => x.GroupAttr?.Group ?? "Other");
 
-            foreach (var group in groupedProperties)
+            foreach (var group in groupedByGroup)
             {
-                TabPage tab = new TabPage(group.Key) { AutoScroll = true };
-                innerTabs.TabPages.Add(tab);
+                // Create top-level tab for each Group
+                TabPage groupTab = new TabPage(group.Key) { AutoScroll = true };
+                innerTabs.TabPages.Add(groupTab);
 
-                int y = 20;
-                foreach (var prop in group)
+                // Group properties within this Group by SubGroup attribute
+                var groupedBySubGroup = group
+                    .GroupBy(x => x.GroupAttr?.SubGroup)
+                    .ToList();
+
+                if (groupedBySubGroup.Count == 1 && groupedBySubGroup[0].Key == null)
                 {
-                    Label label = new Label { Text = prop.Name, Left = 20, Top = y, Width = 250 };
-                    Control control = GenerateControlForProperty(prop, weapon);
-                    control.Left = 280;
-                    control.Top = y;
-                    control.Width = 300;
+                    // No subgroups: Add all properties directly in this group tab
+                    int y = 20;
+                    foreach (var item in groupedBySubGroup[0])
+                    {
+                        AddPropertyControlToTab(groupTab, item.Property, weapon, y);
+                        y += 30;
+                    }
+                }
+                else
+                {
+                    // Create a nested TabControl for subgroups inside this group tab
+                    var subTabControl = new TabControl
+                    {
+                        Dock = DockStyle.Fill
+                    };
+                    groupTab.Controls.Add(subTabControl);
 
-                    HookControlChangedEvent(control, containerTab);
+                    foreach (var subGroup in groupedBySubGroup)
+                    {
+                        string subGroupName = subGroup.Key ?? "General";
+                        TabPage subTab = new TabPage(subGroupName) { AutoScroll = true };
+                        subTabControl.TabPages.Add(subTab);
 
-                    tab.Controls.Add(label);
-                    tab.Controls.Add(control);
-
-                    y += 30;
+                        int y = 20;
+                        foreach (var item in subGroup)
+                        {
+                            AddPropertyControlToTab(subTab, item.Property, weapon, y);
+                            y += 30;
+                        }
+                    }
                 }
             }
+        }
+
+        private void AddPropertyControlToTab(TabPage tab, PropertyInfo prop, WeaponJson weapon, int y)
+        {
+            Label label = new Label { Text = prop.Name, Left = 20, Top = y, Width = 250 };
+            Control control = GenerateControlForProperty(prop, weapon);
+            control.Left = 280;
+            control.Top = y;
+            control.Width = 300;
+
+            HookControlChangedEvent(control, tab.Parent as TabPage ?? tab);
+
+            tab.Controls.Add(label);
+            tab.Controls.Add(control);
         }
 
         private void HookControlChangedEvent(Control control, TabPage parentTab)
