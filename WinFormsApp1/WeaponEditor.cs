@@ -76,6 +76,44 @@ namespace WinFormsApp1
             searchMenu.DropDownItems.Add(findMenuItem);
             menuStrip.Items.Add(searchMenu);
 
+            var zonetoolMenu = new ToolStripMenuItem("Zonetool");
+            var linkZoneItem = new ToolStripMenuItem("Link zonetool");
+            var buildZoneItem = new ToolStripMenuItem("Build zone");
+            var dumpZoneItem = new ToolStripMenuItem("Dump zone");
+            var loadZoneItem = new ToolStripMenuItem("Load zone");
+
+            linkZoneItem.Click += (s, e) =>
+            {
+                Zonetool.LinkZonetool();
+            };
+
+            buildZoneItem.Click += (s, e) =>
+            {
+                string zone = Prompt.ShowDialog("Enter zone name to build:", "Build Zone");
+                if (!string.IsNullOrWhiteSpace(zone))
+                    Zonetool.BuildZone(zone);
+            };
+
+            dumpZoneItem.Click += (s, e) =>
+            {
+                string zone = Prompt.ShowDialog("Enter zone name to dump:", "Dump Zone");
+                if (!string.IsNullOrWhiteSpace(zone))
+                    Zonetool.DumpZone(zone);
+            };
+
+            loadZoneItem.Click += (s, e) =>
+            {
+                string zone = Prompt.ShowDialog("Enter zone name to load:", "Load Zone");
+                if (!string.IsNullOrWhiteSpace(zone))
+                    Zonetool.LoadZone(zone);
+            };
+
+            zonetoolMenu.DropDownItems.Add(linkZoneItem);
+            zonetoolMenu.DropDownItems.Add(buildZoneItem);
+            zonetoolMenu.DropDownItems.Add(dumpZoneItem);
+            zonetoolMenu.DropDownItems.Add(loadZoneItem);
+            menuStrip.Items.Add(zonetoolMenu);
+
             // Create About menu with Credits
             var aboutMenu = new ToolStripMenuItem("About");
             var creditsItem = new ToolStripMenuItem("Credits");
