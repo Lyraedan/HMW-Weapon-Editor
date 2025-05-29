@@ -116,8 +116,7 @@ namespace WinFormsApp1
 
             TabControl innerTabs = new TabControl
             {
-                Dock = DockStyle.Top,
-                Height = 400
+                Dock = DockStyle.Fill,
             };
             newTab.Controls.Add(innerTabs);
 
@@ -216,8 +215,7 @@ namespace WinFormsApp1
 
                     TabControl innerTabs = new TabControl
                     {
-                        Dock = DockStyle.Top,
-                        Height = 400
+                        Dock = DockStyle.Fill,
                     };
                     weaponTab.Controls.Add(innerTabs);
 
