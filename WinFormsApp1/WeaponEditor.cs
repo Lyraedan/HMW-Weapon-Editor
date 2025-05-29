@@ -43,8 +43,10 @@ namespace WinFormsApp1
 
             var saveMenu = new ToolStripMenuItem("Save");
             saveCurrentMenuItem = new ToolStripMenuItem("Save Current File") { Enabled = false };
+            saveCurrentMenuItem.ShortcutKeys = Keys.Control | Keys.S;
             var saveAllMenuItem = new ToolStripMenuItem("Save All");
             var saveNewMenuItem = new ToolStripMenuItem("Save New");
+            saveNewMenuItem.ShortcutKeys = Keys.Control | Keys.Shift | Keys.S;
 
             saveCurrentMenuItem.Click += SaveCurrentFile_Click;
             saveAllMenuItem.Click += SaveAllButton_Click;
@@ -141,23 +143,28 @@ namespace WinFormsApp1
 
                 foreach (TabPage subTab in innerTabs.TabPages)
                 {
-                    foreach (Control ctrl in subTab.Controls)
+                    foreach (Control container in subTab.Controls)
                     {
-                        if (ctrl is TableLayoutPanel layout)
+                        if (container is TableLayoutPanel layout)
                         {
                             foreach (Control c in layout.Controls)
+                            {
                                 if (c is Label lbl)
+                                {
+                                    lbl.Tag ??= lbl.Text.Trim().ToLower(); // ensure it's always tagged
                                     yield return lbl;
+                                }
+                            }
                         }
                     }
                 }
             }
         }
-
-
         private void PerformSearchAndScroll(string searchTerm)
         {
             if (string.IsNullOrWhiteSpace(searchTerm)) return;
+
+            string targetTerm = searchTerm.Trim().ToLower();
 
             foreach (TabPage mainTab in weaponTabControl.TabPages)
             {
@@ -170,28 +177,34 @@ namespace WinFormsApp1
                     {
                         if (container is TableLayoutPanel layout)
                         {
-                            for (int i = 0; i < layout.Controls.Count; i += 2)
+                            for (int i = 0; i < layout.Controls.Count - 1; i += 2)
                             {
-                                if (layout.Controls[i] is Label lbl &&
-                                    lbl.Text.IndexOf(searchTerm, StringComparison.OrdinalIgnoreCase) >= 0)
+                                if (layout.Controls[i] is Label label)
                                 {
-                                    weaponTabControl.SelectedTab = mainTab;
-                                    innerTabs.SelectedTab = subTab;
+                                    string labelKey = label.Tag?.ToString()?.ToLower() ?? label.Text.Trim().ToLower();
 
-                                    Control target = layout.Controls[i + 1];
-                                    layout.ScrollControlIntoView(target);
-
-                                    target.BackColor = Color.LightYellow;
-                                    var timer = new Timer { Interval = 1500 };
-                                    timer.Tick += (s, e) =>
+                                    if (labelKey == targetTerm ||
+                                        labelKey.Contains(targetTerm) ||
+                                        LevenshteinDistance(labelKey, targetTerm) <= 1)
                                     {
-                                        target.BackColor = SystemColors.Window;
-                                        timer.Stop();
-                                        timer.Dispose();
-                                    };
-                                    timer.Start();
+                                        weaponTabControl.SelectedTab = mainTab;
+                                        innerTabs.SelectedTab = subTab;
 
-                                    return;
+                                        Control input = layout.Controls[i + 1];
+                                        layout.ScrollControlIntoView(input);
+                                        input.BackColor = Color.LightYellow;
+
+                                        var timer = new Timer { Interval = 1500 };
+                                        timer.Tick += (s, e) =>
+                                        {
+                                            input.BackColor = SystemColors.Window;
+                                            timer.Stop();
+                                            timer.Dispose();
+                                        };
+                                        timer.Start();
+
+                                        return;
+                                    }
                                 }
                             }
                         }
@@ -202,6 +215,28 @@ namespace WinFormsApp1
             MessageBox.Show($"No match found for '{searchTerm}'.", "Find", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
+        private int LevenshteinDistance(string s, string t)
+        {
+            int n = s.Length;
+            int m = t.Length;
+            int[,] d = new int[n + 1, m + 1];
+
+            for (int i = 0; i <= n; i++) d[i, 0] = i;
+            for (int j = 0; j <= m; j++) d[0, j] = j;
+
+            for (int i = 1; i <= n; i++)
+            {
+                for (int j = 1; j <= m; j++)
+                {
+                    int cost = s[i - 1] == t[j - 1] ? 0 : 1;
+                    d[i, j] = Math.Min(
+                        Math.Min(d[i - 1, j] + 1, d[i, j - 1] + 1),
+                        d[i - 1, j - 1] + cost);
+                }
+            }
+
+            return d[n, m];
+        }
 
 
         private void NewMenuItem_Click(object sender, EventArgs e)
@@ -359,7 +394,6 @@ namespace WinFormsApp1
 
                 if (IsCustomClass(prop.PropertyType) && val != null)
                 {
-                    // Get nested class properties
                     return prop.PropertyType.GetProperties().Select(subProp => new
                     {
                         Property = subProp,
@@ -392,7 +426,7 @@ namespace WinFormsApp1
                     AutoScroll = true,
                     ColumnCount = 2,
                     RowCount = 0,
-                    AutoSize = false, // Important
+                    AutoSize = false,
                     AutoSizeMode = AutoSizeMode.GrowAndShrink
                 };
 
@@ -418,8 +452,15 @@ namespace WinFormsApp1
                     {
                         var property = item.Property;
                         var target = item.Target;
-                        var label = new Label { Text = property.Name, AutoSize = true };
+                        var label = new Label
+                        {
+                            Text = property.Name,
+                            AutoSize = true,
+                            Tag = property.Name.Trim().ToLower() // 🔑 For matching
+                        };
                         var control = GenerateControlForProperty(property, target);
+                        control.Tag = property.Name.Trim().ToLower(); // 🔑 Optional reverse mapping
+
                         layout.Controls.Add(label);
                         layout.Controls.Add(control);
                         layout.RowCount++;
