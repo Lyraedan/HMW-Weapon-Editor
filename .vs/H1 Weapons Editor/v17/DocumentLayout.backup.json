@@ -1,0 +1,121 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\Github\\H1 Weapons Editor\\H1 Weapons Editor\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B523C6-DB1F-47FB-BF85-8E5624F3DCA0}|WinFormsApp1\\WinFormsApp1.csproj|d:\\github\\h1 weapons editor\\h1 weapons editor\\winformsapp1\\form1.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6B523C6-DB1F-47FB-BF85-8E5624F3DCA0}|WinFormsApp1\\WinFormsApp1.csproj|solutionrelative:winformsapp1\\form1.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B523C6-DB1F-47FB-BF85-8E5624F3DCA0}|WinFormsApp1\\WinFormsApp1.csproj|d:\\github\\h1 weapons editor\\h1 weapons editor\\winformsapp1\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{A6B523C6-DB1F-47FB-BF85-8E5624F3DCA0}|WinFormsApp1\\WinFormsApp1.csproj|solutionrelative:winformsapp1\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B523C6-DB1F-47FB-BF85-8E5624F3DCA0}|WinFormsApp1\\WinFormsApp1.csproj|d:\\github\\h1 weapons editor\\h1 weapons editor\\winformsapp1\\collapsibledictionarycontrol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6B523C6-DB1F-47FB-BF85-8E5624F3DCA0}|WinFormsApp1\\WinFormsApp1.csproj|solutionrelative:winformsapp1\\collapsibledictionarycontrol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B523C6-DB1F-47FB-BF85-8E5624F3DCA0}|WinFormsApp1\\WinFormsApp1.csproj|d:\\github\\h1 weapons editor\\h1 weapons editor\\winformsapp1\\weaponeditor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6B523C6-DB1F-47FB-BF85-8E5624F3DCA0}|WinFormsApp1\\WinFormsApp1.csproj|solutionrelative:winformsapp1\\weaponeditor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B523C6-DB1F-47FB-BF85-8E5624F3DCA0}|WinFormsApp1\\WinFormsApp1.csproj|d:\\github\\h1 weapons editor\\h1 weapons editor\\winformsapp1\\weaponjson.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6B523C6-DB1F-47FB-BF85-8E5624F3DCA0}|WinFormsApp1\\WinFormsApp1.csproj|solutionrelative:winformsapp1\\weaponjson.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B523C6-DB1F-47FB-BF85-8E5624F3DCA0}|WinFormsApp1\\WinFormsApp1.csproj|d:\\github\\h1 weapons editor\\h1 weapons editor\\winformsapp1\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6B523C6-DB1F-47FB-BF85-8E5624F3DCA0}|WinFormsApp1\\WinFormsApp1.csproj|solutionrelative:winformsapp1\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 5,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Form1.cs [Design]",
+              "DocumentMoniker": "D:\\Github\\H1 Weapons Editor\\H1 Weapons Editor\\WinFormsApp1\\Form1.cs",
+              "RelativeDocumentMoniker": "WinFormsApp1\\Form1.cs",
+              "ToolTip": "D:\\Github\\H1 Weapons Editor\\H1 Weapons Editor\\WinFormsApp1\\Form1.cs [Design]",
+              "RelativeToolTip": "WinFormsApp1\\Form1.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-29T04:59:22.356Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "CollapsibleDictionaryControl.cs",
+              "DocumentMoniker": "D:\\Github\\H1 Weapons Editor\\H1 Weapons Editor\\WinFormsApp1\\CollapsibleDictionaryControl.cs",
+              "RelativeDocumentMoniker": "WinFormsApp1\\CollapsibleDictionaryControl.cs",
+              "ToolTip": "D:\\Github\\H1 Weapons Editor\\H1 Weapons Editor\\WinFormsApp1\\CollapsibleDictionaryControl.cs",
+              "RelativeToolTip": "WinFormsApp1\\CollapsibleDictionaryControl.cs",
+              "ViewState": "AgIAAHMAAAAAAAAAAAAmwJcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-29T04:31:49.291Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "WeaponJson.cs",
+              "DocumentMoniker": "D:\\Github\\H1 Weapons Editor\\H1 Weapons Editor\\WinFormsApp1\\WeaponJson.cs",
+              "RelativeDocumentMoniker": "WinFormsApp1\\WeaponJson.cs",
+              "ToolTip": "D:\\Github\\H1 Weapons Editor\\H1 Weapons Editor\\WinFormsApp1\\WeaponJson.cs",
+              "RelativeToolTip": "WinFormsApp1\\WeaponJson.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-29T04:02:18.22Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "WeaponEditor.cs",
+              "DocumentMoniker": "D:\\Github\\H1 Weapons Editor\\H1 Weapons Editor\\WinFormsApp1\\WeaponEditor.cs",
+              "RelativeDocumentMoniker": "WinFormsApp1\\WeaponEditor.cs",
+              "ToolTip": "D:\\Github\\H1 Weapons Editor\\H1 Weapons Editor\\WinFormsApp1\\WeaponEditor.cs",
+              "RelativeToolTip": "WinFormsApp1\\WeaponEditor.cs",
+              "ViewState": "AgIAAIoAAAAAAAAAAAAtwPQAAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-29T03:35:34.265Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\Github\\H1 Weapons Editor\\H1 Weapons Editor\\WinFormsApp1\\Program.cs",
+              "RelativeDocumentMoniker": "WinFormsApp1\\Program.cs",
+              "ToolTip": "D:\\Github\\H1 Weapons Editor\\H1 Weapons Editor\\WinFormsApp1\\Program.cs",
+              "RelativeToolTip": "WinFormsApp1\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-29T03:30:17.98Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Form1.Designer.cs",
+              "DocumentMoniker": "D:\\Github\\H1 Weapons Editor\\H1 Weapons Editor\\WinFormsApp1\\Form1.Designer.cs",
+              "RelativeDocumentMoniker": "WinFormsApp1\\Form1.Designer.cs",
+              "ToolTip": "D:\\Github\\H1 Weapons Editor\\H1 Weapons Editor\\WinFormsApp1\\Form1.Designer.cs",
+              "RelativeToolTip": "WinFormsApp1\\Form1.Designer.cs",
+              "ViewState": "AgIAABkAAAAAAAAAAAAgwCMAAAA/AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-29T03:28:35.518Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
