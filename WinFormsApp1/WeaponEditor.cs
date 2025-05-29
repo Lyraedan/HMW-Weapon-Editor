@@ -344,9 +344,28 @@ namespace WinFormsApp1
             if (type == typeof(string))
                 return new TextBox { Text = value as string ?? "" };
             else if (type == typeof(int))
-                return new NumericUpDown { Value = (int)(value ?? 0), Maximum = int.MaxValue };
+            {
+                int val = (int)(value ?? 0);
+                var nud = new NumericUpDown
+                {
+                    Maximum = int.MaxValue,
+                    Minimum = int.MinValue,
+                    Value = val < int.MinValue ? int.MinValue : val > int.MaxValue ? int.MaxValue : val
+                };
+                return nud;
+            }
             else if (type == typeof(float))
-                return new NumericUpDown { DecimalPlaces = 2, Value = Convert.ToDecimal(value ?? 0f), Maximum = decimal.MaxValue };
+            {
+                decimal val = Convert.ToDecimal(value ?? 0f);
+                var nud = new NumericUpDown
+                {
+                    DecimalPlaces = 2,
+                    Maximum = decimal.MaxValue,
+                    Minimum = decimal.MinValue,
+                    Value = val < decimal.MinValue ? decimal.MinValue : val > decimal.MaxValue ? decimal.MaxValue : val
+                };
+                return nud;
+            }
             else if (type == typeof(bool))
                 return new CheckBox { Checked = (bool)(value ?? false) };
             else if (type == typeof(List<string>))
