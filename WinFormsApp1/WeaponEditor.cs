@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using System.Reflection;
 using System.Linq;
 using static WinFormsApp1.WeaponJson;
+using Timer = System.Windows.Forms.Timer;
 
 namespace WinFormsApp1
 {
@@ -62,6 +63,13 @@ namespace WinFormsApp1
 
             menuStrip.Items.Add(fileMenu);
 
+            var searchMenu = new ToolStripMenuItem("Search");
+            var findMenuItem = new ToolStripMenuItem("Find");
+            findMenuItem.ShortcutKeys = Keys.Control | Keys.F;
+            findMenuItem.Click += FindMenuItem_Click;
+            searchMenu.DropDownItems.Add(findMenuItem);
+            menuStrip.Items.Add(searchMenu);
+
             // Create About menu with Credits
             var aboutMenu = new ToolStripMenuItem("About");
             var creditsItem = new ToolStripMenuItem("Credits");
@@ -110,6 +118,91 @@ namespace WinFormsApp1
             this.PreviewKeyDown += WeaponEditor_PreviewKeyDown;
             this.KeyDown += WeaponEditor_KeyDown;
         }
+
+        private void FindMenuItem_Click(object sender, EventArgs e)
+        {
+            var fieldNames = GetAllLabelsAcrossTabs().Select(l => l.Text).Distinct().ToList();
+            var findDialog = new FindWindow(fieldNames);
+            findDialog.OnFind += (term) =>
+            {
+                findDialog.Close();
+                PerformSearchAndScroll(term);
+            };
+            findDialog.ShowDialog();
+        }
+
+
+        private IEnumerable<Label> GetAllLabelsAcrossTabs()
+        {
+            foreach (TabPage mainTab in weaponTabControl.TabPages)
+            {
+                var innerTabs = mainTab.Controls.OfType<TabControl>().FirstOrDefault();
+                if (innerTabs == null) continue;
+
+                foreach (TabPage subTab in innerTabs.TabPages)
+                {
+                    foreach (Control ctrl in subTab.Controls)
+                    {
+                        if (ctrl is TableLayoutPanel layout)
+                        {
+                            foreach (Control c in layout.Controls)
+                                if (c is Label lbl)
+                                    yield return lbl;
+                        }
+                    }
+                }
+            }
+        }
+
+
+        private void PerformSearchAndScroll(string searchTerm)
+        {
+            if (string.IsNullOrWhiteSpace(searchTerm)) return;
+
+            foreach (TabPage mainTab in weaponTabControl.TabPages)
+            {
+                var innerTabs = mainTab.Controls.OfType<TabControl>().FirstOrDefault();
+                if (innerTabs == null) continue;
+
+                foreach (TabPage subTab in innerTabs.TabPages)
+                {
+                    foreach (Control container in subTab.Controls)
+                    {
+                        if (container is TableLayoutPanel layout)
+                        {
+                            for (int i = 0; i < layout.Controls.Count; i += 2)
+                            {
+                                if (layout.Controls[i] is Label lbl &&
+                                    lbl.Text.IndexOf(searchTerm, StringComparison.OrdinalIgnoreCase) >= 0)
+                                {
+                                    weaponTabControl.SelectedTab = mainTab;
+                                    innerTabs.SelectedTab = subTab;
+
+                                    Control target = layout.Controls[i + 1];
+                                    layout.ScrollControlIntoView(target);
+
+                                    target.BackColor = Color.LightYellow;
+                                    var timer = new Timer { Interval = 1500 };
+                                    timer.Tick += (s, e) =>
+                                    {
+                                        target.BackColor = SystemColors.Window;
+                                        timer.Stop();
+                                        timer.Dispose();
+                                    };
+                                    timer.Start();
+
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            MessageBox.Show($"No match found for '{searchTerm}'.", "Find", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+
 
         private void NewMenuItem_Click(object sender, EventArgs e)
         {
