@@ -1,8 +1,10 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace WinFormsApp1
 {
-    partial class Form1
+    partial class Form1 : Form
     {
         /// <summary>
         ///  Required designer variable.
@@ -40,9 +42,9 @@ namespace WinFormsApp1
             // 
             weaponEditor.AllowDrop = true;
             weaponEditor.Dock = DockStyle.Fill;
-            weaponEditor.Location = new Point(0, 0);
+            weaponEditor.Location = new System.Drawing.Point(0, 0);
             weaponEditor.Name = "weaponEditor";
-            weaponEditor.Size = new Size(800, 450);
+            weaponEditor.Size = new System.Drawing.Size(800, 450);
             weaponEditor.TabIndex = 0;
             weaponEditor.OnFileChanged = (file_name) =>
             {
@@ -51,16 +53,45 @@ namespace WinFormsApp1
             // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new System.Drawing.Size(800, 450);
             Controls.Add(weaponEditor);
-            Name = "HMW Weapon Editor";
+            Name = "Form1";
             Text = "HMW Weapon Editor";
-            Load += Form1_Load;
+
+            // Subscribe to the FormClosing event here
+            this.FormClosing += Form1_FormClosing;
+
             ResumeLayout(false);
         }
 
-        #endregion
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            var unsavedTabs = weaponEditor.GetDirtyTabs().ToList();
+            if (unsavedTabs.Count > 0)
+            {
+                var result = MessageBox.Show(
+                    "There are unsaved changes. Do you want to save before exiting?",
+                    "Unsaved Changes",
+                    MessageBoxButtons.YesNoCancel,
+                    MessageBoxIcon.Warning);
+
+                if (result == DialogResult.Yes)
+                {
+                    foreach (var tab in unsavedTabs)
+                    {
+                        weaponEditor.SelectTab(tab);
+                        weaponEditor.SaveCurrentFile();
+                    }
+                }
+                else if (result == DialogResult.Cancel)
+                {
+                    e.Cancel = true;
+                }
+                // If No, just exit without saving
+            }
+        }
     }
+    #endregion
 }

@@ -11,10 +11,17 @@ namespace WinFormsApp1
     public class WeaponEditor : UserControl
     {
         private TabControl weaponTabControl;
-        private Label fileLabel;
+        private StatusStrip statusStrip;
+        private ToolStripStatusLabel weaponNameStatusLabel;
+        private ToolStripStatusLabel fileNameStatusLabel;
         private SaveFileDialog saveFileDialog;
         private OpenFileDialog openFileDialog;
         private ContextMenuStrip tabContextMenu;
+
+        private ToolStripMenuItem saveCurrentMenuItem;
+
+        // Track dirty state per tab
+        private Dictionary<TabPage, bool> dirtyFlags = new();
 
         public Action<string> OnFileChanged;
 
@@ -28,10 +35,15 @@ namespace WinFormsApp1
             var menuStrip = new MenuStrip { Dock = DockStyle.Top };
             var fileMenu = new ToolStripMenuItem("File");
             var loadMenuItem = new ToolStripMenuItem("Load JSON");
+            saveCurrentMenuItem = new ToolStripMenuItem("Save Current File") { Enabled = false };
             var saveMenuItem = new ToolStripMenuItem("Save JSON");
+
             loadMenuItem.Click += LoadButton_Click;
-            saveMenuItem.Click += SaveButton_Click;
+            saveMenuItem.Click += SaveAllButton_Click;
+            saveCurrentMenuItem.Click += SaveCurrentFile_Click;
+
             fileMenu.DropDownItems.Add(loadMenuItem);
+            fileMenu.DropDownItems.Add(saveCurrentMenuItem);
             fileMenu.DropDownItems.Add(saveMenuItem);
             menuStrip.Items.Add(fileMenu);
             Controls.Add(menuStrip);
@@ -41,15 +53,14 @@ namespace WinFormsApp1
             weaponTabControl.SelectedIndexChanged += WeaponTabControl_SelectedIndexChanged;
             Controls.Add(weaponTabControl);
 
-            // Status label docked bottom
-            fileLabel = new Label
-            {
-                Text = "No file loaded",
-                Dock = DockStyle.Bottom,
-                Height = 25,
-                TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-            };
-            Controls.Add(fileLabel);
+            // Status strip docked bottom with two labels
+            statusStrip = new StatusStrip();
+            weaponNameStatusLabel = new ToolStripStatusLabel("Weapon: None");
+            fileNameStatusLabel = new ToolStripStatusLabel("File: None") { Spring = true };
+
+            statusStrip.Items.Add(weaponNameStatusLabel);
+            statusStrip.Items.Add(fileNameStatusLabel);
+            Controls.Add(statusStrip);
 
             saveFileDialog = new SaveFileDialog { Filter = "JSON Files (*.json)|*.json" };
             openFileDialog = new OpenFileDialog { Filter = "JSON Files (*.json)|*.json" };
@@ -63,19 +74,57 @@ namespace WinFormsApp1
             tabContextMenu.Items.AddRange(new ToolStripItem[] { closeItem, closeAllItem });
 
             weaponTabControl.MouseUp += WeaponTabControl_MouseUp;
+
+            // Hook key preview for Ctrl+S and Ctrl+Shift+S shortcuts
+            this.PreviewKeyDown += WeaponEditor_PreviewKeyDown;
+            this.KeyDown += WeaponEditor_KeyDown;
+        }
+
+        private void WeaponEditor_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            e.IsInputKey = true;
+        }
+
+        private void WeaponEditor_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.S)
+            {
+                if (e.Shift)
+                {
+                    SaveCurrentFileAs();
+                }
+                else
+                {
+                    SaveCurrentFile();
+                }
+                e.Handled = true;
+            }
         }
 
         private void WeaponTabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
+            UpdateFileLabelAndSaveCurrentMenu();
+        }
+
+        private void UpdateFileLabelAndSaveCurrentMenu()
+        {
             if (weaponTabControl.SelectedTab?.Tag is WeaponTabContext context)
             {
-                string name = context.Weapon?.szDisplayName ?? Path.GetFileName(context.FilePath);
-                fileLabel.Text = name;
-                weaponTabControl.SelectedTab.Text = name;
+                string weaponName = context.Weapon?.szDisplayName ?? Path.GetFileName(context.FilePath);
+                if (dirtyFlags.TryGetValue(weaponTabControl.SelectedTab, out bool dirty) && dirty)
+                {
+                    weaponName += "*";
+                }
+                weaponNameStatusLabel.Text = $"Weapon: {weaponName}";
+                fileNameStatusLabel.Text = $"File: {Path.GetFileName(context.FilePath)}";
+                saveCurrentMenuItem.Enabled = true;
+                weaponTabControl.SelectedTab.Text = weaponName;
             }
             else
             {
-                fileLabel.Text = "No file loaded";
+                weaponNameStatusLabel.Text = "Weapon: None";
+                fileNameStatusLabel.Text = "File: None";
+                saveCurrentMenuItem.Enabled = false;
             }
         }
 
@@ -114,11 +163,10 @@ namespace WinFormsApp1
                     TabPage weaponTab = new TabPage(name);
                     weaponTab.Tag = new WeaponTabContext { Weapon = weapon, FilePath = path };
 
-                    // Inner tabs dock top with fixed height to prevent overlapping outer tabs
                     TabControl innerTabs = new TabControl
                     {
                         Dock = DockStyle.Top,
-                        Height = 400 // Adjust height as needed for your layout
+                        Height = 400
                     };
                     weaponTab.Controls.Add(innerTabs);
 
@@ -127,10 +175,10 @@ namespace WinFormsApp1
                     weaponTabControl.TabPages.Add(weaponTab);
                     weaponTabControl.SelectedTab = weaponTab;
 
-                    // Update status label and tab text
-                    fileLabel.Text = name;
-                    weaponTab.Text = name;
-                    OnFileChanged.Invoke($"{name}");
+                    dirtyFlags[weaponTab] = false;
+
+                    UpdateFileLabelAndSaveCurrentMenu();
+                    OnFileChanged?.Invoke($"{name}");
                 }
             }
             catch (Exception ex)
@@ -164,11 +212,42 @@ namespace WinFormsApp1
                     control.Top = y;
                     control.Width = 300;
 
+                    HookControlChangedEvent(control, containerTab);
+
                     tab.Controls.Add(label);
                     tab.Controls.Add(control);
 
                     y += 30;
                 }
+            }
+        }
+
+        private void HookControlChangedEvent(Control control, TabPage parentTab)
+        {
+            void MarkDirty(object sender, EventArgs e)
+            {
+                if (!dirtyFlags.TryGetValue(parentTab, out bool dirty) || dirty == false)
+                {
+                    dirtyFlags[parentTab] = true;
+                    UpdateFileLabelAndSaveCurrentMenu();
+                    OnFileChanged?.Invoke($"{parentTab.Text}*");
+                }
+            }
+
+            switch (control)
+            {
+                case TextBox tb:
+                    tb.TextChanged += MarkDirty;
+                    break;
+                case NumericUpDown nud:
+                    nud.ValueChanged += MarkDirty;
+                    break;
+                case CheckBox cb:
+                    cb.CheckedChanged += MarkDirty;
+                    break;
+                case CollapsibleDictionaryControl cdc:
+                    // Implement dict change event if needed
+                    break;
             }
         }
 
@@ -178,46 +257,91 @@ namespace WinFormsApp1
             object value = prop.GetValue(weapon);
 
             if (type == typeof(string))
-            {
                 return new TextBox { Text = value as string ?? "" };
-            }
             else if (type == typeof(int))
-            {
                 return new NumericUpDown { Value = (int)(value ?? 0), Maximum = int.MaxValue };
-            }
             else if (type == typeof(float))
-            {
                 return new NumericUpDown { DecimalPlaces = 2, Value = Convert.ToDecimal(value ?? 0f), Maximum = decimal.MaxValue };
-            }
             else if (type == typeof(bool))
-            {
                 return new CheckBox { Checked = (bool)(value ?? false) };
-            }
             else if (type == typeof(List<string>))
-            {
                 return new TextBox { Text = string.Join(", ", (List<string>)value ?? new List<string>()) };
-            }
             else if (type == typeof(List<float>))
-            {
                 return new TextBox { Text = string.Join(", ", (List<float>)value ?? new List<float>()) };
-            }
             else if (type == typeof(Dictionary<string, object>))
             {
                 var dict = (Dictionary<string, object>)value ?? new Dictionary<string, object>();
-                var control = new CollapsibleDictionaryControl(prop.Name)
-                {
-                    Width = 500
-                };
+                var control = new CollapsibleDictionaryControl(prop.Name) { Width = 500 };
                 control.Values = dict;
                 return control;
             }
             else
-            {
                 return new TextBox { Text = value?.ToString() ?? "" };
-            }
         }
 
         private void SaveButton_Click(object sender, EventArgs e)
+        {
+            SaveCurrentFile();
+        }
+
+        private void SaveAllButton_Click(object sender, EventArgs e)
+        {
+            foreach (TabPage tab in weaponTabControl.TabPages)
+            {
+                weaponTabControl.SelectedTab = tab;
+                SaveCurrentFile();
+            }
+        }
+
+        private void SaveCurrentFile_Click(object sender, EventArgs e)
+        {
+            SaveCurrentFile();
+        }
+
+        public void SaveCurrentFile()
+        {
+            if (weaponTabControl.SelectedTab?.Tag is not WeaponTabContext context) return;
+
+            var innerTabs = weaponTabControl.SelectedTab.Controls.OfType<TabControl>().FirstOrDefault();
+            if (innerTabs == null) return;
+
+            foreach (TabPage tab in innerTabs.TabPages)
+            {
+                foreach (Control control in tab.Controls)
+                {
+                    if (control is Label lbl)
+                    {
+                        string propName = lbl.Text;
+                        Control inputControl = tab.Controls[tab.Controls.IndexOf(lbl) + 1];
+                        PropertyInfo prop = typeof(WeaponJson).GetProperty(propName);
+                        if (prop == null || !prop.CanWrite) continue;
+
+                        try
+                        {
+                            object parsedValue = ParseControlValue(inputControl, prop.PropertyType);
+                            prop.SetValue(context.Weapon, parsedValue);
+                        }
+                        catch { }
+                    }
+                }
+            }
+
+            if (string.IsNullOrEmpty(context.FilePath))
+            {
+                if (saveFileDialog.ShowDialog() != DialogResult.OK)
+                    return;
+                context.FilePath = saveFileDialog.FileName;
+            }
+
+            string json = JsonSerializer.Serialize(context.Weapon, new JsonSerializerOptions { WriteIndented = true });
+            File.WriteAllText(context.FilePath, json);
+
+            dirtyFlags[weaponTabControl.SelectedTab] = false;
+            UpdateFileLabelAndSaveCurrentMenu();
+            OnFileChanged?.Invoke($"{context.Weapon.szDisplayName ?? Path.GetFileName(context.FilePath)}");
+        }
+
+        private void SaveCurrentFileAs()
         {
             if (weaponTabControl.SelectedTab?.Tag is not WeaponTabContext context) return;
 
@@ -247,8 +371,13 @@ namespace WinFormsApp1
 
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
+                context.FilePath = saveFileDialog.FileName;
                 string json = JsonSerializer.Serialize(context.Weapon, new JsonSerializerOptions { WriteIndented = true });
-                File.WriteAllText(saveFileDialog.FileName, json);
+                File.WriteAllText(context.FilePath, json);
+
+                dirtyFlags[weaponTabControl.SelectedTab] = false;
+                UpdateFileLabelAndSaveCurrentMenu();
+                OnFileChanged?.Invoke($"{context.Weapon.szDisplayName ?? Path.GetFileName(context.FilePath)}");
             }
         }
 
@@ -317,6 +446,17 @@ namespace WinFormsApp1
         private void CloseAllTabs_Click(object sender, EventArgs e)
         {
             weaponTabControl.TabPages.Clear();
+        }
+
+        public IEnumerable<TabPage> GetDirtyTabs()
+        {
+            return dirtyFlags.Where(kvp => kvp.Value).Select(kvp => kvp.Key);
+        }
+
+        public void SelectTab(TabPage tab)
+        {
+            if (weaponTabControl.TabPages.Contains(tab))
+                weaponTabControl.SelectedTab = tab;
         }
 
         private class WeaponTabContext
