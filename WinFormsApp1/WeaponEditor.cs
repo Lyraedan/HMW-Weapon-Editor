@@ -4,14 +4,13 @@ using System.Text.Json;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Reflection;
+using System.Linq;
 
 namespace WinFormsApp1
 {
     public class WeaponEditor : UserControl
     {
         private TabControl weaponTabControl;
-        private Button saveButton;
-        private Button loadButton;
         private Label fileLabel;
         private SaveFileDialog saveFileDialog;
         private OpenFileDialog openFileDialog;
@@ -23,27 +22,37 @@ namespace WinFormsApp1
             DragEnter += WeaponEditor_DragEnter;
             DragDrop += WeaponEditor_DragDrop;
 
+            // MenuStrip with File menu
+            var menuStrip = new MenuStrip { Dock = DockStyle.Top };
+            var fileMenu = new ToolStripMenuItem("File");
+            var loadMenuItem = new ToolStripMenuItem("Load JSON");
+            var saveMenuItem = new ToolStripMenuItem("Save JSON");
+            loadMenuItem.Click += LoadButton_Click;
+            saveMenuItem.Click += SaveButton_Click;
+            fileMenu.DropDownItems.Add(loadMenuItem);
+            fileMenu.DropDownItems.Add(saveMenuItem);
+            menuStrip.Items.Add(fileMenu);
+            Controls.Add(menuStrip);
+
+            // Main weapon TabControl fills remaining space
             weaponTabControl = new TabControl { Dock = DockStyle.Fill };
             weaponTabControl.SelectedIndexChanged += WeaponTabControl_SelectedIndexChanged;
             Controls.Add(weaponTabControl);
 
-            Panel topPanel = new Panel { Dock = DockStyle.Top, Height = 40 };
-            fileLabel = new Label { Text = "No file loaded", Dock = DockStyle.Fill, TextAlign = System.Drawing.ContentAlignment.MiddleLeft };
-            topPanel.Controls.Add(fileLabel);
-            Controls.Add(topPanel);
-
-            loadButton = new Button { Text = "Load JSON", Dock = DockStyle.Top, Height = 40 };
-            loadButton.Click += LoadButton_Click;
-            Controls.Add(loadButton);
-
-            saveButton = new Button { Text = "Save JSON", Dock = DockStyle.Bottom, Height = 40 };
-            saveButton.Click += SaveButton_Click;
-            Controls.Add(saveButton);
+            // Status label docked bottom
+            fileLabel = new Label
+            {
+                Text = "No file loaded",
+                Dock = DockStyle.Bottom,
+                Height = 25,
+                TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+            };
+            Controls.Add(fileLabel);
 
             saveFileDialog = new SaveFileDialog { Filter = "JSON Files (*.json)|*.json" };
             openFileDialog = new OpenFileDialog { Filter = "JSON Files (*.json)|*.json" };
 
-            // Initialize ContextMenuStrip for tab right-click menu
+            // Tab context menu for right-click on weapon tabs
             tabContextMenu = new ContextMenuStrip();
             var closeItem = new ToolStripMenuItem("Close");
             var closeAllItem = new ToolStripMenuItem("Close All");
@@ -100,11 +109,25 @@ namespace WinFormsApp1
                 if (weapon != null)
                 {
                     string name = weapon.szDisplayName ?? Path.GetFileName(path);
-                    TabPage tab = new TabPage(name);
-                    tab.Tag = new WeaponTabContext { Weapon = weapon, FilePath = path };
-                    GenerateTabsForWeapon(tab, weapon);
-                    weaponTabControl.TabPages.Add(tab);
-                    weaponTabControl.SelectedTab = tab;
+                    TabPage weaponTab = new TabPage(name);
+                    weaponTab.Tag = new WeaponTabContext { Weapon = weapon, FilePath = path };
+
+                    // Inner tabs dock top with fixed height to prevent overlapping outer tabs
+                    TabControl innerTabs = new TabControl
+                    {
+                        Dock = DockStyle.Top,
+                        Height = 400 // Adjust height as needed for your layout
+                    };
+                    weaponTab.Controls.Add(innerTabs);
+
+                    GenerateTabsForWeapon(weaponTab, weapon);
+
+                    weaponTabControl.TabPages.Add(weaponTab);
+                    weaponTabControl.SelectedTab = weaponTab;
+
+                    // Update status label and tab text
+                    fileLabel.Text = name;
+                    weaponTab.Text = name;
                 }
             }
             catch (Exception ex)
@@ -115,8 +138,10 @@ namespace WinFormsApp1
 
         private void GenerateTabsForWeapon(TabPage containerTab, WeaponJson weapon)
         {
-            TabControl innerTabs = new TabControl { Dock = DockStyle.Fill };
-            containerTab.Controls.Add(innerTabs);
+            var innerTabs = containerTab.Controls.OfType<TabControl>().FirstOrDefault();
+            if (innerTabs == null) return;
+
+            innerTabs.TabPages.Clear();
 
             var groupedProperties = typeof(WeaponJson)
                 .GetProperties()
@@ -193,7 +218,8 @@ namespace WinFormsApp1
         {
             if (weaponTabControl.SelectedTab?.Tag is not WeaponTabContext context) return;
 
-            TabControl innerTabs = (TabControl)weaponTabControl.SelectedTab.Controls[0];
+            var innerTabs = weaponTabControl.SelectedTab.Controls.OfType<TabControl>().FirstOrDefault();
+            if (innerTabs == null) return;
 
             foreach (TabPage tab in innerTabs.TabPages)
             {
