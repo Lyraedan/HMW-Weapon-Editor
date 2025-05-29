@@ -15,3 +15,21 @@ D:\Github\H1 Weapons Editor\H1 Weapons Editor\WinFormsApp1\obj\Debug\net8.0-wind
 D:\Github\H1 Weapons Editor\H1 Weapons Editor\WinFormsApp1\obj\Debug\net8.0-windows\WinFormsApp1.genruntimeconfig.cache
 D:\Github\H1 Weapons Editor\H1 Weapons Editor\WinFormsApp1\obj\Debug\net8.0-windows\ref\WinFormsApp1.dll
 D:\Github\H1 Weapons Editor\H1 Weapons Editor\WinFormsApp1\obj\Debug\net8.0-windows\WinFormsApp1.CollapsibleDictionaryControl.resources
+D:\Github\HMW-Weapon-Editor\WinFormsApp1\bin\Debug\net8.0-windows\WinFormsApp1.exe
+D:\Github\HMW-Weapon-Editor\WinFormsApp1\bin\Debug\net8.0-windows\WinFormsApp1.deps.json
+D:\Github\HMW-Weapon-Editor\WinFormsApp1\bin\Debug\net8.0-windows\WinFormsApp1.runtimeconfig.json
+D:\Github\HMW-Weapon-Editor\WinFormsApp1\bin\Debug\net8.0-windows\WinFormsApp1.dll
+D:\Github\HMW-Weapon-Editor\WinFormsApp1\bin\Debug\net8.0-windows\WinFormsApp1.pdb
+D:\Github\HMW-Weapon-Editor\WinFormsApp1\obj\Debug\net8.0-windows\WinFormsApp1.CollapsibleDictionaryControl.resources
+D:\Github\HMW-Weapon-Editor\WinFormsApp1\obj\Debug\net8.0-windows\WinFormsApp1.Form1.resources
+D:\Github\HMW-Weapon-Editor\WinFormsApp1\obj\Debug\net8.0-windows\WinFormsApp1.csproj.GenerateResource.cache
+D:\Github\HMW-Weapon-Editor\WinFormsApp1\obj\Debug\net8.0-windows\WinFormsApp1.GeneratedMSBuildEditorConfig.editorconfig
+D:\Github\HMW-Weapon-Editor\WinFormsApp1\obj\Debug\net8.0-windows\WinFormsApp1.AssemblyInfoInputs.cache
+D:\Github\HMW-Weapon-Editor\WinFormsApp1\obj\Debug\net8.0-windows\WinFormsApp1.AssemblyInfo.cs
+D:\Github\HMW-Weapon-Editor\WinFormsApp1\obj\Debug\net8.0-windows\WinFormsApp1.csproj.CoreCompileInputs.cache
+D:\Github\HMW-Weapon-Editor\WinFormsApp1\obj\Debug\net8.0-windows\WinFormsApp1.sourcelink.json
+D:\Github\HMW-Weapon-Editor\WinFormsApp1\obj\Debug\net8.0-windows\WinFormsApp1.dll
+D:\Github\HMW-Weapon-Editor\WinFormsApp1\obj\Debug\net8.0-windows\refint\WinFormsApp1.dll
+D:\Github\HMW-Weapon-Editor\WinFormsApp1\obj\Debug\net8.0-windows\WinFormsApp1.pdb
+D:\Github\HMW-Weapon-Editor\WinFormsApp1\obj\Debug\net8.0-windows\WinFormsApp1.genruntimeconfig.cache
+D:\Github\HMW-Weapon-Editor\WinFormsApp1\obj\Debug\net8.0-windows\ref\WinFormsApp1.dll

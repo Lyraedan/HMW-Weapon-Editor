@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.IO;
 using System.Text.Json;
 using System.Collections.Generic;
@@ -16,6 +15,7 @@ namespace WinFormsApp1
         private Label fileLabel;
         private SaveFileDialog saveFileDialog;
         private OpenFileDialog openFileDialog;
+        private ContextMenuStrip tabContextMenu;
 
         public WeaponEditor()
         {
@@ -42,6 +42,16 @@ namespace WinFormsApp1
 
             saveFileDialog = new SaveFileDialog { Filter = "JSON Files (*.json)|*.json" };
             openFileDialog = new OpenFileDialog { Filter = "JSON Files (*.json)|*.json" };
+
+            // Initialize ContextMenuStrip for tab right-click menu
+            tabContextMenu = new ContextMenuStrip();
+            var closeItem = new ToolStripMenuItem("Close");
+            var closeAllItem = new ToolStripMenuItem("Close All");
+            closeItem.Click += CloseTab_Click;
+            closeAllItem.Click += CloseAllTabs_Click;
+            tabContextMenu.Items.AddRange(new ToolStripItem[] { closeItem, closeAllItem });
+
+            weaponTabControl.MouseUp += WeaponTabControl_MouseUp;
         }
 
         private void WeaponTabControl_SelectedIndexChanged(object sender, EventArgs e)
@@ -248,6 +258,36 @@ namespace WinFormsApp1
             }
 
             return control.Text;
+        }
+
+        private void WeaponTabControl_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                for (int i = 0; i < weaponTabControl.TabCount; i++)
+                {
+                    Rectangle r = weaponTabControl.GetTabRect(i);
+                    if (r.Contains(e.Location))
+                    {
+                        weaponTabControl.SelectedIndex = i;  // Select the tab under the mouse
+                        tabContextMenu.Show(weaponTabControl, e.Location);
+                        break;
+                    }
+                }
+            }
+        }
+
+        private void CloseTab_Click(object sender, EventArgs e)
+        {
+            if (weaponTabControl.SelectedTab != null)
+            {
+                weaponTabControl.TabPages.Remove(weaponTabControl.SelectedTab);
+            }
+        }
+
+        private void CloseAllTabs_Click(object sender, EventArgs e)
+        {
+            weaponTabControl.TabPages.Clear();
         }
 
         private class WeaponTabContext
