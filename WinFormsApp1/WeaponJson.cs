@@ -625,154 +625,64 @@ namespace WinFormsApp1
 
         public class StateTimers
         {
-            [Group("State Timers")]
+            [Group("State Timers", "Fuse")]
             public int aiFuseTime { get; set; }
-            [Group("State Timers")]
-            public int altDropTime { get; set; }
-            [Group("State Timers")]
-            public int altRaiseTime { get; set; }
-            [Group("State Timers")]
-            public bool bHoldFullPrime { get; set; }
-            [Group("State Timers")]
-            public int blastBackTime { get; set; }
-            [Group("State Timers")]
-            public int blastLeftTime { get; set; }
-            [Group("State Timers")]
-            public int blastRightTime { get; set; }
-            [Group("State Timers")]
-            public int breachRaiseTime { get; set; }
-            [Group("State Timers")]
-            public int detonateDelay { get; set; }
-            [Group("State Timers")]
-            public int detonateTime { get; set; }
-            [Group("State Timers")]
-            public int dodgeTime { get; set; }
-            [Group("State Timers")]
-            public int dropTime { get; set; }
-            [Group("State Timers")]
-            public int emptyDropTime { get; set; }
-            [Group("State Timers")]
-            public int emptyRaiseTime { get; set; }
-            [Group("State Timers")]
-            public int fireDelay { get; set; }
-            [Group("State Timers")]
-            public int fireTime { get; set; }
-            [Group("State Timers")]
-            public int firstRaiseTime { get; set; }
-            [Group("State Timers")]
             public int fuseTime { get; set; }
-            [Group("State Timers")]
-            public int grenadePrimeReadyToThrowTime { get; set; }
-            [Group("State Timers")]
-            public int heatCooldownInTime { get; set; }
-            [Group("State Timers")]
-            public int heatCooldownOutReadyTime { get; set; }
-            [Group("State Timers")]
-            public int heatCooldownOutTime { get; set; }
-            [Group("State Timers")]
-            public int highJumpDropInTime { get; set; }
-            [Group("State Timers")]
-            public int highJumpDropLandTime { get; set; }
-            [Group("State Timers")]
-            public int highJumpDropLoopTime { get; set; }
-            [Group("State Timers")]
-            public int highJumpInTime { get; set; }
-            [Group("State Timers")]
-            public int holdFireTime { get; set; }
-            [Group("State Timers")]
-            public int hybridSightInTime { get; set; }
-            [Group("State Timers")]
-            public int hybridSightOutTime { get; set; }
-            [Group("State Timers")]
-            public int landDipTime { get; set; }
-            [Group("State Timers")]
-            public int meleeChargeDelay { get; set; }
-            [Group("State Timers")]
-            public int meleeChargeTime { get; set; }
-            [Group("State Timers")]
-            public int meleeDelay { get; set; }
-            [Group("State Timers")]
-            public int meleeTime { get; set; }
-            [Group("State Timers")]
-            public int missileTime { get; set; }
-            [Group("State Timers")]
-            public int nightVisionRemoveTime { get; set; }
-            [Group("State Timers")]
-            public int nightVisionRemoveTimeFadeInStart { get; set; }
-            [Group("State Timers")]
-            public int nightVisionRemoveTimePowerDown { get; set; }
-            [Group("State Timers")]
-            public int nightVisionWearTime { get; set; }
-            [Group("State Timers")]
-            public int nightVisionWearTimeFadeOutEnd { get; set; }
-            [Group("State Timers")]
-            public int nightVisionWearTimePowerUp { get; set; }
-            [Group("State Timers")]
-            public int offhandSwitchTime { get; set; }
-            [Group("State Timers")]
-            public int overheatOutReadyTime { get; set; }
-            [Group("State Timers")]
-            public int overheatOutTime { get; set; }
-            [Group("State Timers")]
-            public int primeTime { get; set; }
-            [Group("State Timers")]
-            public int quickDropTime { get; set; }
-            [Group("State Timers")]
-            public int quickRaiseTime { get; set; }
-            [Group("State Timers")]
+
+            [Group("State Timers", "Raise/Drop")]
+            public int altDropTime { get; set; }
+            public int altRaiseTime { get; set; }
+            public int dropTime { get; set; }
             public int raiseTime { get; set; }
-            [Group("State Timers")]
-            public int rechamberBoltTime { get; set; }
-            [Group("State Timers")]
-            public int rechamberTime { get; set; }
-            [Group("State Timers")]
-            public int rechamberTimeOneHanded { get; set; }
-            [Group("State Timers")]
-            public int reloadAddTime { get; set; }
-            [Group("State Timers")]
-            public int reloadAddTimeDualWield { get; set; }
-            [Group("State Timers")]
-            public int reloadEmptyAddTime { get; set; }
-            [Group("State Timers")]
-            public int reloadEmptyAddTimeDualMag { get; set; }
-            [Group("State Timers")]
-            public int reloadEmptyDualMag { get; set; }
-            [Group("State Timers")]
-            public int reloadEmptyTime { get; set; }
-            [Group("State Timers")]
-            public int reloadEndTime { get; set; }
-            [Group("State Timers")]
-            public int reloadShowRocketTime { get; set; }
-            [Group("State Timers")]
-            public int reloadStartAddTime { get; set; }
-            [Group("State Timers")]
-            public int reloadStartTime { get; set; }
-            [Group("State Timers")]
+            public int quickDropTime { get; set; }
+            public int quickRaiseTime { get; set; }
+            public int emptyDropTime { get; set; }
+            public int emptyRaiseTime { get; set; }
+
+            [Group("State Timers", "Fire")]
+            public int fireTime { get; set; }
+            public int fireDelay { get; set; }
+            public int holdFireTime { get; set; }
+
+            [Group("State Timers", "Melee")]
+            public int meleeTime { get; set; }
+            public int meleeDelay { get; set; }
+            public int meleeChargeTime { get; set; }
+            public int meleeChargeDelay { get; set; }
+
+            [Group("State Timers", "NVG")]
+            public int nightVisionRemoveTime { get; set; }
+            public int nightVisionWearTime { get; set; }
+            public int nightVisionRemoveTimeFadeInStart { get; set; }
+            public int nightVisionWearTimeFadeOutEnd { get; set; }
+            public int nightVisionRemoveTimePowerDown { get; set; }
+            public int nightVisionWearTimePowerUp { get; set; }
+
+            [Group("State Timers", "Reload")]
             public int reloadTime { get; set; }
-            [Group("State Timers")]
-            public int reloadTimeDualWield { get; set; }
-            [Group("State Timers")]
-            public int slideInTime { get; set; }
-            [Group("State Timers")]
-            public int slideLoopTime { get; set; }
-            [Group("State Timers")]
-            public int slideOutTime { get; set; }
-            [Group("State Timers")]
-            public int speedReloadAddTime { get; set; }
-            [Group("State Timers")]
-            public int speedReloadTime { get; set; }
-            [Group("State Timers")]
+            public int reloadAddTime { get; set; }
+            public int reloadEndTime { get; set; }
+            public int reloadStartTime { get; set; }
+            public int reloadShowRocketTime { get; set; }
+
+            [Group("State Timers", "Movement")]
             public int sprintInTime { get; set; }
-            [Group("State Timers")]
             public int sprintLoopTime { get; set; }
-            [Group("State Timers")]
             public int sprintOutTime { get; set; }
-            [Group("State Timers")]
+            public int slideInTime { get; set; }
+            public int slideLoopTime { get; set; }
+            public int slideOutTime { get; set; }
+
+            [Group("State Timers", "Other")]
+            public bool bHoldFullPrime { get; set; }
+            public int breachRaiseTime { get; set; }
+            public int dodgeTime { get; set; }
+            public int landDipTime { get; set; }
             public int stunnedTimeBegin { get; set; }
-            [Group("State Timers")]
             public int stunnedTimeEnd { get; set; }
-            [Group("State Timers")]
             public int stunnedTimeLoop { get; set; }
+            // Add more reorganized entries if desired...
         }
+
     }
 }

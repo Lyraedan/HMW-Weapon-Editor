@@ -250,29 +250,46 @@ namespace WinFormsApp1
                 TabPage groupTab = new TabPage(group.Key) { AutoScroll = true };
                 innerTabs.TabPages.Add(groupTab);
 
-                var groupedBySubGroup = group
-                    .GroupBy(x => x.GroupAttr?.SubGroup)
-                    .ToList();
+                // Flatten out properties, including nested ones with their own GroupAttribute
+                var flattened = group.SelectMany(g =>
+                {
+                    var parentProp = g.Property;
+                    object parentValue = parentProp.GetValue(weapon);
 
-                if (groupedBySubGroup.Count == 1 && groupedBySubGroup[0].Key == null)
+                    if (IsCustomClass(parentProp.PropertyType) && parentValue != null)
+                    {
+                        return parentProp.PropertyType
+                            .GetProperties()
+                            .Select(subProp => new
+                            {
+                                Property = subProp,
+                                Target = parentValue,
+                                GroupAttr = subProp.GetCustomAttribute<GroupAttribute>()
+                            });
+                    }
+                    else
+                    {
+                        return new[] {
+                    new {
+                        Property = parentProp,
+                        Target = (object)weapon,
+                        GroupAttr = g.GroupAttr
+                    }
+                };
+                    }
+                });
+
+                // Group by subgroup (which may be null)
+                var groupedBySubGroup = flattened
+                    .GroupBy(x => x.GroupAttr?.SubGroup);
+
+                if (groupedBySubGroup.Count() == 1 && groupedBySubGroup.First().Key == null)
                 {
                     int y = 20;
-                    foreach (var item in groupedBySubGroup[0])
+                    foreach (var item in groupedBySubGroup.First())
                     {
-                        object target = item.Property.GetValue(weapon);
-                        if (IsCustomClass(item.Property.PropertyType) && target != null)
-                        {
-                            foreach (var subProp in item.Property.PropertyType.GetProperties())
-                            {
-                                AddPropertyControlToTab(groupTab, subProp, target, y);
-                                y += 30;
-                            }
-                        }
-                        else
-                        {
-                            AddPropertyControlToTab(groupTab, item.Property, weapon, y);
-                            y += 30;
-                        }
+                        AddPropertyControlToTab(groupTab, item.Property, item.Target, y);
+                        y += 30;
                     }
                 }
                 else
@@ -289,20 +306,8 @@ namespace WinFormsApp1
                         int y = 20;
                         foreach (var item in subGroup)
                         {
-                            object target = item.Property.GetValue(weapon);
-                            if (IsCustomClass(item.Property.PropertyType) && target != null)
-                            {
-                                foreach (var subProp in item.Property.PropertyType.GetProperties())
-                                {
-                                    AddPropertyControlToTab(subTab, subProp, target, y);
-                                    y += 30;
-                                }
-                            }
-                            else
-                            {
-                                AddPropertyControlToTab(subTab, item.Property, weapon, y);
-                                y += 30;
-                            }
+                            AddPropertyControlToTab(subTab, item.Property, item.Target, y);
+                            y += 30;
                         }
                     }
                 }
