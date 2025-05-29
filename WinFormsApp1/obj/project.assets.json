@@ -14,9 +14,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Github\\HMW-Weapon-Editor\\WinFormsApp1\\WinFormsApp1.csproj",
-      "projectName": "WinFormsApp1",
-      "projectPath": "D:\\Github\\HMW-Weapon-Editor\\WinFormsApp1\\WinFormsApp1.csproj",
+      "projectUniqueName": "D:\\Github\\HMW-Weapon-Editor\\WinFormsApp1\\HMW Weapons Editor.csproj",
+      "projectName": "HMW Weapons Editor",
+      "projectPath": "D:\\Github\\HMW-Weapon-Editor\\WinFormsApp1\\HMW Weapons Editor.csproj",
       "packagesPath": "C:\\Users\\luke\\.nuget\\packages\\",
       "outputPath": "D:\\Github\\HMW-Weapon-Editor\\WinFormsApp1\\obj\\",
       "projectStyle": "PackageReference",

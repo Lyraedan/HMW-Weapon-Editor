@@ -1,0 +1,19 @@
+D:\Github\HMW-Weapon-Editor\WinFormsApp1\bin\Release\net8.0-windows\HMW Weapons Editor.exe
+D:\Github\HMW-Weapon-Editor\WinFormsApp1\bin\Release\net8.0-windows\HMW Weapons Editor.deps.json
+D:\Github\HMW-Weapon-Editor\WinFormsApp1\bin\Release\net8.0-windows\HMW Weapons Editor.runtimeconfig.json
+D:\Github\HMW-Weapon-Editor\WinFormsApp1\bin\Release\net8.0-windows\HMW Weapons Editor.dll
+D:\Github\HMW-Weapon-Editor\WinFormsApp1\bin\Release\net8.0-windows\HMW Weapons Editor.pdb
+D:\Github\HMW-Weapon-Editor\WinFormsApp1\obj\Release\net8.0-windows\WinFormsApp1.CollapsibleDictionaryControl.resources
+D:\Github\HMW-Weapon-Editor\WinFormsApp1\obj\Release\net8.0-windows\WinFormsApp1.Form1.resources
+D:\Github\HMW-Weapon-Editor\WinFormsApp1\obj\Release\net8.0-windows\WinFormsApp1.WeaponEditor.resources
+D:\Github\HMW-Weapon-Editor\WinFormsApp1\obj\Release\net8.0-windows\HMW Weapons Editor.csproj.GenerateResource.cache
+D:\Github\HMW-Weapon-Editor\WinFormsApp1\obj\Release\net8.0-windows\HMW Weapons Editor.GeneratedMSBuildEditorConfig.editorconfig
+D:\Github\HMW-Weapon-Editor\WinFormsApp1\obj\Release\net8.0-windows\HMW Weapons Editor.AssemblyInfoInputs.cache
+D:\Github\HMW-Weapon-Editor\WinFormsApp1\obj\Release\net8.0-windows\HMW Weapons Editor.AssemblyInfo.cs
+D:\Github\HMW-Weapon-Editor\WinFormsApp1\obj\Release\net8.0-windows\HMW Weapons Editor.csproj.CoreCompileInputs.cache
+D:\Github\HMW-Weapon-Editor\WinFormsApp1\obj\Release\net8.0-windows\HMW Weapons Editor.sourcelink.json
+D:\Github\HMW-Weapon-Editor\WinFormsApp1\obj\Release\net8.0-windows\HMW Weapons Editor.dll
+D:\Github\HMW-Weapon-Editor\WinFormsApp1\obj\Release\net8.0-windows\refint\HMW Weapons Editor.dll
+D:\Github\HMW-Weapon-Editor\WinFormsApp1\obj\Release\net8.0-windows\HMW Weapons Editor.pdb
+D:\Github\HMW-Weapon-Editor\WinFormsApp1\obj\Release\net8.0-windows\HMW Weapons Editor.genruntimeconfig.cache
+D:\Github\HMW-Weapon-Editor\WinFormsApp1\obj\Release\net8.0-windows\ref\HMW Weapons Editor.dll
