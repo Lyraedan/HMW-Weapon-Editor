@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("HMW Weapons Editor")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1af416410e42e6b33787e1b34368cd5f684c1410")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ebf70073d73cea03de878535ab985b6eb3695bb2")]
 [assembly: System.Reflection.AssemblyProductAttribute("HMW Weapons Editor")]
 [assembly: System.Reflection.AssemblyTitleAttribute("HMW Weapons Editor")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

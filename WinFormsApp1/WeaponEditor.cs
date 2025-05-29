@@ -7,6 +7,8 @@ using System.Reflection;
 using System.Linq;
 using static WinFormsApp1.WeaponJson;
 using Timer = System.Windows.Forms.Timer;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using TextBox = System.Windows.Forms.TextBox;
 
 namespace WinFormsApp1
 {
@@ -19,6 +21,7 @@ namespace WinFormsApp1
         private SaveFileDialog saveFileDialog;
         private OpenFileDialog openFileDialog;
         private ContextMenuStrip tabContextMenu;
+        private ToolStripProgressBar progressBar;
 
         private ToolStripMenuItem saveCurrentMenuItem;
 
@@ -98,9 +101,19 @@ namespace WinFormsApp1
             statusStrip = new StatusStrip();
             weaponNameStatusLabel = new ToolStripStatusLabel("Weapon: None");
             fileNameStatusLabel = new ToolStripStatusLabel("File: None") { Spring = true };
+            
+            progressBar = new ToolStripProgressBar
+            {
+                Minimum = 0,
+                Maximum = 100,
+                Size = new Size(100, 16),
+                Value = 0,
+                Visible = true // Always show; just empty when unused
+            };
 
             statusStrip.Items.Add(weaponNameStatusLabel);
             statusStrip.Items.Add(fileNameStatusLabel);
+            statusStrip.Items.Add(progressBar);
             Controls.Add(statusStrip);
 
             saveFileDialog = new SaveFileDialog { Filter = "JSON Files (*.json)|*.json" };
@@ -349,8 +362,16 @@ namespace WinFormsApp1
         {
             try
             {
+                progressBar.Value = 10;
+                Application.DoEvents();
+
                 string json = File.ReadAllText(path);
+                progressBar.Value = 40;
+                Application.DoEvents();
+
                 var weapon = JsonSerializer.Deserialize<WeaponJson>(json);
+                progressBar.Value = 70;
+
                 if (weapon != null)
                 {
                     string name = weapon.szDisplayName ?? Path.GetFileName(path);
@@ -373,13 +394,20 @@ namespace WinFormsApp1
                     UpdateFileLabelAndSaveCurrentMenu();
                     OnFileChanged?.Invoke($"{name}");
                 }
+
+                progressBar.Value = 100;
+                Task.Delay(300).ContinueWith(_ =>
+                {
+                    if (!IsDisposed)
+                        Invoke(() => progressBar.Value = 0);
+                });
             }
             catch (Exception ex)
             {
+                progressBar.Value = 0;
                 MessageBox.Show("Failed to load file: " + ex.Message);
             }
         }
-
         private void GenerateTabsForWeapon(TabPage tabPage, WeaponJson weapon)
         {
             var innerTabs = tabPage.Controls.OfType<TabControl>().FirstOrDefault();
@@ -659,14 +687,17 @@ namespace WinFormsApp1
         {
             if (weaponTabControl.SelectedTab?.Tag is not WeaponTabContext context) return;
 
+            progressBar.Value = 10;
+            Application.DoEvents();
+
             var innerTabs = weaponTabControl.SelectedTab.Controls.OfType<TabControl>().FirstOrDefault();
             if (innerTabs == null) return;
 
             foreach (TabPage tab in innerTabs.TabPages)
             {
-                foreach (Control control in tab.Controls)
+                for (int i = 0; i < tab.Controls.Count - 1; i++)
                 {
-                    if (control is Label lbl)
+                    if (tab.Controls[i] is Label lbl)
                     {
                         string propName = lbl.Text;
                         Control inputControl = tab.Controls[tab.Controls.IndexOf(lbl) + 1];
@@ -683,21 +714,33 @@ namespace WinFormsApp1
                 }
             }
 
+            progressBar.Value = 40;
+            Application.DoEvents();
+
             if (string.IsNullOrEmpty(context.FilePath))
             {
                 if (saveFileDialog.ShowDialog() != DialogResult.OK)
+                {
+                    progressBar.Value = 0;
                     return;
+                }
                 context.FilePath = saveFileDialog.FileName;
             }
 
             string json = JsonSerializer.Serialize(context.Weapon, new JsonSerializerOptions { WriteIndented = true });
             File.WriteAllText(context.FilePath, json);
 
+            progressBar.Value = 100;
+            Task.Delay(300).ContinueWith(_ =>
+            {
+                if (!IsDisposed)
+                    Invoke(() => progressBar.Value = 0);
+            });
+
             dirtyFlags[weaponTabControl.SelectedTab] = false;
             UpdateFileLabelAndSaveCurrentMenu();
             OnFileChanged?.Invoke($"{context.Weapon.szDisplayName ?? Path.GetFileName(context.FilePath)}");
         }
-
         private void SaveCurrentFileAs()
         {
             if (weaponTabControl.SelectedTab?.Tag is not WeaponTabContext context) return;
