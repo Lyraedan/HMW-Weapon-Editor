@@ -31,20 +31,34 @@ namespace WinFormsApp1
             DragEnter += WeaponEditor_DragEnter;
             DragDrop += WeaponEditor_DragDrop;
 
-            // MenuStrip with File menu
+            // MenuStrip with File menu including New, Save submenu, and Load JSON
             var menuStrip = new MenuStrip { Dock = DockStyle.Top };
+
             var fileMenu = new ToolStripMenuItem("File");
-            var loadMenuItem = new ToolStripMenuItem("Load JSON");
+
+            var newMenuItem = new ToolStripMenuItem("New");
+            newMenuItem.Click += NewMenuItem_Click;
+
+            var saveMenu = new ToolStripMenuItem("Save");
             saveCurrentMenuItem = new ToolStripMenuItem("Save Current File") { Enabled = false };
-            var saveMenuItem = new ToolStripMenuItem("Save JSON");
+            var saveAllMenuItem = new ToolStripMenuItem("Save All");
+            var saveNewMenuItem = new ToolStripMenuItem("Save New");
 
-            loadMenuItem.Click += LoadButton_Click;
-            saveMenuItem.Click += SaveAllButton_Click;
             saveCurrentMenuItem.Click += SaveCurrentFile_Click;
+            saveAllMenuItem.Click += SaveAllButton_Click;
+            saveNewMenuItem.Click += SaveNewFile_Click;
 
+            saveMenu.DropDownItems.Add(saveCurrentMenuItem);
+            saveMenu.DropDownItems.Add(saveAllMenuItem);
+            saveMenu.DropDownItems.Add(saveNewMenuItem);
+
+            var loadMenuItem = new ToolStripMenuItem("Load JSON");
+            loadMenuItem.Click += LoadButton_Click;
+
+            fileMenu.DropDownItems.Add(newMenuItem);
             fileMenu.DropDownItems.Add(loadMenuItem);
-            fileMenu.DropDownItems.Add(saveCurrentMenuItem);
-            fileMenu.DropDownItems.Add(saveMenuItem);
+            fileMenu.DropDownItems.Add(saveMenu);
+
             menuStrip.Items.Add(fileMenu);
             Controls.Add(menuStrip);
 
@@ -78,6 +92,35 @@ namespace WinFormsApp1
             // Hook key preview for Ctrl+S and Ctrl+Shift+S shortcuts
             this.PreviewKeyDown += WeaponEditor_PreviewKeyDown;
             this.KeyDown += WeaponEditor_KeyDown;
+        }
+
+        private void NewMenuItem_Click(object sender, EventArgs e)
+        {
+            var newWeapon = new WeaponJson(); // You can customize default values here if needed
+
+            // Initialize anim dictionaries with all keys set to empty strings
+            newWeapon.szXAnimsRightHanded = StaticReadonly.AnimDictKeys.ToDictionary(k => k, k => "");
+            newWeapon.szXAnimsLeftHanded = StaticReadonly.AnimDictKeys.ToDictionary(k => k, k => "");
+            newWeapon.szXAnims = StaticReadonly.AnimDictKeys.ToDictionary(k => k, k => "");
+
+            TabPage newTab = new TabPage("New Weapon");
+            newTab.Tag = new WeaponTabContext { Weapon = newWeapon, FilePath = null };
+
+            TabControl innerTabs = new TabControl
+            {
+                Dock = DockStyle.Top,
+                Height = 400
+            };
+            newTab.Controls.Add(innerTabs);
+
+            GenerateTabsForWeapon(newTab, newWeapon);
+
+            weaponTabControl.TabPages.Add(newTab);
+            weaponTabControl.SelectedTab = newTab;
+
+            dirtyFlags[newTab] = true;
+            UpdateFileLabelAndSaveCurrentMenu();
+            OnFileChanged?.Invoke("New Weapon*");
         }
 
         private void WeaponEditor_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
@@ -116,7 +159,7 @@ namespace WinFormsApp1
                     weaponName += "*";
                 }
                 weaponNameStatusLabel.Text = $"Weapon: {weaponName}";
-                fileNameStatusLabel.Text = $"File: {Path.GetFileName(context.FilePath)}";
+                fileNameStatusLabel.Text = $"File: {Path.GetFileName(context.FilePath) ?? "None"}";
                 saveCurrentMenuItem.Enabled = true;
                 weaponTabControl.SelectedTab.Text = weaponName;
             }
@@ -246,7 +289,7 @@ namespace WinFormsApp1
                     cb.CheckedChanged += MarkDirty;
                     break;
                 case CollapsibleDictionaryControl cdc:
-                    // Implement dict change event if needed
+                    // Add dictionary change events here if implemented
                     break;
             }
         }
@@ -268,6 +311,8 @@ namespace WinFormsApp1
                 return new TextBox { Text = string.Join(", ", (List<string>)value ?? new List<string>()) };
             else if (type == typeof(List<float>))
                 return new TextBox { Text = string.Join(", ", (List<float>)value ?? new List<float>()) };
+            else if (type == typeof(List<int>))
+                return new TextBox { Text = string.Join(", ", (List<int>)value ?? new List<int>()) };
             else if (type == typeof(Dictionary<string, object>))
             {
                 var dict = (Dictionary<string, object>)value ?? new Dictionary<string, object>();
@@ -279,7 +324,7 @@ namespace WinFormsApp1
                 return new TextBox { Text = value?.ToString() ?? "" };
         }
 
-        private void SaveButton_Click(object sender, EventArgs e)
+        private void SaveCurrentFile_Click(object sender, EventArgs e)
         {
             SaveCurrentFile();
         }
@@ -293,9 +338,9 @@ namespace WinFormsApp1
             }
         }
 
-        private void SaveCurrentFile_Click(object sender, EventArgs e)
+        private void SaveNewFile_Click(object sender, EventArgs e)
         {
-            SaveCurrentFile();
+            SaveCurrentFileAs();
         }
 
         public void SaveCurrentFile()
@@ -406,6 +451,16 @@ namespace WinFormsApp1
                     if (float.TryParse(p, out var f))
                         floats.Add(f);
                 return floats;
+            }
+
+            if (type == typeof(List<int>))
+            {
+                var parts = control.Text.Split(new[] { ", " }, StringSplitOptions.RemoveEmptyEntries);
+                List<int> ints = new();
+                foreach (var p in parts)
+                    if (int.TryParse(p, out var i))
+                        ints.Add(i);
+                return ints;
             }
 
             if (type == typeof(Dictionary<string, object>))
