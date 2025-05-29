@@ -61,6 +61,22 @@ namespace WinFormsApp1
             fileMenu.DropDownItems.Add(saveMenu);
 
             menuStrip.Items.Add(fileMenu);
+
+            // Create About menu with Credits
+            var aboutMenu = new ToolStripMenuItem("About");
+            var creditsItem = new ToolStripMenuItem("Credits");
+            creditsItem.Click += (s, e) =>
+            {
+                MessageBox.Show(
+                    "HMW Weapon Editor\nAuthor: ItsLuke\nVersion: 0.1",
+                    "About",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information
+                );
+            };
+            aboutMenu.DropDownItems.Add(creditsItem);
+            menuStrip.Items.Add(aboutMenu); // Add About to the top-level menu
+
             Controls.Add(menuStrip);
 
             // Main weapon TabControl fills remaining space
