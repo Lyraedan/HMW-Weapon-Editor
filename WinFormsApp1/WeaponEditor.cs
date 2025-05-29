@@ -238,87 +238,89 @@ namespace WinFormsApp1
             }
         }
 
-        private void GenerateTabsForWeapon(TabPage containerTab, WeaponJson weapon)
+        private void GenerateTabsForWeapon(TabPage tabPage, WeaponJson weapon)
         {
-            var innerTabs = containerTab.Controls.OfType<TabControl>().FirstOrDefault();
+            var innerTabs = tabPage.Controls.OfType<TabControl>().FirstOrDefault();
             if (innerTabs == null) return;
 
-            innerTabs.TabPages.Clear();
+            var allProperties = weapon.GetType().GetProperties();
 
-            var groupedByGroup = typeof(WeaponJson)
-                .GetProperties()
-                .Select(p => new {
-                    Property = p,
-                    GroupAttr = p.GetCustomAttribute<GroupAttribute>()
-                })
-                .GroupBy(x => x.GroupAttr?.Group ?? "Other");
-
-            foreach (var group in groupedByGroup)
+            var flattenedProps = allProperties.SelectMany(prop =>
             {
-                TabPage groupTab = new TabPage(group.Key) { AutoScroll = true };
-                innerTabs.TabPages.Add(groupTab);
+                var groupAttr = prop.GetCustomAttribute<GroupAttribute>();
+                var val = prop.GetValue(weapon);
 
-                // Flatten out properties, including nested ones with their own GroupAttribute
-                var flattened = group.SelectMany(g =>
+                if (IsCustomClass(prop.PropertyType) && val != null)
                 {
-                    var parentProp = g.Property;
-                    object parentValue = parentProp.GetValue(weapon);
-
-                    if (IsCustomClass(parentProp.PropertyType) && parentValue != null)
+                    // Get nested class properties
+                    return prop.PropertyType.GetProperties().Select(subProp => new
                     {
-                        return parentProp.PropertyType
-                            .GetProperties()
-                            .Select(subProp => new
-                            {
-                                Property = subProp,
-                                Target = parentValue,
-                                GroupAttr = subProp.GetCustomAttribute<GroupAttribute>()
-                            });
-                    }
-                    else
-                    {
-                        return new[] {
-                    new {
-                        Property = parentProp,
-                        Target = (object)weapon,
-                        GroupAttr = g.GroupAttr
-                    }
-                };
-                    }
-                });
-
-                // Group by subgroup (which may be null)
-                var groupedBySubGroup = flattened
-                    .GroupBy(x => x.GroupAttr?.SubGroup);
-
-                if (groupedBySubGroup.Count() == 1 && groupedBySubGroup.First().Key == null)
-                {
-                    int y = 20;
-                    foreach (var item in groupedBySubGroup.First())
-                    {
-                        AddPropertyControlToTab(groupTab, item.Property, item.Target, y);
-                        y += 30;
-                    }
+                        Property = subProp,
+                        Target = val,
+                        GroupAttr = subProp.GetCustomAttribute<GroupAttribute>()
+                    });
                 }
                 else
                 {
-                    var subTabControl = new TabControl { Dock = DockStyle.Fill };
-                    groupTab.Controls.Add(subTabControl);
-
-                    foreach (var subGroup in groupedBySubGroup)
+                    return new[]
                     {
-                        string subGroupName = subGroup.Key ?? "General";
-                        TabPage subTab = new TabPage(subGroupName) { AutoScroll = true };
-                        subTabControl.TabPages.Add(subTab);
+                new
+                {
+                    Property = prop,
+                    Target = (object)weapon,
+                    GroupAttr = groupAttr
+                }
+            };
+                }
+            });
 
-                        int y = 20;
-                        foreach (var item in subGroup)
+            var groupedByGroup = flattenedProps.GroupBy(x => x.GroupAttr?.Group ?? "Other");
+
+            foreach (var group in groupedByGroup)
+            {
+                var groupTab = new TabPage(group.Key);
+                var layout = new TableLayoutPanel
+                {
+                    Dock = DockStyle.Fill,
+                    AutoScroll = true,
+                    ColumnCount = 2,
+                    RowCount = 0,
+                    AutoSize = false, // Important
+                    AutoSizeMode = AutoSizeMode.GrowAndShrink
+                };
+
+                var groupedBySubgroup = group.GroupBy(x => x.GroupAttr?.SubGroup ?? "");
+
+                foreach (var subgroup in groupedBySubgroup)
+                {
+                    if (!string.IsNullOrWhiteSpace(subgroup.Key))
+                    {
+                        var label = new Label
                         {
-                            AddPropertyControlToTab(subTab, item.Property, item.Target, y);
-                            y += 30;
-                        }
+                            Text = subgroup.Key,
+                            Font = new Font(SystemFonts.DefaultFont, FontStyle.Bold),
+                            AutoSize = true,
+                            Padding = new Padding(0, 10, 0, 0)
+                        };
+                        layout.Controls.Add(label);
+                        layout.SetColumnSpan(label, 2);
+                        layout.RowCount++;
+                    }
+
+                    foreach (var item in subgroup)
+                    {
+                        var property = item.Property;
+                        var target = item.Target;
+                        var label = new Label { Text = property.Name, AutoSize = true };
+                        var control = GenerateControlForProperty(property, target);
+                        layout.Controls.Add(label);
+                        layout.Controls.Add(control);
+                        layout.RowCount++;
                     }
                 }
+
+                groupTab.Controls.Add(layout);
+                innerTabs.TabPages.Add(groupTab);
             }
         }
 
