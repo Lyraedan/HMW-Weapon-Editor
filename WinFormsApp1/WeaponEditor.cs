@@ -48,9 +48,9 @@ namespace WinFormsApp1
             saveAllMenuItem.Click += SaveAllButton_Click;
             saveNewMenuItem.Click += SaveNewFile_Click;
 
+            saveMenu.DropDownItems.Add(saveNewMenuItem);
             saveMenu.DropDownItems.Add(saveCurrentMenuItem);
             saveMenu.DropDownItems.Add(saveAllMenuItem);
-            saveMenu.DropDownItems.Add(saveNewMenuItem);
 
             var loadMenuItem = new ToolStripMenuItem("Load JSON");
             loadMenuItem.Click += LoadButton_Click;
@@ -357,11 +357,26 @@ namespace WinFormsApp1
                 return new TextBox { Text = string.Join(", ", (List<int>)value ?? new List<int>()) };
             else if (type == typeof(Dictionary<string, object>))
             {
-                var dict = (Dictionary<string, object>)value ?? new Dictionary<string, object>();
-                var control = new CollapsibleDictionaryControl(prop.Name) { Width = 500 };
-                control.Values = dict;
+                var dict = (IDictionary<string, object>)value;
+                var control = new CollapsibleDictionaryControl(prop.Name)
+                {
+                    Width = 500,
+                    Values = dict != null ? dict.ToDictionary(kvp => kvp.Key, kvp => kvp.Value) : new Dictionary<string, object>()
+                };
                 return control;
             }
+            else if (type == typeof(Dictionary<string, string>))
+            {
+                var dict = (IDictionary<string, string>)value;
+                var control = new CollapsibleDictionaryControl(prop.Name)
+                {
+                    Width = 500,
+                    Values = dict != null ? dict.ToDictionary(kvp => kvp.Key, kvp => (object)kvp.Value) : new Dictionary<string, object>()
+                };
+                return control;
+            }
+
+
             else
                 return new TextBox { Text = value?.ToString() ?? "" };
         }

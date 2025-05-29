@@ -16,29 +16,29 @@ namespace WinFormsApp1
         public string szAltWeaponName { get; set; }
 
 
-        // Models group, subgroup "GunModels"
-        [Group("Models", "GunModels")]
+        // Models group
+        [Group("Models")]
         public List<string> gunModel { get; set; }
 
-        [Group("Models", "GunModels")]
+        [Group("Models")]
         public List<string> worldModel { get; set; }
 
-        [Group("Models", "GunModels")]
+        [Group("Models")]
         public string handModel { get; set; }
 
-        [Group("Models", "GunModels")]
+        [Group("Models")]
         public string persistentArmXModel { get; set; }
 
-        [Group("Models", "GunModels")]
+        [Group("Models")]
         public string worldClipModel { get; set; }
 
-        [Group("Models", "GunModels")]
+        [Group("Models")]
         public string rocketModel { get; set; }
 
-        [Group("Models", "GunModels")]
+        [Group("Models")]
         public string knifeModel { get; set; }
 
-        [Group("Models", "GunModels")]
+        [Group("Models")]
         public string worldKnifeModel { get; set; }
 
 
@@ -59,70 +59,69 @@ namespace WinFormsApp1
         public List<string> attachments { get; set; }
 
 
-        // Sound Notetracks group, subgroup "MapKeys"
-        [Group("Sound Notetracks", "MapKeys")]
+        [Group("Sound Notetracks")]
         public List<string> notetrackSoundMapKeys { get; set; }
 
-        [Group("Sound Notetracks", "MapValues")]
+        [Group("Sound Notetracks")]
         public List<string> notetrackSoundMapValues { get; set; }
 
-        [Group("Sound Notetracks", "RumbleMapKeys")]
+        [Group("Sound Notetracks")]
         public List<string> notetrackRumbleMapKeys { get; set; }
 
-        [Group("Sound Notetracks", "RumbleMapValues")]
+        [Group("Sound Notetracks")]
         public List<string> notetrackRumbleMapValues { get; set; }
 
-        [Group("Sound Notetracks", "FXMapKeys")]
+        [Group("Sound Notetracks")]
         public List<string> notetrackFXMapKeys { get; set; }
 
-        [Group("Sound Notetracks", "FXMapValues")]
+        [Group("Sound Notetracks")]
         public List<string> notetrackFXMapValues { get; set; }
 
-        [Group("Sound Notetracks", "FXMapTagValues")]
+        [Group("Sound Notetracks")]
         public List<string> notetrackFXMapTagValues { get; set; }
 
-        [Group("Sound Notetracks", "UnknownKeys")]
+        [Group("Sound Notetracks")]
         public List<string> notetrackUnknownKeys { get; set; }
 
-        [Group("Sound Notetracks", "UnknownInts")]
+        [Group("Sound Notetracks")]
         public List<int> notetrackUnknown { get; set; }
 
-        [Group("Sound Notetracks", "UnknownValues")]
+        [Group("Sound Notetracks")]
         public List<string> notetrackUnknownValues { get; set; }
 
 
         // FX group, subgroup "Effects"
-        [Group("FX", "Effects")]
+        [Group("FX")]
         public string viewFlashEffect { get; set; }
 
-        [Group("FX", "Effects")]
+        [Group("FX")]
         public string worldFlashEffect { get; set; }
 
-        [Group("FX", "Effects")]
+        [Group("FX")]
         public string viewBodyFlashEffect { get; set; }
 
-        [Group("FX", "Effects")]
+        [Group("FX")]
         public string viewFlashADSEffect { get; set; }
 
-        [Group("FX", "Effects")]
+        [Group("FX")]
         public string signatureViewFlashEffect { get; set; }
 
-        [Group("FX", "Effects")]
+        [Group("FX")]
         public string signatureWorldFlashEffect { get; set; }
 
-        [Group("FX", "Effects")]
+        [Group("FX")]
         public string viewMagEjectEffect { get; set; }
 
-        [Group("FX", "Effects")]
+        [Group("FX")]
         public string viewShellEjectEffect { get; set; }
 
-        [Group("FX", "Effects")]
+        [Group("FX")]
         public string worldShellEjectEffect { get; set; }
 
-        [Group("FX", "Effects")]
+        [Group("FX")]
         public string viewLastShotEjectEffect { get; set; }
 
-        [Group("FX", "Effects")]
+        [Group("FX")]
         public string worldLastShotEjectEffect { get; set; }
 
 
@@ -142,10 +141,10 @@ namespace WinFormsApp1
         public AccuracyGraph accuracy_graph { get; set; }
 
 
-        [Group("State Timers", "Normal")]
+        [Group("State Timers")]
         public StateTimers stateTimers { get; set; }
 
-        [Group("State Timers", "Akimbo")]
+        [Group("State Timers")]
         public StateTimers stateTimersAkimbo { get; set; }
 
 
