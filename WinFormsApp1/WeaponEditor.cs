@@ -9,6 +9,7 @@ using static WinFormsApp1.WeaponJson;
 using Timer = System.Windows.Forms.Timer;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using TextBox = System.Windows.Forms.TextBox;
+using System.Text.Json.Serialization;
 
 namespace WinFormsApp1
 {
@@ -81,7 +82,7 @@ namespace WinFormsApp1
             creditsItem.Click += (s, e) =>
             {
                 MessageBox.Show(
-                    "HMW Weapon Editor\nAuthor: ItsLuke\nVersion: 0.1",
+                    "HMW Weapon Editor\nAuthor: ItsLuke\nVersion: 0.2",
                     "About",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information
@@ -399,6 +400,7 @@ namespace WinFormsApp1
 
                     UpdateFileLabelAndSaveCurrentMenu();
                     OnFileChanged?.Invoke($"{name}");
+                    MessageBox.Show($"Successfully loaded: {name}.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
 
                 progressBar.Value = 100;
@@ -742,12 +744,9 @@ namespace WinFormsApp1
 
         private void SaveAllButton_Click(object sender, EventArgs e)
         {
-            foreach (TabPage tab in weaponTabControl.TabPages)
-            {
-                weaponTabControl.SelectedTab = tab;
-                SaveCurrentFile();
-            }
+            SaveAll();
         }
+
 
         private void SaveNewFile_Click(object sender, EventArgs e)
         {
@@ -758,104 +757,191 @@ namespace WinFormsApp1
         {
             if (weaponTabControl.SelectedTab?.Tag is not WeaponTabContext context) return;
 
-            progressBar.Value = 10;
-            Application.DoEvents();
-
-            var innerTabs = weaponTabControl.SelectedTab.Controls.OfType<TabControl>().FirstOrDefault();
-            if (innerTabs == null) return;
-
-            foreach (TabPage tab in innerTabs.TabPages)
-            {
-                for (int i = 0; i < tab.Controls.Count - 1; i++)
-                {
-                    if (tab.Controls[i] is Label lbl)
-                    {
-                        string propName = lbl.Text;
-                        Control inputControl = tab.Controls[tab.Controls.IndexOf(lbl) + 1];
-                        PropertyInfo prop = typeof(WeaponJson).GetProperty(propName);
-                        if (prop == null || !prop.CanWrite) continue;
-
-                        try
-                        {
-                            object parsedValue = ParseControlValue(inputControl, prop.PropertyType);
-                            prop.SetValue(context.Weapon, parsedValue);
-                        }
-                        catch { }
-                    }
-                }
-            }
-
-            progressBar.Value = 40;
-            Application.DoEvents();
+            SaveTabEditsToWeapon(context);
 
             if (string.IsNullOrEmpty(context.FilePath))
             {
                 if (saveFileDialog.ShowDialog() != DialogResult.OK)
-                {
-                    progressBar.Value = 0;
                     return;
-                }
                 context.FilePath = saveFileDialog.FileName;
             }
 
-            string json = JsonSerializer.Serialize(context.Weapon, new JsonSerializerOptions { WriteIndented = true });
-            File.WriteAllText(context.FilePath, json);
-
-            progressBar.Value = 100;
-            Task.Delay(300).ContinueWith(_ =>
-            {
-                if (!IsDisposed)
-                    Invoke(() => progressBar.Value = 0);
-            });
-
-            dirtyFlags[weaponTabControl.SelectedTab] = false;
-            UpdateFileLabelAndSaveCurrentMenu();
-            OnFileChanged?.Invoke($"{context.Weapon.szDisplayName ?? Path.GetFileName(context.FilePath)}");
+            SaveToFile(context, context.FilePath);
         }
+
         private void SaveCurrentFileAs()
         {
             if (weaponTabControl.SelectedTab?.Tag is not WeaponTabContext context) return;
 
+            SaveTabEditsToWeapon(context);
+
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                context.FilePath = saveFileDialog.FileName;
+                SaveToFile(context, context.FilePath);
+            }
+        }
+
+        private void SaveAll()
+        {
+            progressBar.Value = 10;
+
+            try
+            {
+                foreach (TabPage tab in weaponTabControl.TabPages)
+                {
+                    weaponTabControl.SelectedTab = tab;
+
+                    if (tab.Tag is not WeaponTabContext context)
+                        continue;
+
+                    SaveCurrentFile();
+                }
+
+                MessageBox.Show("All files saved successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to save all files: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                Task.Delay(750).ContinueWith(_ =>
+                {
+                    if (!IsDisposed)
+                    {
+                        Invoke(() => progressBar.Value = 0);
+                    }
+                });
+            }
+        }
+
+        private void SaveToFile(WeaponTabContext context, string filePath)
+        {
+            try
+            {
+                string json = JsonSerializer.Serialize(context.Weapon, new JsonSerializerOptions
+                {
+                    WriteIndented = true,
+                    Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) }
+                });
+
+                File.WriteAllText(filePath, json);
+
+                dirtyFlags[weaponTabControl.SelectedTab] = false;
+                UpdateFileLabelAndSaveCurrentMenu();
+                OnFileChanged?.Invoke($"{context.Weapon.szDisplayName ?? Path.GetFileName(filePath)}");
+
+                MessageBox.Show("Save completed.", "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to save file: {ex.Message}", "Save Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void SaveTabEditsToWeapon(WeaponTabContext context)
+        {
             var innerTabs = weaponTabControl.SelectedTab.Controls.OfType<TabControl>().FirstOrDefault();
             if (innerTabs == null) return;
 
             foreach (TabPage tab in innerTabs.TabPages)
             {
-                foreach (Control control in tab.Controls)
+                var layout = tab.Controls.OfType<TableLayoutPanel>().FirstOrDefault();
+                if (layout == null) continue;
+
+                for (int i = 0; i < layout.Controls.Count - 1; i++)
                 {
-                    if (control is Label lbl)
+                    if (layout.Controls[i] is Label label)
                     {
-                        string propName = lbl.Text;
-                        Control inputControl = tab.Controls[tab.Controls.IndexOf(lbl) + 1];
-                        PropertyInfo prop = typeof(WeaponJson).GetProperty(propName);
-                        if (prop == null || !prop.CanWrite) continue;
+                        string propName = label.Text;
+                        Control inputControl = layout.Controls[i + 1];
 
                         try
                         {
-                            object parsedValue = ParseControlValue(inputControl, prop.PropertyType);
-                            prop.SetValue(context.Weapon, parsedValue);
+                            var prop = context.Weapon.GetType().GetProperty(propName);
+                            if (prop != null && prop.CanWrite)
+                            {
+                                object parsedValue = ParseControlValue(inputControl, prop.PropertyType);
+                                prop.SetValue(context.Weapon, parsedValue);
+                            }
+                            else
+                            {
+                                foreach (var containerProp in context.Weapon.GetType().GetProperties())
+                                {
+                                    if (containerProp.PropertyType.IsClass &&
+                                        containerProp.PropertyType != typeof(string) &&
+                                        containerProp.GetValue(context.Weapon) is object container)
+                                    {
+                                        var nested = containerProp.PropertyType.GetProperty(propName);
+                                        if (nested != null && nested.CanWrite)
+                                        {
+                                            object parsed = ParseControlValue(inputControl, nested.PropertyType);
+                                            nested.SetValue(container, parsed);
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
                         }
-                        catch { }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show($"Failed to parse or set value for {propName}: {ex.Message}", "Save Error");
+                        }
                     }
                 }
             }
-
-            if (saveFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                context.FilePath = saveFileDialog.FileName;
-                string json = JsonSerializer.Serialize(context.Weapon, new JsonSerializerOptions { WriteIndented = true });
-                File.WriteAllText(context.FilePath, json);
-
-                dirtyFlags[weaponTabControl.SelectedTab] = false;
-                UpdateFileLabelAndSaveCurrentMenu();
-                OnFileChanged?.Invoke($"{context.Weapon.szDisplayName ?? Path.GetFileName(context.FilePath)}");
-            }
         }
+
 
         private object ParseControlValue(Control control, Type type)
         {
+            if (type == typeof(object))
+            {
+                // Dynamically guess type based on control
+                if (control is NumericUpDown nud)
+                {
+                    return nud.DecimalPlaces > 0 ? (object)(float)nud.Value : (int)nud.Value;
+                }
+                else if (control is CheckBox cb)
+                {
+                    return cb.Checked;
+                }
+                else if (control is TextBox tb)
+                {
+                    string text = tb.Text.Trim();
+
+                    if (string.IsNullOrWhiteSpace(text))
+                        return "";
+
+                    if (bool.TryParse(text, out bool boolVal))
+                        return boolVal;
+
+                    if (int.TryParse(text, out int intVal))
+                        return intVal;
+
+                    if (float.TryParse(text, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out float floatVal))
+                        return floatVal;
+
+                    // Try parsing as comma-separated list
+                    var parts = text.Split(new[] { ", " }, StringSplitOptions.RemoveEmptyEntries);
+                    if (parts.Length > 1)
+                    {
+                        if (parts.All(p => int.TryParse(p, out _)))
+                            return parts.Select(int.Parse).Cast<object>().ToList();
+
+                        if (parts.All(p => float.TryParse(p, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out _)))
+                            return parts.Select(p => (object)float.Parse(p, System.Globalization.CultureInfo.InvariantCulture)).ToList();
+
+                        return parts.Cast<object>().ToList();
+                    }
+
+                    return text;
+                }
+            }
+
             if (type == typeof(string))
-                return control.Text;
+                return control.Text ?? "";
 
             if (type == typeof(int))
                 return (int)((NumericUpDown)control).Value;
@@ -867,26 +953,24 @@ namespace WinFormsApp1
                 return ((CheckBox)control).Checked;
 
             if (type == typeof(List<string>))
-                return new List<string>(control.Text.Split(new[] { ", " }, StringSplitOptions.RemoveEmptyEntries));
+                return control.Text.Split(new[] { ", " }, StringSplitOptions.RemoveEmptyEntries).ToList();
 
             if (type == typeof(List<float>))
             {
                 var parts = control.Text.Split(new[] { ", " }, StringSplitOptions.RemoveEmptyEntries);
-                List<float> floats = new();
-                foreach (var p in parts)
-                    if (float.TryParse(p, out var f))
-                        floats.Add(f);
-                return floats;
+                return parts
+                    .Where(p => float.TryParse(p, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out _))
+                    .Select(p => float.Parse(p, System.Globalization.CultureInfo.InvariantCulture))
+                    .ToList();
             }
 
             if (type == typeof(List<int>))
             {
                 var parts = control.Text.Split(new[] { ", " }, StringSplitOptions.RemoveEmptyEntries);
-                List<int> ints = new();
-                foreach (var p in parts)
-                    if (int.TryParse(p, out var i))
-                        ints.Add(i);
-                return ints;
+                return parts
+                    .Where(p => int.TryParse(p, out _))
+                    .Select(int.Parse)
+                    .ToList();
             }
 
             if (type == typeof(Dictionary<string, object>))
@@ -900,18 +984,16 @@ namespace WinFormsApp1
             {
                 var parts = control.Text.Split(new[] { ", " }, StringSplitOptions.RemoveEmptyEntries);
 
-                // Try parse type from content
                 if (parts.All(p => int.TryParse(p, out _)))
                     return parts.Select(p => (object)int.Parse(p)).ToList();
 
-                if (parts.All(p => float.TryParse(p, out _)))
-                    return parts.Select(p => (object)float.Parse(p)).ToList();
+                if (parts.All(p => float.TryParse(p, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out _)))
+                    return parts.Select(p => (object)float.Parse(p, System.Globalization.CultureInfo.InvariantCulture)).ToList();
 
-                return parts.Select(p => (object)p).ToList();
+                return parts.Cast<object>().ToList();
             }
 
-
-            return control.Text;
+            return control.Text ?? "";
         }
 
         private void WeaponTabControl_MouseUp(object sender, MouseEventArgs e)

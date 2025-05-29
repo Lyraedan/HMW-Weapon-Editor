@@ -5,7 +5,9 @@ namespace WinFormsApp1
 {
     public class WeaponJson
     {
-        // General group, no subgroup
+        [Group("General")]
+        public object baseAsset { get; set; }
+
         [Group("General")]
         public object szinternalName { get; set; }
 
