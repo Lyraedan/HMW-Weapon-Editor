@@ -120,7 +120,7 @@ namespace WinFormsApp1
             creditsItem.Click += (s, e) =>
             {
                 MessageBox.Show(
-                    "HMW Weapon Editor\nAuthor: ItsLuke\nVersion: 0.2",
+                    "HMW Weapon Editor\nAuthor: ItsLuke\nVersion: 0.3",
                     "About",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information
