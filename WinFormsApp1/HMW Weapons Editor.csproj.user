@@ -4,13 +4,16 @@
     <Compile Update="CollapsibleDictionaryControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Update="FindWindow.cs">
+    <Compile Update="FastFiles\FastFileViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Weapon Editor\FindWindow.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="WeaponEditor.cs">
+    <Compile Update="Weapon Editor\WeaponEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
   </ItemGroup>

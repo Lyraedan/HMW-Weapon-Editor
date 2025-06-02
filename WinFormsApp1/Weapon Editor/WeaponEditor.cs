@@ -10,6 +10,9 @@ using Timer = System.Windows.Forms.Timer;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using TextBox = System.Windows.Forms.TextBox;
 using System.Text.Json.Serialization;
+using HMW_Weapons_Editor.Zonetool;
+using FastFiles;
+using ProgressBar = System.Windows.Forms.ProgressBar;
 
 namespace WinFormsApp1
 {
@@ -113,6 +116,73 @@ namespace WinFormsApp1
             zonetoolMenu.DropDownItems.Add(dumpZoneItem);
             zonetoolMenu.DropDownItems.Add(loadZoneItem);
             menuStrip.Items.Add(zonetoolMenu);
+
+            // Create Fastfile
+            var fastfileMenu = new ToolStripMenuItem("Fastfile");
+            var viewFastfile = new ToolStripMenuItem("View Fastfile");
+            viewFastfile.Click += async (s, e) =>
+            {
+                using var ofd = new OpenFileDialog
+                {
+                    Filter = "FastFiles (*.ff)|*.ff|All files (*.*)|*.*",
+                    Title = "Select a FastFile"
+                };
+
+                if (ofd.ShowDialog() == DialogResult.OK)
+                {
+                    var progressForm = new Form
+                    {
+                        Text = "Loading FastFile...",
+                        Width = 400,
+                        Height = 100,
+                        FormBorderStyle = FormBorderStyle.FixedToolWindow,
+                        StartPosition = FormStartPosition.CenterParent
+                    };
+
+                    var label = new Label
+                    {
+                        Text = "Starting...",
+                        Dock = DockStyle.Top,
+                        Height = 30,
+                        TextAlign = ContentAlignment.MiddleCenter
+                    };
+
+                    var progressBar = new ProgressBar
+                    {
+                        Dock = DockStyle.Bottom,
+                        Minimum = 0,
+                        Maximum = 100
+                    };
+
+                    progressForm.Controls.Add(label);
+                    progressForm.Controls.Add(progressBar);
+                    progressForm.Show();
+
+                    var progress = new Progress<(int, string)>(tuple =>
+                    {
+                        progressBar.Value = tuple.Item1;
+                        label.Text = tuple.Item2;
+                    });
+
+                    try
+                    {
+                        var fastFile = await FastFile.LoadAsync(ofd.FileName, "H1", progress);
+                        progressForm.Close();
+
+                        var viewer = new FormFastFileViewer(fastFile);
+                        viewer.Show();
+                    }
+                    catch (Exception ex)
+                    {
+                        progressForm.Close();
+                        MessageBox.Show($"Failed to load FastFile:\n{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            };
+
+
+            fastfileMenu.DropDownItems.Add(viewFastfile);
+            menuStrip.Items.Add(fastfileMenu);
 
             // Create About menu with Credits
             var aboutMenu = new ToolStripMenuItem("About");

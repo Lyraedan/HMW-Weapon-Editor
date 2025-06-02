@@ -4,7 +4,7 @@ using System.IO;
 using System.Text.Json;
 using System.Windows.Forms;
 
-namespace WinFormsApp1 // Replace with your actual namespace
+namespace HMW_Weapons_Editor.Zonetool // Replace with your actual namespace
 {
     public static class Zonetool
     {
